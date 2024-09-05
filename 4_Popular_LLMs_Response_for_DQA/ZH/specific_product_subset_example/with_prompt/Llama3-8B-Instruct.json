@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "gauss",
+        "language": "zh",
+        "input": "什么是SNAPSHOT表？它记录了什么信息？",
+        "actual_output": "😊\n\nSNAPSHOT表是Opengauss和GaussDB数据库中的一张系统表，记录当前系统中存储的WDR快照数据的索引信息、开始时间和结束时间。该表只能在系统库中查询到结果，在用户库中无法查询。\n\nSNAPSHOT表的属性包括：\n\n* snapshot_id：WDR快照序号\n* start_ts：WDR快照的开始时间\n* end_ts：WDR快照的结束时间\n\n这个表主要用于记录WDR快照的信息，可以帮助管理员了解系统的快照情况。",
+        "expected_output": "SNAPSHOT表是用来记录当前系统中存储的WDR快照数据的索引信息、开始时间和结束时间的表。它包含以下信息：\n\n1. **snapshot_id**：WDR快照序号，类型为bigint。\n2. **start_ts**：WDR快照的开始时间，类型为timestamp。\n3. **end_ts**：WDR快照的结束时间，类型为timestamp。\n\n因此，SNAPSHOT表记录了每个WDR快照的序号、开始时间和结束时间信息。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "SNAPSHOT.SNAPSHOT\nSNAPSHOT表记录当前系统中存储的WDR快照数据的索引信息、开始时间和结束时间。只能在系统库中查询到结果，在用户库中无法查询。\n表 1  SNAPSHOT表属性\n名称 \n \n 类型 \n \n 描述 \n \n 示例 \n \n snapshot_id \n \n bigint \n \n WDR快照序号。 \n \n 1 \n \n start_ts \n \n timestamp \n \n WDR快照的开始时间。 \n \n 2019-12-28 17:11:27.423742+08 \n \n end_ts \n \n timestamp \n \n WDR快照的结束时间。 \n \n 2019-12-28 17:11:43.67726+08\n{\"point\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。\", \"ADM_TYPES视图描述数据库中的所有对象类型。\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。\", \"ADM_USERS视图存储关于数据库所有用户名信息。\", \"ADM_VIEWS视图存储关于数据库内的视图信息。\", \"这些系统视图同时存在于PG_CATALOG和SYS schema下。\", \"普通用户需要授权才能访问这些系统视图。\"], \"question\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\n如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。如何查看特定表的统计信息历史记录?\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。如何查看表的平均行长和行数?\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。如何查看特定触发器的触发事件类型?\", \"ADM_TYPES视图描述数据库中的所有对象类型。如何查看特定对象类型的属性数?\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。如何查看特定对象类型的字段名和数据类型?\", \"ADM_USERS视图存储关于数据库所有用户名信息。如何查看特定用户的账户状态和到期日期?\", \"ADM_VIEWS视图存储关于数据库内的视图信息。如何查看特定视图的创建语句和文本长度?\"], \"answer\": [\"要查看特定用户被授予的权限，可以通过查询ADM_TAB_PRIVS视图来实现。\n"
+        ]
+    },
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "gauss",
+        "language": "zh",
+        "input": "查询GS_WLM_USER_RESOURCE_HISTORY系统表需要什么权限？",
+        "actual_output": "根据Opengauss和GaussDB文档，查询GS_WLM_USER_RESOURCE_HISTORY系统表需要sysadmin权限。",
+        "expected_output": "查询GS_WLM_USER_RESOURCE_HISTORY系统表需要sysadmin权限，并且仅在数据库postgres下面查询时有数据。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "GS_WLM_USER_RESOURCE_HISTORY\nGS_WLM_USER_RESOURCE_HISTORY系统表存储与用户使用资源相关的信息。该系统表的每条记录都是对应时间点某用户的资源使用情况，包括：内存、CPU核数、存储空间、临时空间、算子落盘空间、逻辑IO流量、逻辑IO次数和逻辑IO速率信息。其中，内存、CPU、IO相关监控项仅记录用户复杂作业的资源使用情况。对于IO相关监控项，当参数enable_logical_io_statistics为on时才有效；当参数enable_user_metric_persistent为on时，才会开启用户监控数据保存功能。GS_WLM_USER_RESOURCE_HISTORY系统表的数据来源于PG_TOTAL_USER_RESOURCE_INFO视图。查询该系统表需要sysadmin权限，且仅在数据库postgres下面查询时有数据。\n表 1  GS_WLM_USER_RESOURCE_HISTORY\n名称 \n \n 类型 \n \n 描述 \n \n username\n表 1  GS_WLM_USER_RESOURCE_HISTORY\n名称 \n \n 类型 \n \n 描述 \n \n username \n \n text \n \n 用户名 \n \n timestamp \n \n timestamp with time zone \n \n 时间戳 \n \n used_memory \n \n integer \n \n 正在使用的内存大小，单位MB。 \n \n total_memory \n \n integer \n \n 可以使用的内存大小，单位为MB。值为0表示未限制最大可用内存，其限制取决于数据库最大可用内存。 \n \n used_cpu \n \n real \n \n 正在使用的CPU核数。 \n \n total_cpu \n \n integer \n \n 该机器节点上，用户关联控制组的CPU核数总和。 \n \n used_space\n如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。如何查看特定表的统计信息历史记录?\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。如何查看表的平均行长和行数?\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。如何查看特定触发器的触发事件类型?\", \"ADM_TYPES视图描述数据库中的所有对象类型。如何查看特定对象类型的属性数?\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。如何查看特定对象类型的字段名和数据类型?\", \"ADM_USERS视图存储关于数据库所有用户名信息。如何查看特定用户的账户状态和到期日期?\", \"ADM_VIEWS视图存储关于数据库内的视图信息。如何查看特定视图的创建语句和文本长度?\"], \"answer\": [\"要查看特定用户被授予的权限，可以通过查询ADM_TAB_PRIVS视图来实现。\n"
+        ]
+    }
+]

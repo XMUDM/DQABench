@@ -1,0 +1,32 @@
+[
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, how to specify the valid start time and valid end time of a user when creating the user?",
+        "actual_output": "When creating a user in openGauss, you can specify the valid start time and valid end time for the user using the following syntax:\n\n```sql\nCREATE USER username PASSWORD 'password' VALID BEGIN 'start_time' VALID UNTIL 'end_time';\n```\n\nReplace 'username' with the desired username, 'password' with the user's password, 'start_time' with the valid start time in the format 'YYYY-MM-DD HH:MM:SS', and 'end_time' with the valid end time in the same format.\n\nFor example, to create a user with the username 'testuser' and set the valid start time to '2022-01-01 00:00:00' and the valid end time to '2023-01-01 00:00:00', you would use the following command:\n\n```sql\nCREATE USER testuser PASSWORD 'password' VALID BEGIN '2022-01-01 00:00:00' VALID UNTIL '2023-01-01 00:00:00';\n```\n\nThis will create a user with the specified valid start and end times in openGauss.",
+        "expected_output": "When creating a user, you can use the following command to specify the valid start time and valid end time of the user:\n\n```\nCREATE USER joe WITH PASSWORD 'XXXXXXXXX' VALID BEGIN '2015-10-10 08:00:00' VALID UNTIL '2016-10-10 08:00:00';\n```\n\nThis command will create a user named joe and specify that the user's valid start time is '2015-10-10 08:00:00' and the valid end time is '2016-10-10 08:00:00'.\n\nIf you need to reset the validity period of the user, you can use the following command:\n\n```\nALTER USER joe WITH VALID BEGIN '2016-11-10 08:00:00' VALID UNTIL '2017-11-10 08:00:00';\n```\n\nThis command will reset the valid start time of user joe to '2016-11-10 08:00:00' and the valid end time to '2017-11-10 08:00:00'.\n\nIf VALID BEGIN is not specified, it means there is no restriction on the user's start operation time; if VALID UNTIL is not specified, it means there is no restriction on the user's end operation time; if neither is specified, it means the user is always valid.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "创建用户并制定用户的有效开始时间和有效结束时间。\nCREATE USER joe WITH PASSWORD 'XXXXXXXXX' VALID BEGIN '2015-10-10 08:00:00' VALID UNTIL '2016-10-10 08:00:00';\n显示如下信息表示创建用户成功。\nCREATE ROLE\n用户已不在有效使用期内，需要重新设定帐号的有效期，这包括有效开始时间和有效结束时间。\nALTER USER joe WITH VALID BEGIN '2016-11-10 08:00:00' VALID UNTIL '2017-11-10 08:00:00';\n显示如下信息表示重新设定成功。\nALTER ROLE\n说明：\n说明：\n若在“CREATE ROLE”或“ALTER ROLE”语法中不指定“VALID BEGIN”，表示不对用户的开始操作时间做限定；若不指定“VALID UNTIL”，表示不对用户的结束操作时间做限定；若两者均不指定，表示该用户一直有效。\n\", \"根据文档中提供的信息，要查看特定用户的账户状态和到期日期，可以使用ADM_USERS视图。该视图存储了数据库所有用户名信息，包括用户名称、账户状态、到期日期等字段。\\n\\n具体查询语句如下：\\n```sql\\nSELECT account_status, expiry_date\\nFROM ADM_USERS\\nWHERE username = '特定用户的用户名';\\n```\\n\\n在上述查询语句中，将\\\"特定用户的用户名\\\"替换为你要查询的具体用户的用户名，即可查看该用户的账户状态和到期日期信息。\", \"要查看特定视图的创建语句和文本长度，可以使用ADM_VIEWS系统视图。具体步骤如下：\\n\\n1. 查询特定视图的创建语句：\\n```sql\\nSELECT TEXT_VC\\nFROM ADM_VIEWS\\nWHERE view_name = 'your_view_name';\\n```\\n将'your_view_name'替换为你要查询的视图名称。\n"
+        ]
+    },
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, what data does gs_dumpall support exporting?",
+        "actual_output": "gs_dumpall in openGauss supports exporting the entire database cluster, including all databases, roles, tablespaces, and other objects such as schemas, tables, indexes, functions, and data. It can be used to create a complete backup of the database cluster that can be restored using the gs_restore utility.",
+        "expected_output": "According to the documentation, gs_dumpall supports exporting the following data:\n\n1. Global objects common to all databases, including database users and groups, tablespaces, and attribute information.\n2. Export SQL script files for each database by calling gs_dump, including the data and schema definitions of the databases.\n\nTherefore, gs_dumpall supports exporting global objects of databases and data and schema definitions of each database.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "gs_dumpall\n背景信息\ngs_dumpall是openGauss用于导出所有数据库相关信息工具，它可以导出openGauss数据库的所有数据，包括默认数据库postgres的数据、自定义数据库的数据以及openGauss所有数据库公共的全局对象。\ngs_dumpall工具由操作系统用户omm执行。\ngs_dumpall工具在进行数据导出时，其他用户可以访问openGauss数据库（读或写）。\ngs_dumpall工具支持导出完整一致的数据。例如，T1时刻启动gs_dumpall导出openGauss数据库，那么导出数据结果将会是T1时刻该openGauss数据库的数据状态，T1时刻之后对openGauss的修改不会被导出。\ngs_dumpall时生成列不会被转储。\ngs_dumpall在导出openGauss所有数据库时分为两部分：\ngs_dumpall自身对所有数据库公共的全局对象进行导出，包括有关数据库用户和组、表空间以及属性（例如，适用于数据库整体的访问权限）信息。\ngs_dumpall自身对所有数据库公共的全局对象进行导出，包括有关数据库用户和组、表空间以及属性（例如，适用于数据库整体的访问权限）信息。\ngs_dumpall通过调用gs_dump来完成openGauss中各数据库的SQL脚本文件导出，该脚本文件包含将数据库恢复为其保存时的状态所需要的全部SQL语句。\n以上两部分导出的结果为纯文本格式的SQL脚本文件，使用gsql运行该脚本文件可以恢复openGauss数据库。\n注意事项\n禁止修改导出的文件和内容，否则可能无法恢复成功。\n为了保证数据一致性和完整性，gs_dumpall会对需要转储的表设置共享锁。如果某张表在别的事务中设置了共享锁，gs_dumpall会等待此表的锁释放后锁定此表。如果无法在指定时间内锁定某张表，转储会失败。用户可以通过指定--lock-wait-timeout选项，自定义等待锁超时时间。\n相关命令\ngs_dump，gs_restore\n"
+        ]
+    }
+]

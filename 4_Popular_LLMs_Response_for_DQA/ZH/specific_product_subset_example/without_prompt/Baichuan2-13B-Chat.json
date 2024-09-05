@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "gauss",
+        "language": "zh",
+        "input": "track_sql_count参数控制对每个会话中当前正在执行的SQL语句进行计数的统计数据，受到哪些参数的约束？",
+        "actual_output": "track_sql_count参数受以下MySQL系统的参数约束：\n\n1. performance_schema - 此参数在performance_schema模式下启用或禁用跟踪。默认情况下，performance_schema是禁用的（即track_sql_count=0）。要启用performance_schema模式并使track_sql_count生效，请设置performance_schema_account_for_deadlock_detection = 1和performance_schema = 1。\n\n2. max_statement_time - 此参数限制每个会话中可以执行的最长SQL语句时间（以秒为单位）。如果超过此限制，MySQL将终止会话并返回一个错误。这个参数会影响track_sql_count的准确性，因为它限制了可以执行的SQL语句的数量和时间。\n\n3. max_connections - 此参数限制MySQL服务器可以同时处理的连接数。如果达到此限制，MySQL将拒绝新的连接请求，这可能会影响track_sql_count的准确性，因为某些连接可能无法执行任何SQL语句。\n\n4. max_user_connections - 此参数限制每个MySQL用户可以同时建立的连接数。如果达到此限制，MySQL将拒绝该用户的新连接请求。这个参数也会影响track_sql_count的准确性，因为某些用户可能无法执行任何SQL语句。\n\n5. lock_wait_timeout - 此参数定义了MySQL服务器在等待锁时允许的最大时间（以秒为单位）。如果超过此限制，MySQL将放弃锁并返回一个错误。这个参数可能影响track_sql_count的准确性，因为它限制了可以执行SQL语句的时间。\n\n6. idle_instances_search_interval - 此参数定义了MySQL服务器在检查休眠连接之间的最小时间间隔（以秒为单位）。这个参数可能影响track_sql_count的准确性，因为它限制了可以在一个给定时间内检查的连接数量。",
+        "expected_output": "track_sql_count参数控制对每个会话中当前正在执行的SELECT、INSERT、UPDATE、DELETE、MERGE INTO语句进行计数的统计数据。该参数受到track_activities参数的约束。具体来说，当track_activities开启而track_sql_count关闭时，如果查询了gs_sql_count视图，日志中将会有WARNING提示track_sql_count是关闭的；当track_activities和track_sql_count同时关闭时，日志中将会有两条WARNING，分别提示track_activities是关闭的和track_sql_count是关闭的；当track_activities关闭而track_sql_count开启时，日志中将仅有WARNING提示track_activities是关闭。\n\n因此，track_sql_count参数受到track_activities参数的约束，需要确保track_activities参数开启才能正确统计每个会话中当前正在执行的SQL语句。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "取值范围：布尔型\non表示开启计数功能。\noff表示关闭计数功能。\n默认值：on\n说明：\ntrack_sql_count参数受track_activities约束：\ntrack_activities开启而track_sql_count关闭时，如果查询了gs_sql_count视图，日志中将会有WARNING提示track_sql_count是关闭的；\ntrack_activities和track_sql_count同时关闭，那么此时日志中将会有两条WARNING，分别提示track_activities是关闭的和track_sql_count是关闭的；\ntrack_activities关闭而track_sql_count开启，此时日志中将仅有WARNING提示track_activities是关闭。\n当参数关闭时，查询视图的结果为0行。\n该参数属于USERSET类型参数，请参考表1中对应设置方法进行设置。\n取值范围：布尔型\non表示允许收集相关操作对表数据改动的时间。\noff表示禁止收集相关操作对表数据改动的时间。\n默认值：on\ntrack_sql_count\n参数说明：控制对每个会话中当前正在执行的SELECT、INSERT、UPDATE、DELETE、MERGE INTO语句进行计数的统计数据。\n在x86平台集中式部署下，硬件配置规格为32核CPU/256GB内存，使用Benchmark SQL 5.0工具测试性能，开关此参数性能影响约0.8%。\n该参数属于SUSET类型参数，请参考表1中对应设置方法进行设置。\n取值范围：布尔型\non表示开启计数功能。\noff表示关闭计数功能。\n默认值：on\n说明：\ntrack_sql_count参数受track_activities约束：\n查询和索引统计收集器\n查询和索引统计收集器负责收集数据库系统运行中的统计数据，如在一个表和索引上进行了多少次插入与更新操作、磁盘块的数量和元组的数量、每个表上最近一次执行清理和分析操作的时间等。可以通过查询系统视图pg_stats和pg_statistic查看统计数据。下面的参数设置服务器范围内的统计收集特性。\ntrack_activities\n参数说明：控制收集每个会话中当前正在执行命令的统计数据。\n该参数属于SUSET类型参数，请参考表1中对应设置方法进行设置。\n取值范围：布尔型\non表示开启收集功能。\noff表示关闭收集功能。\n默认值：on\ntrack_counts\n参数说明：控制收集数据库活动的统计数据。\n该参数属于SUSET类型参数，请参考表1中对应设置方法进行设置。\n取值范围：布尔型\non表示开启收集功能。\noff表示关闭收集功能。\n默认值：on\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "gauss",
+        "language": "zh",
+        "input": "openGauss的闪回和回收站功能是如何帮助用户恢复历史数据的？",
+        "actual_output": "OpenGauss 的闪回和回收站功能通过提供对历史数据的可视化和恢复能力，帮助用户更好地管理和保护数据库。\n\n1. 闪回（Flashback）：闪回功能允许用户在数据库中查看和恢复特定时间点的数据状态。这可以帮助用户在数据出现问题时回到之前的正确状态，从而减少数据丢失的风险。闪回功能通常包括以下子功能：\n   - 时间点复制（Point-in-Time Recovery, PITR）：在 OpenGauss 中，您可以使用时间点复制功能将数据库恢复到特定的时间点。这可以帮助您在数据损坏或发生其他问题时恢复数据。\n   - 读一致性闪回（Read-Consistent Flashback）：此功能允许您查看数据库在特定时间点的读一致性快照。这可以帮助您分析数据在特定时间点的状态，以便找到潜在的问题并进行修复。\n\n2. 回收站（Recycle Bin）：回收站功能类似于操作系统中的回收站，允许用户在删除数据之前将其保存在一个指定的位置。这样，如果您不小心删除了重要的数据或者想要恢复已删除的数据，您可以从回收站中将其恢复。回收站功能有助于防止因误操作导致的数据丢失。\n\n这些功能使得 OpenGauss 成为一个更加灵活、可靠的数据库管理系统，使用户能够更好地管理历史数据，并在需要时轻松恢复数据。",
+        "expected_output": "openGauss的闪回和回收站功能通过支持TIMECAPSULE和RECYCLEBIN，帮助用户恢复历史数据。具体来说，用户可以通过指定时间戳进行闪回查询，或者指定时间戳对表进行闪回，从而获取到错误DELETE、UPDATE前的历史数据。此外，用户还可以从RECYCLEBIN中恢复被TRUNCATE或DROP的表对象，将表数据恢复到错误操作前的状态，从而大大提高了用户数据的可靠性。这种功能使用户能够在数据操作出现错误时，快速、准确地恢复到之前的状态，避免数据丢失或不可逆的影响。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "高安全性\n支持访问控制、加密认证、数据库审计、动态数据脱敏等安全特性，提供全方位端到端的数据安全保护。\n高可靠\n闪回和回收站\n通常在表数据被错误的UPDATE、DELETE、TRUNCATE和DROP时数据难以恢复，即便恢复也仅能通过PITR（Point-in-time  recovery，基于时间点恢复）的方式恢复到错误操作前的时刻。这种修复方式会导致整个数据库不可用，并且一些用户不希望“撤销”的表操作也同样会被“撤销”。openGauss对TIMECAPSULE以及RECYCLEBIN的支持，使用户可以通过指定时间戳进行闪回查询，或者指定时间戳对表进行闪回，获取到错误DELETE、UPDATE前的历史数据。通过从RECYCLEBIN中闪回TRUNCATE、以及DROP的表对象，用户可以将表数据恢复到错误操作前，大大提高了用户数据的可靠性。\n产品特点\nopenGauss具有高性能、高可用、高安全性和可维护性好的特点。\n高性能\n通过列存储、向量化执行引擎、融合引擎等关键技术，实现百亿数据量查询秒级响应。\n高可用\n同城跨AZ（Available Zone）容灾，数据不丢失，分钟级恢复。\n高安全性\n支持访问控制、加密认证、数据库审计、动态数据脱敏等安全特性，提供全方位端到端的数据安全保护。\n高可靠\n闪回和回收站\n列存表适合数据批量插入、更新较少和以查询为主统计分析类的场景。\", \"根据文档内容，选择行存表和列存表的具体情况如下：\\n\\n1. 行存表（Row Store Table）：\\n   - 数据按行存储到硬盘分区上，即一行数据是连续存储。\\n   - 适用于对数据需要经常更新的场景，如有频繁的INSERT、UPDATE操作。\\n   - 默认情况下，创建的表为行存储。\\n\\n2. 列存表（Column Store Table）：\\n   - 数据按列存储到硬盘分区上，即一列所有数据是连续存储的。\\n   - 适用于数据批量插入、更新较少和以查询为主统计分析类的场景。\\n   - 不适合点查询，但适合统计分析类查询和即席查询。\\n\\n选择行存表还是列存表的考虑因素包括：\\n- 更新频繁程度：频繁更新选择行存表。\\n- 插入频繁程度：少量频繁插入选择行存表，大批量插入选择列存表。\n"
+        ]
+    }
+]

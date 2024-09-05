@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "tool",
+        "language": "en",
+        "input": "I want to understand the definitions of all views in the database for maintenance and optimization purposes. How should I proceed?",
+        "actual_output": " Thought: I need to query the definitions of all views in the database to understand their structure for maintenance and optimization. First, I will use the database_state_info tool and specify the keyword as view to obtain the status information of all views.\n\nAction: database_state_info\n\nAction_Input: view\n\nObservation:",
+        "expected_output": "Thought: I need to query the definitions of all views in the database for maintenance and optimization. First, I need to use the database_state_info tool to obtain the status information of the views.\nAction: database_state_info\nAction_Input: view\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: must be one or multi-states info, and must choose from the following options: knob, index, view.\nFormat requirement: format is as follows #type.\n\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "tool",
+        "language": "en",
+        "input": "I want to understand the definitions of all views in the database for maintenance and optimization purposes. How should I proceed?",
+        "actual_output": " Thought: I need to query the definitions of all views in the database to understand their structure for maintenance and optimization. First, I will use the database_state_info tool and specify the keyword as view to obtain the status information of all views.\n\nAction: database_state_info\n\nAction_Input: view\n\nObservation: \n        {\n            'views': ['view1: SELECT * FROM table1', 'view2: SELECT column1, column2 FROM table2']\n        }\n Thought: Based on the results output by the tool, I now understand the definitions of all views in the database, which are view1: SELECT * FROM table1 and view2: SELECT column1, column2 FROM table2. These views can help me better understand the data structure in the database for maintenance and optimization.\n\nFinal_Answer: The definitions of all views in the database are as follows: view1: SELECT * FROM table1, view2: SELECT column1, column2 FROM table2. This information will help you with your maintenance and optimization tasks.",
+        "expected_output": "Thought: I need to query the definitions of all views in the database for maintenance and optimization. First, I need to use the database_state_info tool to obtain the status information of the views.\nAction: database_state_info\nAction_Input: view\nObservation: \n        {\n            'views': ['view1: SELECT * FROM table1', 'view2: SELECT column1, column2 FROM table2']\n        }\nThought: With the view definitions information output by the tool, I can see the definitions of all views, enabling me to perform maintenance and optimization tasks.\nFinal_Answer: The definitions of all views in the database are as follows: view1: SELECT * FROM table1, view2: SELECT column1, column2 FROM table2. This information will help you in your database maintenance and optimization work.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: must be one or multi-states info, and must choose from the following options: knob, index, view.\nFormat requirement: format is as follows #type.\n\n"
+        ]
+    }
+]

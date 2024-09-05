@@ -1,0 +1,32 @@
+[
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "en",
+        "input": "What is the pg_delete_audit function? What is its purpose?",
+        "actual_output": "The pg_delete_audit function is used to delete audit logs within a specified time period. Its purpose is to manage and maintain audit logs by removing entries that are no longer needed or relevant.",
+        "expected_output": "According to the documentation, the pg_delete_audit function is used to delete audit logs for a specified time period. Its purpose is to clean up the audit logs in the database, allowing for the deletion of audit records within a specific time range as needed to maintain the audit log data of the database. Specific usage and examples of the function can be found in the \"Maintaining Audit Logs\" section of the documentation.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "pg_delete_audit\n描述：删除指定时间段的审计日志。  \n返回值类型：void  \n函数使用方法及示例请参考维护审计日志。\n列存表适合数据批量插入、更新较少和以查询为主统计分析类的场景。\", \"根据文档内容，选择行存表和列存表的具体情况如下：\\n\\n1. 行存表（Row Store Table）：\\n   - 数据按行存储到硬盘分区上，即一行数据是连续存储。\\n   - 适用于对数据需要经常更新的场景，如有频繁的INSERT、UPDATE操作。\\n   - 默认情况下，创建的表为行存储。\\n\\n2. 列存表（Column Store Table）：\\n   - 数据按列存储到硬盘分区上，即一列所有数据是连续存储的。\\n   - 适用于数据批量插入、更新较少和以查询为主统计分析类的场景。\\n   - 不适合点查询，但适合统计分析类查询和即席查询。\\n\\n选择行存表还是列存表的考虑因素包括：\\n- 更新频繁程度：频繁更新选择行存表。\\n- 插入频繁程度：少量频繁插入选择行存表，大批量插入选择列存表。\n\\n\\n2. 确保执行删除表空间的用户是表空间的owner或者系统管理员，否则删除操作会失败。\\n\\n3. 在执行删除表空间之前，确保没有其他用户正在连接到该表空间，否则删除操作也会失败。\\n\\n根据文档中的操作步骤，可以使用以上命令来删除一个表空间。\", \"根据文档内容，要创建一个新的表，可以按照以下步骤进行操作：\\n\\n1. 使用如下命令创建一个新的表：\\n```sql\\nCREATE TABLE customer_t1\\n(\\n   c_customer_sk             integer,\\n   c_customer_id             char(5),\\n   c_first_name              char(6),\\n   c_last_name               char(8)\\n);\\n```\\n\\n2. 当结果显示为`CREATE TABLE`时，则表示创建成功。\n"
+        ]
+    },
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "en",
+        "input": "How does the MOT storage engine of openGauss ensure data durability?",
+        "actual_output": "Answer: The MOT storage engine of openGauss ensures data durability by fully integrating openGauss's WAL-based logging mechanism. It supports both synchronous and asynchronous logging options, as well as synchronous + NUMA-optimized group commit. This means that even in the event of a crash or failure, the effects of successfully completed (committed) transactions are persistently saved.",
+        "expected_output": "The MOT storage engine of openGauss ensures data durability through the following ways:\n\n1. **WAL-based logging**: MOT fully integrates openGauss's Write-Ahead Logging (WAL) mechanism. This means that for successfully completed (committed) transactions, their effects are recorded in WAL. Even in the event of a system crash or failure, the database can recover data by replaying WAL to ensure data durability.\n\n2. **Synchronous and asynchronous logging options**: MOT supports synchronous and asynchronous logging options. In synchronous mode, transactions wait for log writes to complete upon submission, ensuring data is persisted to disk. In asynchronous mode, transactions do not wait for log writes to complete, improving performance but with a risk of potential data loss.\n\n3. **Synchronous + NUMA-optimized group commit**: MOT also supports synchronous + NUMA-optimized group commit. This mechanism optimizes transaction submission performance while ensuring data durability. Through group commit, the number of log writes is reduced, enhancing performance while maintaining data consistency and durability.\n\nIn summary, the MOT storage engine of openGauss ensures data durability through mechanisms such as WAL-based logging, synchronous and asynchronous logging options, and synchronous + NUMA-optimized group commit. This ensures that committed transaction data will not be lost even in the event of system crashes or failures.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "一致性（Consistency）：事务结束后，数据库处于一致状态，保留数据完整性。\n隔离性（Isolation）：事务之间不能相互干扰。MOT支持不同的重复读和读提交隔离级别。在下一个版本中，MOT还将支持可序列化隔离。更多信息，请参见MOT隔离级别。\n持久性（Durability）：即使发生崩溃和失败，成功完成（提交）的事务效果持久保存。MOT完全集成了openGauss的基于WAL的日志记录。同时支持同步和异步日志记录选项。MOT还支持同步+面向NUMA优化的组提交。更多信息，请参见MOT持久性概念。\nMOT简介\nopenGauss引入了MOT存储引擎，它是一种事务性行存储，针对多核和大内存服务器进行了优化。MOT是openGauss数据库最先进的生产级特性（Beta版本），它为事务性工作负载提供更高的性能。MOT完全支持ACID特性，并包括严格的持久性和高可用性支持。企业可以在关键任务、性能敏感的在线事务处理（OLTP）中使用MOT，以实现高性能、高吞吐、可预测低延迟以及多核服务器的高利用率。MOT尤其适合在多路和多核处理器的现代服务器上运行，例如基于Arm/鲲鹏处理器的华为TaiShan服务器，以及基于x86的戴尔或类似服务器。\n图 1  openGauss内存优化存储引擎\n如图1所示，openGauss数据库内存优化存储引擎组件（绿色部分）负责管理MOT和事务。\nMOT与基于磁盘的普通表并排创建。MOT的有效设计实现了几乎完全的SQL覆盖，并且支持完整的数据库功能集，如存储过程和自定义函数（限制参见MOT SQL覆盖和限制）。\n列存表适合数据批量插入、更新较少和以查询为主统计分析类的场景。"
+        ]
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "gpt-4-0125-preview",
+        "field": "gauss",
+        "language": "zh",
+        "input": "如何查看当前数据库的服务端编码字符集？",
+        "actual_output": "要查看当前数据库的服务端编码字符集，您可以通过查询`server_encoding`参数来实现。这个参数报告了当前数据库的服务端编码字符集。由于它是一个INTERNAL类型的参数，用户无法修改，只能查看。默认情况下，`gs_initdb`会根据当前的系统环境初始化此参数。如果您想查看当前的服务端编码字符集，可以通过数据库查询命令来获取这个信息。例如，在SQL命令行中，您可以使用以下查询：\n\n```sql\nSHOW server_encoding;\n```\n\n这将返回当前数据库服务端使用的编码字符集。",
+        "expected_output": "根据文档内容，要查看当前数据库的服务端编码字符集，可以查看参数`server_encoding`。该参数属于INTERNAL类型参数，用户无法修改，只能查看。默认情况下，`server_encoding`的取值由当前系统环境决定，在创建数据库时初始化。\n\n因此，要查看当前数据库的服务端编码字符集，可以通过以下SQL查询语句获取：\n\n```sql\nSHOW server_encoding;\n```\n\n执行以上SQL查询语句，即可查看当前数据库的服务端编码字符集。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "取值范围：字符串\nserver_version\n参数说明：报告服务器版本号（字符串形式）。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。该参数继承自PostgreSQL内核，表示当前数据库内核兼容PostgreSQL对应的server_version版本，无实际含义，为保持北向对外工具接口的生态兼容性（工具连接时查询），保留该参数。该参数不推荐使用，如想查询服务器版本号，可通过函数opengauss_version()获取。\n取值范围：字符串\n默认值：9.2.4\nserver_version_num\n参数说明：报告服务器版本号（整数形式）。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。该参数继承自PostgreSQL内核，表示当前数据库内核兼容PostgreSQL对应的server_version_num版本，无实际含义，为保持北向对外工具接口的生态兼容性（工具连接时查询），保留该参数。\n取值范围：整数\n参数说明：报告当前系统允许的标识符最大长度。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。\n取值范围：整型\n默认值：63\nserver_encoding\n参数说明：报告当前数据库的服务端编码字符集。\n默认情况下，gs_initdb会根据当前的系统环境初始化此参数，通过locale命令可以查看当前的配置环境。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。\n默认值：在创建数据库的时候由当前系统环境决定的。\nenable_upgrade_merge_lock_mode\n参数说明：当该参数设置为on时，通过提升deltamerge内部实现的锁级别，避免和update/delete并发操作时的报错。\n该参数属于USERSET类型参数，请参考表1中对应设置方法进行设置。\n取值范围：  布尔型\n取值范围：整数\n默认值：90204\nblock_size\n参数说明：报告当前数据库所使用的块大小。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。\n取值范围：8192\n默认值：8192\nsegment_size\n参数说明：报告当前数据库所使用的段文件大小。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。\n单位: 8KB\n默认值：131072，即1GB\nmax_index_keys\n参数说明：报告当前数据库能够支持的索引键值的最大数目。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。\n默认值：32\ninteger_datetimes\n参数说明：报告是否支持64位整数形式的日期和时间格式。\n该参数属于INTERNAL类型参数，为固定参数，用户无法修改此参数，只能查看。\n取值范围：布尔型\n"
+        ]
+    },
+    {
+        "model": "gpt-4-0125-preview",
+        "field": "gauss",
+        "language": "zh",
+        "input": "CALL命令的语法格式是什么？",
+        "actual_output": "CALL命令的语法格式是：\n\n```\nCALL [schema.|package.] {func_name| procedure_name} ( param_expr );\n```\n\n其中：\n\n- `schema` 是函数或存储过程所在的模式名称。\n- `package` 是函数或存储过程所在的package名称。\n- `func_name` 或 `procedure_name` 是所调用函数或存储过程的名称。\n- `param_expr` 是参数列表，可以使用符号“:=”或者“=>”将参数名和参数值隔开，允许参数以任意顺序排列。如果参数列表中仅出现参数值，则它们的排列顺序必须与函数或存储过程定义时的相同。\n\n注意，参数可以包含入参（使用“IN”关键字）和出参（使用“OUT”关键字）。在调用非重载的函数时，参数列表必须包含出参，出参可以是变量或常量。对于重载的package函数，可以忽略出参，但这可能导致函数找不到。",
+        "expected_output": "CALL命令的语法格式如下：\n\n```\nCALL [schema.|package.] {func_name| procedure_name} ( param_expr );\n```\n\n其中：\n\n- **schema**: 函数或存储过程所在的模式名称。\n- **package**: 函数或存储过程所在的package名称。\n- **func_name**: 所调用函数或存储过程的名称。\n- **param_expr**: 参数列表可以用符号“:=”或者“=>”将参数名和参数值隔开，参数可以以任意顺序排列。参数列表中必须包含出参，出参可以传入一个变量或者任一常量。\n\n根据文档内容，以上是CALL命令的语法格式。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "CALL\n功能描述\n使用CALL命令可以调用已定义的函数和存储过程。\n注意事项\n函数或存储过程的所有者、被授予了函数或存储过程EXECUTE权限的用户或被授予EXECUTE ANY FUNCTION权限的用户有权调用函数或存储过程，系统管理员默认拥有此权限。\n语法格式\nCALL [schema.|package.] {func_name| procedure_name} ( param_expr );\n参数说明\nschema\n函数或存储过程所在的模式名称。\npackage\n函数或存储过程所在的package名称。\nfunc_name\n所调用函数或存储过程的名称。\n取值范围：已存在的函数名称。\nparam_expr\n参数列表可以用符号“:=”或者“=>”将参数名和参数值隔开，这种方法的好处是参数可以以任意顺序排列。若参数列表中仅出现参数值，则参数值的排列顺序必须和函数或存储过程定义时的相同。\n取值范围：已存在的函数参数名称或存储过程参数名称。\n说明： \n参数可以包含入参（参数名和类型之间指定“IN”关键字）和出参（参数名和类型之间指定“OUT”关键字），使用CALL命令调用函数或存储过程时，对于非重载的函数，参数列表必须包含出参，出参可以传入一个变量或者任一常量，详见示例。对于重载的package函数，参数列表里可以忽略出参，忽略出参时可能会导致函数找不到。包含出参时，出参只能是常量。\n示例\n```\n--创建一个函数func_add_sql，计算两个整数的和，并返回结果。\nopenGauss=# CREATE FUNCTION func_add_sql(num1 integer, num2 integer) RETURN integer\nAS\nBEGIN\nRETURN num1 + num2;\nEND;\n/\n--按参数值传递。\nopenGauss=# CALL func_add_sql(1, 3);\n--按参数值传递。\nopenGauss=# CALL func_add_sql(1, 3);\n--使用命名标记法传参。\nopenGauss=# CALL func_add_sql(num1 => 1,num2 => 3);\nopenGauss=# CALL func_add_sql(num2 := 2, num1 := 3);\n--删除函数。\nopenGauss=# DROP FUNCTION func_add_sql;\n--创建带出参的函数。\nopenGauss=# CREATE FUNCTION func_increment_sql(num1 IN integer, num2 IN integer, res OUT integer)\nRETURN integer\nAS\nBEGIN\nres := num1 + num2;\nEND;\n/\n--出参传入常量。\nopenGauss=# CALL func_increment_sql(1,2,1);\n--删除函数。\nopenGauss=# DROP FUNCTION func_increment_sql;\n```\n"
+        ]
+    }
+]

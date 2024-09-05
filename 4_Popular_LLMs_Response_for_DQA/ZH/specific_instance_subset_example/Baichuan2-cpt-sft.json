@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "tool",
+        "language": "zh",
+        "input": "我需要制定一个备份计划，但首先要了解数据库的数据量和表的大小分布。我该如何获得这些信息？",
+        "actual_output": " Thought: 为了制定备份计划，首先需要了解数据库的数据量和表的大小分布，可以通过查询数据库的结构信息来获取这些信息。\n\nAction: database_structure_info\n\nAction_Input: table\n\nObservation:",
+        "expected_output": "Thought: 我需要了解数据库中表的大小分布，以便制定备份计划。首先，我可以使用database_structure_info工具来获取表的结构信息，特别是表的大小信息。\n\nAction: database_structure_info\n\nAction_Input: table\n\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_structure_info\nContent requirement: must be one or multi-states info, and must choose from the following options: table, column, relation.\nFormat requirement: format is as follows #type.\n\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "tool",
+        "language": "zh",
+        "input": "我需要制定一个备份计划，但首先要了解数据库的数据量和表的大小分布。我该如何获得这些信息？",
+        "actual_output": " Thought: 为了制定备份计划，首先需要了解数据库的数据量和表的大小分布，可以通过查询数据库的结构信息来获取这些信息。\n\nAction: database_structure_info\n\nAction_Input: table\n\nObservation: \n        {\n            'tables': [\n                {\n                    'table_name': 'customer',\n                    'table_size': '10GB'\n                },\n                {\n                    'table_name': 'order',\n                    'table_size': '20GB'\n                },\n                {\n                    'table_name': 'product',\n                    'table_size': '15GB'\n                }\n            ]\n        }\n\n Thought: 根据数据库结构信息，我可以看到customer表大小为10GB，order表大小为20GB，product表大小为15GB。这些信息可以帮助我制定备份计划。\n\nFinal_Answer: 根据数据库结构信息查询结果，customer表大小为10GB，order表大小为20GB，product表大小为15GB。这些信息可以帮助您制定备份计划。\n    ",
+        "expected_output": "Thought: 我需要了解数据库中表的大小分布，以便制定备份计划。首先，我可以使用database_structure_info工具来获取表的结构信息，特别是表的大小信息。\n\nAction: database_structure_info\n\nAction_Input: table\n\nObservation: \n        {\n            'tables': [\n                {\n                    'table_name': 'customer',\n                    'table_size': '10GB'\n                },\n                {\n                    'table_name': 'order',\n                    'table_size': '20GB'\n                },\n                {\n                    'table_name': 'product',\n                    'table_size': '15GB'\n                }\n            ]\n        }\n\nThought: 根据工具输出的信息，我可以看到数据库中的customer表大小为10GB，order表大小为20GB，product表大小为15GB。这些信息可以帮助我制定备份计划。\n\nFinal_Answer: 根据数据库结构信息查询结果，customer表大小为10GB，order表大小为20GB，product表大小为15GB。这些信息将有助于你制定数据库备份计划。\n    ",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_structure_info\nContent requirement: must be one or multi-states info, and must choose from the following options: table, column, relation.\nFormat requirement: format is as follows #type.\n\n"
+        ]
+    }
+]

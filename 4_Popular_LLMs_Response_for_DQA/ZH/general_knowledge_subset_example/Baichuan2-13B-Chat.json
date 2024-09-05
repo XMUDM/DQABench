@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "general",
+        "language": "zh",
+        "input": "我想创建一个数据库表，存储包含字母和数字的值，哪种数据类型更好？\n\n变量必须能够包含最多12个字母和数字字符，并且能够唯一标识行。为此，您建议使用哪种数据类型？",
+        "actual_output": "在创建数据库表时，要存储包含字母和数字的值，可以使用字符串（varchar）数据类型。这种数据类型可以容纳任意长度的字符串，包括字母和数字。为了满足您的需求，即最多包含12个字母和数字字符且能唯一标识行，可以将字符串长度设置为12。这样，您可以确保每个行都有一个独特的字符串值。",
+        "expected_output": "对于字母和数字值，显然您将需要使用varchar，并且要指定长度，请像下面这样使用\n\nYourField varchar(12)",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    },
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "general",
+        "language": "zh",
+        "input": "如何在数据库表中为多行添加递增数字\n\n我需要向表中添加行项目。以下是我目前拥有的示例（规模小得多）：\n\n```\nshiptoid,lineitem\n642218,0\n642218,0\n642218,0\n3041340,0\n3041077,0\n3041077,0\n```\n\n我需要的结果如下：\n\n```\nshiptoid,lineitem\n642218,1\n642218,2\n642218,3\n3041340,1\n3041077,1\n3041077,2\n```\n\n对于每个唯一的shiptoid，我需要一个从1开始的递增行项目编号。我过去做过类似的事情，但我现在怎么也想不出来。",
+        "actual_output": "首先，我们需要创建一个名为`lineitem`的表，其中包含两个字段：`shiptoid`和`lineitem`。然后，我们可以使用`SELECT`语句来查询每个唯一的`shiptoid`及其相应的递增`lineitem`编号。这是一个可能的解决方案：\n\n```sql\nCREATE TABLE lineitem (\n    shiptoid INT PRIMARY KEY,\n    lineitem INT NOT NULL\n);\n\n-- 插入初始数据\nINSERT INTO lineitem (shiptoid, lineitem)\nVALUES (642218, 0), (642218, 0), (642218, 0), (3041340, 0), (3041077, 0), (3041077, 0);\n\n-- 查询并更新每个唯一的shiptoid及其相应的递增lineitem编号\nUPDATE lineitem\nSET lineitem = lineitem + 1\nWHERE shiptoid IN (\n    SELECT shiptoid FROM (\n        SELECT DISTINCT shiptoid FROM lineitem\n    ) AS temp\n);\n\n-- 查看更新后的数据\nSELECT * FROM lineitem;\n```\n\n这个解决方案首先创建了一个名为`lineitem`的表，并插入了一些初始数据。然后，它使用`UPDATE`语句和`IN`子句来查询每个唯一的`shiptoid`，并将其相应的`lineitem`编号递增1。最后，它选择了更新后的数据以查看结果。",
+        "expected_output": "如果你正在使用SQL Server，以下代码可以实现：\n\n```\ndeclare @tbl table (shiptoid int)\n\ninsert into @tbl values (642218), (642218), (642218), (3041340), (3041077), (3041077)\n\nselect shiptoid, row_number() over (partition by shiptoid order by shiptoid) as lineitem from @tbl\n``` \n\n这是它的返回结果：\n\n```\nshiptoid    lineitem\n----------- --------------------\n642218      1\n642218      2\n642218      3\n3041077     1\n3041077     2\n3041340     1\n```\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    }
+]

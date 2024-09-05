@@ -1,0 +1,20 @@
+[
+    {
+        "question": "我应该为哪些表创建索引，以提高当前工作负载的性能？",
+        "answer": "Thought: 为了获得当前工作负载的索引推荐，我们可以调用index_recommendation工具，该工具可以根据当前的执行语句给出索引的建议。在调用index_recommendation工具之前，我们需要先调用workload_info工具获取当前执行的工作负载。\n\nAction: workload_info\n\nAction_Input: None\n\nObservation: \n    SELECT * FROM catalog_sales WHERE cs_ship_date_sk IS NULL;\n\n    SELECT ws_web_site_id, ws_web_site_desc FROM web_site WHERE ws_web_site_id = 1;\n\n    SELECT i_item_id, i_item_desc, i_current_price FROM item WHERE i_current_price > 100;\n\n    SELECT count(*) FROM store_sales;\n\nAction: index_recommendation\n\nAction_Input: \n    SELECT * FROM catalog_sales WHERE cs_ship_date_sk IS NULL;\n\n    SELECT ws_web_site_id, ws_web_site_desc FROM web_site WHERE ws_web_site_id = 1;\n\n    SELECT i_item_id, i_item_desc, i_current_price FROM item WHERE i_current_price > 100;\n\n    SELECT count(*) FROM store_sales;\n\nObservation: cs_ship_date_sk, ws_web_site_id, i_current_price, store_sales. Reward: 20%\n\nFinal_Answer: 根据当前的工作负载，你可以为cs_ship_date_sk, ws_web_site_id, i_current_price, store_sales列创建索引，这预计会带来20%的性能提升。",
+        "tool": "workload_info",
+        "field": "tool",
+        "format": [
+            {
+                "tool": "workload_info",
+                "Content requirement": "The input must be None",
+                "Format requirement": "The input must be None"
+            },
+            {
+                "tool": "index_recommendation",
+                "Content requirement": "The input must be multiple select statements to get an index recommendation for the current workload for the user or None",
+                "Format requirement": "format is as follows #select statements\n#select statements\n#select statements."
+            }
+        ]
+    }
+]

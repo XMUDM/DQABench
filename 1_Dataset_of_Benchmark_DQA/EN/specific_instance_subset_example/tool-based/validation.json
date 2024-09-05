@@ -1,0 +1,20 @@
+[
+    {
+        "question": "I want to know the number of records in the aka_name table.",
+        "answer": "Thought: First, I can use the database_structure_info tool to get information about the aka_name table.\n\nAction: database_structure_info\n\nAction_input: table\n\nObservation: [\"aka_name\"]\n\nThought: The tool informed me that the aka_name table exists. I can generate an SQL query to count the number of records in the aka_name table.\n\nAction: sql_executor\n\nAction_input: \"\nSELECT COUNT(*) FROM aka_name;\n\"\n\nObservation: {'answer':'[(10000000,)]'}\n\nThought: Now I know that there are 10,000,000 records in the aka_name table.\n\nFinal_Answer: The number of records in the aka_name table is 10,000,000.\n",
+        "tool": "sql_executor",
+        "field": "tool",
+        "format": [
+            {
+                "tool": "database_structure_info",
+                "Content requirement": "The input must be only one or more of the three keywords: table, column, key.",
+                "Format requirement": "format is as follows #type, #type."
+            },
+            {
+                "tool": "sql_executor",
+                "Content requirement": "The input must be only sql statements.You can only enter select type statements.",
+                "Format requirement": "format is as follows 'SELECT #columns FROM #table WHERE #condition GROUP BY #column ORDER BY #column #order LIMIT #number;'."
+            }
+        ]
+    }
+]

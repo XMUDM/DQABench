@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Llama-2-13b-chat",
+        "field": "gauss",
+        "language": "zh",
+        "input": "GLOBAL_STAT_ALL_INDEXES 中的 idx_scan 字段表示什么？",
+        "actual_output": "<s> GLOBAL_STAT_ALL_INDEXES 中的 idx_scan 字段表示什么？\n\n在 MySQL 中，GLOBAL_STAT_ALL_INDEXES 表示所有索引的统计信息，包括它们的使用情况和性能。idx_scan 是 GLOBAL_STAT_ALL_INDEXES 中的一个字段，表示索引的扫描次数。\n\nidx_scan 字段的值是一个整数，表示在上一个统计周期内，对于该索引进行了多少次扫描操作。这个值包括了所有类型的扫描操作，包括 Range 扫描、Point 扫描、Index 扫描等。\n\n例如，如果在上一个统计周期内，对于某个索引，进行了 10 次 Range 扫描和 5 次 Point 扫描，那么 idx_scan 字段的值将是 15。\n\n idx_scan 字段的值可以用来评估索引的使用情况，以及索引的性能。如果 idx_scan 值较高，则表示该索引在上一个统计周期内被使用的频率较高，并且可能需要进行优化。</s>",
+        "expected_output": "根据文档内容，GLOBAL_STAT_ALL_INDEXES 中的 idx_scan 字段表示索引上开始的索引扫描数。换句话说，它表示对该索引进行扫描的次数，即有多少次查询或操作使用了该索引进行扫描。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "GLOBAL_STAT_ALL_INDEXES\n将包含各节点数据库中的每个索引行，显示访问特定索引的统计。\n表 1  GLOBAL_STAT_ALL_INDEXES字段\n名称 \n \n 类型 \n \n 描述 \n \n node_name \n \n name \n \n 数据库进程名称。 \n \n relid \n \n oid \n \n 这个索引的表的OID。 \n \n indexrelid \n \n oid \n \n 索引的OID。 \n \n schemaname \n \n name \n \n 索引中模式名。 \n \n relname \n \n name \n \n 索引的表名。 \n \n indexrelname \n \n name \n \n 索引名。 \n \n idx_scan\n索引的表名。 \n \n indexrelname \n \n name \n \n 索引名。 \n \n idx_scan \n \n bigint \n \n 索引上开始的索引扫描数。 \n \n idx_tup_read \n \n bigint \n \n 通过索引上扫描返回的索引项数。 \n \n idx_tup_fetch\n\", \"要查看特定表的统计信息历史记录，可以使用ADM_TAB_STATS_HISTORY系统视图。该视图包含了数据库所有表的表统计信息历史记录，其中包括表的拥有者、表名、统计信息更新时间等字段。\\n\\n要查看特定表的统计信息历史记录，可以执行以下SQL查询语句：\\n\\n```sql\\nSELECT *\\nFROM ADM_TAB_STATS_HISTORY\\nWHERE table_name = 'your_table_name';\\n```\\n\\n在上面的查询语句中，将'your_table_name'替换为你要查看统计信息历史记录的具体表名。这样就可以获取特定表的统计信息历史记录，包括统计信息更新时间等信息。\\n\\n请注意，只有系统管理员权限才能访问ADM_TAB_STATS_HISTORY系统视图，普通用户需要获得相应的授权才能访问该视图。\", \"要查看表的平均行长和行数，可以使用ADM_TAB_STATISTICS系统视图。具体字段如下：\\n\\n- num_rows: 对象中的行数。\n"
+        ]
+    },
+    {
+        "model": "Llama-2-13b-chat",
+        "field": "gauss",
+        "language": "zh",
+        "input": "openGauss的Foreign Data Wrapper（FDW）实现了哪些功能？",
+        "actual_output": "<s> openGauss的Foreign Data Wrapper（FDW）实现了哪些功能？  \n openGauss的Foreign Data Wrapper（FDW）是一个用于访问外部数据存储系统的封装，它提供了以下几种功能：\n\n1. 数据访问：FDW可以访问外部数据存储系统中的数据，并将其映射到PostgreSQL中的表中。\n2. 数据类型转换：FDW可以将外部数据存储系统中的数据类型转换为PostgreSQL中的数据类型，以便进行数据交换。\n3. 数据验证：FDW可以对外部数据存储系统中的数据进行验证，以确保数据的正确性和完整性。\n4. 数据压缩：FDW可以对外部数据存储系统中的数据进行压缩，以提高数据的压缩率和传输速度。\n5. 数据加密：FDW可以对外部数据存储系统中的数据进行加密，以保护数据的安全性。\n6. 数据分区：FDW可以将外部数据存储系统中的数据分区，以便进行数据的分区管理和查找。\n7. 数据同步：FDW可以将外部数据存储系统中的数据同步到PostgreSQL中，以便保证数据的一致性。\n\n总之，openGauss的Foreign Data Wrapper（FDW）实现了访问外部数据存储系统中的数据，并提供了一些功能来帮助进行数据交换和管理。</s>",
+        "expected_output": "openGauss的Foreign Data Wrapper（FDW）实现了以下功能：\n\n1. 通过oracle_fdw可以实现与Oracle数据库之间的跨库操作。\n2. 通过mysql_fdw可以实现与MySQL（MariaDB）数据库之间的跨库操作。\n3. 通过postgres_fdw可以实现与openGauss数据库之间的跨库操作。\n4. 通过file_fdw可以实现与文件系统之间的跨库操作。\n5. 通过dblink可以实现与其他openGauss数据库之间的跨库操作。\n\n因此，openGauss的Foreign Data Wrapper（FDW）提供了跨不同数据库和文件系统之间进行数据操作的功能。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "Foreign Data Wrapper\nopenGauss的fdw实现的功能是各个openGauss数据库及远程服务器（包括数据库、文件系统）之间的跨库操作。目前支持的远程服务器类型包括Oracle、MySQL（MariaDB）、openGauss（postgres_fdw）、file_fdw 、dblink。\noracle_fdw\nmysql_fdw\npostgres_fdw\nfile_fdw\ndblink\n\\n\\n请确保在执行上述操作时具有足够的权限。如果需要更多关于数据库用户的信息，请参考文档中的相关章节。\", \"根据文档内容，要设置一个用户为系统管理员，可以按照以下步骤进行操作：\\n\\n1. 首先创建一个新用户，例如\\\"joe\\\"，并设置密码：\\n\\n```sql\\nCREATE USER joe WITH PASSWORD '********';\\n```\\n\\n2. 然后使用以下命令将用户\\\"joe\\\"设置为系统管理员：\\n\\n```sql\\nGRANT ALL PRIVILEGES TO joe;\\n```\\n\\n通过以上步骤，用户\\\"joe\\\"将被授予系统管理员权限。\", \"要通过拷贝模板数据库来创建新数据库，可以按照以下步骤进行操作：\\n\\n1. 首先，连接到GaussDB数据库系统，确保您具有创建数据库的权限或者是数据库的系统管理员权限。\n\", \"要通过拷贝模板数据库来创建新数据库，可以按照以下步骤进行操作：\\n\\n1. 首先，连接到GaussDB数据库系统，确保您具有创建数据库的权限或者是数据库的系统管理员权限。\\n\\n2. 使用以下命令创建一个新的数据库，例如命名为\\\"new_database_name\\\"：\\n```sql\\nCREATE DATABASE new_database_name;\\n```\\n\\n3. 当结果显示为\\\"CREATE DATABASE\\\"时，表示创建成功。\\n\\n默认情况下，创建数据库实际上是通过拷贝模板数据库来创建新数据库，而默认情况下会拷贝\\\"template0\\\"模板数据库。请避免直接连接或操作两个模板数据库（template0和template1）。\\n\\n通过以上步骤，您可以成功创建一个新的数据库，该数据库将会拷贝模板数据库的结构和内容作为初始状态。\n"
+        ]
+    }
+]

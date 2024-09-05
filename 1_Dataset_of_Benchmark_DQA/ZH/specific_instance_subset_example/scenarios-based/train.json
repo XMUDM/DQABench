@@ -1,0 +1,15 @@
+[
+    {
+        "question": "在执行某些查询时，发现数据库的响应时间比预期的要长。我怀疑是不是数据库的CPU使用率过高导致的。如何查看当前数据库的CPU使用情况？",
+        "answer": "Thought: 我需要查看当前数据库的CPU使用情况，以确认是否是CPU使用率过高导致响应时间延长。\n\nAction: database_performance_info\n\nAction_Input: cpu\n\nObservation: CPU utilization: 80%\n\nThought: 通过查询数据库性能信息工具，我得知当前数据库的CPU利用率为80%，确认了CPU使用率过高可能导致响应时间延长。\n\nFinal_Answer: 当前数据库的CPU利用率为80%，可能是导致响应时间延长的原因之一。建议进一步分析和优化数据库性能以提升响应速度。\n    ",
+        "tool": "database_performance_info: cpu",
+        "field": "tool",
+        "format": [
+            {
+                "tool": "database_performance_info",
+                "Content requirement": "must be one or multi-states info, and must choose from the following options: cpu, memory, disk.",
+                "Format requirement": "format is as follows #specific_value."
+            }
+        ]
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "tool",
+        "language": "zh",
+        "input": "我当前effective_cache_size参数设置的值是多少，是否需要调整？",
+        "actual_output": "Question: 我当前effective_cache_size参数设置的值是多少，是否需要调整？\n\nThought: 我需要使用database_state_info工具来获取当前数据库的状态信息，特别是effective_cache_size参数的值。\n\nAction: database_state_info\n\nAction_Input: effective_cache_size\n\nObservation:",
+        "expected_output": "Thought: 我需要先调用database_state_info工具得知当前effective_cache_size旋钮的值，之后再给予具体的调整建议。\n\nAction: database_state_info\n\nAction_Input: knob: effective_cache_size\n\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: The input must be only one or more of the three keywords: index, view, knob. When the keyword is knob or view, you can additionally enter the specific name of the knob or view\nFormat requirement: format is as follows #type: #specific_name.\n\n"
+        ]
+    },
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "tool",
+        "language": "zh",
+        "input": "我当前effective_cache_size参数设置的值是多少，是否需要调整？",
+        "actual_output": "Question: 我当前effective_cache_size参数设置的值是多少，是否需要调整？\n\nThought: 我需要使用database_state_info工具来获取当前数据库的状态信息，特别是effective_cache_size参数的值。\n\nAction: database_state_info\n\nAction_Input: effective_cache_size\n\nObservation: [\\\"knob\\\":[\\\"effective_cache_size\\\": \\\"4GB\\\"]]\n\nThought: 我需要使用database_state_info工具来获取当前数据库的状态信息，特别是effective_cache_size参数的值。\n\nAction: database_state_info\n\nAction_Input: effective_cache_size\n\n",
+        "expected_output": "Thought: 我需要先调用database_state_info工具得知当前effective_cache_size旋钮的值，之后再给予具体的调整建议。\n\nAction: database_state_info\n\nAction_Input: knob: effective_cache_size\n\nObservation: [\\\"knob\\\":[\\\"effective_cache_size\\\": \\\"4GB\\\"]]\n\nThought: effective_cache_size参数控制着数据库系统的缓存大小。根据查询结果，当前该值为4GB，已经设置得比较合理。\n\nFinal_Answer: 当前effective_cache_size参数设置的值为4GB，已经相对合理，不需要调整。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: The input must be only one or more of the three keywords: index, view, knob. When the keyword is knob or view, you can additionally enter the specific name of the knob or view\nFormat requirement: format is as follows #type: #specific_name.\n\n"
+        ]
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, how to use SHOW CREATE DATABASE to query the database creation statement?",
+        "actual_output": "You can use the following SQL statement to obtain the creation statement of the database:\nSHOW CREATE DATABASE your_database_name;",
+        "expected_output": "According to the documentation, the syntax format for using SHOW CREATE DATABASE to query the database creation statement is as follows:\n\n```\nSHOW CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name\n```\n\nWhere `db_name` is the name of the target database.\n\nThe example demonstrates how to query the creation statement of the database `test_get_database`, the example command is as follows:\n\n```\nSHOW CREATE DATABASE test_get_database;\n```\n\nAfter executing the above command, the creation statement of the database will be displayed, for example:\n\n```\nDatabase      |                  Create Database                   \n-------------------+----------------------------------------------------\n test_get_database | CREATE SCHEMA test_get_database AUTHORIZATION omm \n```\n\nTherefore, to query the database creation statement, you can use the above command format and replace `db_name` with the actual database name.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "语法格式\nSHOW CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name\n参数说明\ndb_name\n目标实例名。\n示例\n--查询数据库创建语句\nopenGauss=# show create database test_get_database;\n     Database      |                  Create Database                   \n-------------------+----------------------------------------------------\n test_get_database | CREATE SCHEMA test_get_database AUTHORIZATION omm \n(1 row)\nSHOW CREATE DATABASE\n功能描述\n显示CREATE DATABASE创建命名数据库的语句。\n如果该SHOW语句包含一个IF NOT EXISTS子句，则输出也包含这样的子句。SHOW CREATE SCHEMA是的同义词SHOW CREATE DATABASE。\n注意事项\n在b数据库中database和schema是等价的，所以在opengauss中进行语句拼装时都按create schema拼装。\n在opengauss中,创建schema支持with blockchain子句，所以在拼装时也会根据schema在系统表中的信息判断是否拼接该子句。\n语法格式\nSHOW CREATE {DATABASE | SCHEMA} [IF NOT EXISTS] db_name\n参数说明\ndb_name\n目标实例名。"
+        ]
+    },
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, how to use the SET command to modify runtime configuration parameters?",
+        "actual_output": "In OpenGauss, you can use the \"SET\" command to modify the runtime configuration parameter.The syntax of the SET command is as follows:\n\n```\nSET variable_name = value;\n```\n\n-   The name of the variable_name must be a valid configuration parameter name. For example, log_file_rotation_size, max_connections, etc.\n-   You can query the available configuration parameters through the \"show parameter\" command.\n-   Value is the new value of the configuration parameter.You need to specify the value when modifying the configuration parameter.\n-   After executing the SET command, you need to restart the database server for the modified configuration parameter to take effect.\n\nFor example, you want to modify the maximum connections allowed by the database server from 100 to 200.You can execute the following command:\n\n```\nSET max_connections = 200;\n```\n\nAfter executing this command, you need to restart the database server for the modification to take effect.",
+        "expected_output": "To use the SET command to modify runtime configuration parameters, you can follow the format below:\n\n```\nSET [ LOCAL | SESSION ]\n    { {config_parameter { { TO | = } { value | DEFAULT } | FROM CURRENT }}};\nSET [ SESSION | LOCAL ] TIME ZONE { timezone | LOCAL | DEFAULT };\nSET [ SESSION | LOCAL ] NAMES encoding_name;\nSET [ SESSION | LOCAL ]\n    {CURRENT_SCHEMA { TO | = } { schema | DEFAULT }\n    | SCHEMA 'schema'};\nSET [ SESSION | LOCAL ] XML OPTION { DOCUMENT | CONTENT };\n```\n\nSpecifically, you can modify runtime configuration parameters by following these steps:\n\n1. Use the SET command to specify whether to modify the configuration parameters in the current session or locally.\n2. Choose the configuration parameter to modify, such as config_parameter, as needed.\n3. Use the TO or = operator to assign a new value to the configuration parameter, or use DEFAULT to restore it to the default value.\n4. If necessary, you can obtain a new value from the current value using FROM CURRENT.\n5. Depending on the specific situation, you can set parameters like TIME ZONE, NAMES, CURRENT_SCHEMA, XML OPTION, etc.\n\nBy following the above steps, you can successfully use the SET command to modify runtime configuration parameters.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "SET\n用于修改运行时配置参数。\nSET [ LOCAL | SESSION ]\n    { {config_parameter { { TO | = } { value | DEFAULT } | FROM CURRENT }}};\nSET [ SESSION | LOCAL ] TIME ZONE { timezone | LOCAL | DEFAULT };\nSET [ SESSION | LOCAL ] NAMES encoding_name;\nSET [ SESSION | LOCAL ]\n    {CURRENT_SCHEMA { TO | = } { schema | DEFAULT }\n    | SCHEMA 'schema'};\nSET [ SESSION | LOCAL ] XML OPTION { DOCUMENT | CONTENT };\nSET CONSTRAINTS\n设置当前事务检查行为的约束条件。\nSET CONSTRAINTS { ALL | name [, ...] } { DEFERRED | IMMEDIATE };\nSET ROLE\n设置当前会话的当前用户标识符。\nSET [ SESSION | LOCAL ] ROLE role_name PASSWORD 'password';\nRESET ROLE;\nSET SESSION AUTHORIZATION\n设置当前会话的当前用户标识符。\nSET [ SESSION | LOCAL ] ROLE role_name PASSWORD 'password';\nRESET ROLE;\nSET SESSION AUTHORIZATION\n把当前会话里的会话用户标识和当前用户标识都设置为指定的用户。\nSET [ SESSION | LOCAL ] SESSION AUTHORIZATION role_name PASSWORD 'password';\n{SET [ SESSION | LOCAL ] SESSION AUTHORIZATION DEFAULT\n   | RESET SESSION AUTHORIZATION};\nSET TRANSACTION\nSET CONSTRAINTS设置当前事务检查行为的约束条件。\n{SET [ LOCAL ] TRANSACTION|SET SESSION CHARACTERISTICS AS TRANSACTION}\n  { ISOLATION LEVEL { READ COMMITTED | READ UNCOMMITTED }\n  | { READ WRITE | READ ONLY | SERIALIZABLE | REPEATABLE READ }\n  } [, ...]\nSET TRANSACTION SNAPSHOT snapshot_id;\nSHOW\nSHOW\nSHOW将显示当前运行时参数的数值。\nSHOW { configuration_parameter | CURRENT_SCHEMA | TIME ZONE | TRANSACTION ISOLATION LEVEL | SESSION AUTHORIZATION | ALL };\nSTART TRANSACTION\n通过START TRANSACTION启动事务。如果声明了隔离级别、读写模式，那么新事务就使用这些特性，类似执行了SET TRANSACTION。\nSTART TRANSACTION\n   [ { ISOLATION LEVEL { READ COMMITTED | READ UNCOMMITTED }\n   | { READ WRITE | READ ONLY | SERIALIZABLE | REPEATABLE READ }\n   } [, ...] ];\nTRUNCATE\n清理表数据，TRUNCATE快速地从表中删除所有行。\n"
+        ]
+    }
+]

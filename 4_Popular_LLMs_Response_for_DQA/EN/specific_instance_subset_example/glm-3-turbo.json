@@ -1,0 +1,32 @@
+[
+    {
+        "model": "glm-3-turbo",
+        "field": "tool",
+        "language": "en",
+        "input": "Is there an index built on c_custkey currently?",
+        "actual_output": "Thought: The question is asking for the existence of an index on the column c_custkey in the database. I can use the `database_state_info` tool to check the current state of the database.\n\nAction: database_state_info\nAction_Input: index:c_custkey\nObservation:",
+        "expected_output": "Thought: I can use the database_state_info tool to solve this issue.\nAction: database_state_info\nAction_input: index\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: The input must be only one or more of the three keywords: index, view, knob. When the keyword is knob or view, you can additionally enter the specific name of the knob or view\nFormat requirement: format is as follows #type: #specific_name.\n\n"
+        ]
+    },
+    {
+        "model": "glm-3-turbo",
+        "field": "tool",
+        "language": "en",
+        "input": "Is there an index built on c_custkey currently?",
+        "actual_output": "Thought: The question is asking for the existence of an index on the column c_custkey in the database. I can use the `database_state_info` tool to check the current state of the database.\n\nAction: database_state_info\nAction_Input: index:c_custkey\nObservation: [Secondary index: ['o_orderdate#B+Tree', 'l_quantity#B+Tree', 'l_orderkey#Hash', 'c_custkey#B+Tree'.]]\nFinal_Answer: Yes, there is an index built on c_custkey currently. It is a B+Tree index named c_custkey#B+Tree.",
+        "expected_output": "Thought: I can use the database_state_info tool to solve this issue.\nAction: database_state_info\nAction_input: index\nObservation: [Secondary index: ['o_orderdate#B+Tree', 'l_quantity#B+Tree', 'l_orderkey#Hash', 'c_custkey#B+Tree'.]]\nFinal_Answer: According to the tool's output, it is known that a secondary index is currently built on c_custkey in the database. The index structure is B+Tree.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: The input must be only one or more of the three keywords: index, view, knob. When the keyword is knob or view, you can additionally enter the specific name of the knob or view\nFormat requirement: format is as follows #type: #specific_name.\n\n"
+        ]
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "question": "I want to know the total number of records in the customer table.",
+        "answer": "Thought: First, I can use the database_structure_info tool to obtain information about the customer table.\n\nAction: database_structure_info\n\nAction_Input: table\n\nObservation: [\"customer:['c_custkey#integer', 'c_name#character varying', 'c_address#character varying', 'c_nationkey#integer', 'c_phone#character varying', 'c_acctbal#numeric', 'c_mktsegment#character varying', 'c_comment#character varying']\"]\n\nThought: The tool provided me with the structural information of the customer table. I can generate an SQL query to calculate the total number of records.\n\nAction: sql_executor\n\nAction_Input: \"\nSELECT COUNT(*) FROM customer;\n\"\n\nObservation: {'answer':'[(30000,)]'}\n\nThought: Now I know that the total number of records in the customer table is 30000.\n\nFinal_Answer: The total number of records in the customer table is 30000.",
+        "tool": "database_structure_info",
+        "field": "tool",
+        "format": [
+            {
+                "tool": "database_structure_info",
+                "Content requirement": "The input must be only one or more of the three keywords: table, column, key.",
+                "Format requirement": "format is as follows #type, #type."
+            },
+            {
+                "tool": "sql_executor",
+                "Content requirement": "The input must be only sql statements.You can only enter select type statements.",
+                "Format requirement": "format is as follows 'SELECT #columns FROM #table WHERE #condition GROUP BY #column ORDER BY #column #order LIMIT #number;'."
+            }
+        ]
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "glm-3-turbo",
+        "field": "gauss",
+        "language": "en",
+        "input": "What is the function of the exit_on_error parameter? How to set this parameter?",
+        "actual_output": "The function of the `exit_on_error` parameter is to control how the server handles errors. When this parameter is turned on, ERROR-level errors are escalated to PANIC-level errors, which can cause a core dump. This is primarily used for problem identification and business testing.\n\nTo set the `exit_on_error` parameter, you need to modify the configuration file (such as `postgresql.conf`) or use the `ALTER SYSTEM` command. The parameter is of the BOOLEAN type and can be set to `on` or `off`.\n\n- `on` means ERROR-level errors will be escalated to PANIC-level errors.\n- `off` means ERROR-level errors will not be escalated.\n\nThe default value is `off`. Please refer to the documentation for the specific method of setting this parameter, as it may vary depending on the system configuration.",
+        "expected_output": "The function of the exit_on_error parameter is to elevate ERROR-level errors to PANIC-level errors, thereby generating a core stack trace, mainly used for problem diagnosis and business testing. To set this parameter, you can follow these steps:\n\n1. Open the database configuration file and locate the exit_on_error parameter.\n2. Set the parameter to on to enable this functionality, elevating ERROR-level errors to PANIC-level errors.\n3. Save the configuration file and restart the database to apply the settings.\n\nPlease note that the exit_on_error parameter is a USERSET type parameter with a boolean value range. 'on' indicates enabled, 'off' indicates disabled, and the default value is off.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "容错性\n当数据库系统发生错误时，以下参数控制服务器处理错误的方式。\nexit_on_error\n参数说明：打开该开关，ERROR级别报错会升级为PANIC报错，从而可以产生core堆栈。主要用于问题定位和业务测试。\n该参数属于USERSET类型参数，请参考表2中对应设置方法进行设置。\n取值范围：布尔型\non表示ERROR级别报错会升级为PANIC报错。\noff表示不会对ERROR级别报错进行升级。\n默认值：off\nrestart_after_crash\n参数说明：设置为on，后端进程崩溃时，openGauss将自动重新初始化此后端进程。\n该参数属于SIGHUP类型参数，请参考表2中对应设置方法进行设置。\n取值范围：布尔型\non表示能够最大限度地提高数据库的可用性。\n在某些情况（比如当采用管理工具（例如xCAT）管理openGauss时），能够最大限度地提高数据库的可用性。\noff表示有转换错误的字符不能被转换，打印错误信息到终端。\n默认值：off\nmax_query_retry_times\n参数说明：指定SQL语句出错自动重试功能的最大重跑次数（目前支持重跑的错误类型为“Connection reset by peer”、“Lock wait timeout”和“Connection timed out”等），设定为0时关闭重跑功能。\n该参数属于USERSET类型参数，请参考表2中对应设置方法进行设置。\n取值范围：整型，0\\~20。\n默认值：0\ncn_send_buffer_size\n参数说明：指定数据库主节点发送数据缓存区的大小。\n该参数属于POSTMASTER类型参数，请参考表2中对应设置方法进行设置。\n取值范围：整型，8\\~128，单位为KB。\n默认值：8KB\nmax_cn_temp_file_size\n参数说明：指定SQL语句出错自动重试功能中数据库主节点端使用临时文件的最大值，设定为0表示不使用临时文件。\n取值范围：布尔型\non表示能够最大限度地提高数据库的可用性。\n在某些情况（比如当采用管理工具（例如xCAT）管理openGauss时），能够最大限度地提高数据库的可用性。\noff表示能够使得管理工具在后端进程崩溃时获取控制权并采取适当的措施进行处理。\n默认值：on\nomit_encoding_error\n参数说明：设置为on，数据库的客户端字符集编码为UTF-8时，出现的字符编码转换错误将打印在日志中，有转换错误的被转换字符会被忽略，以“?”代替。\n该参数属于USERSET类型参数，请参考表2中对应设置方法进行设置。\n取值范围：布尔型\non表示有转换错误的字符将被忽略，以“?”代替，打印错误信息到日志中。\noff表示有转换错误的字符不能被转换，打印错误信息到终端。\n默认值：off\nmax_query_retry_times\n"
+        ]
+    },
+    {
+        "model": "glm-3-turbo",
+        "field": "gauss",
+        "language": "en",
+        "input": "Why is it necessary to configure Data Source on all openGauss nodes when using exec_on_extension to connect Spark?",
+        "actual_output": "When using `exec_on_extension` to connect Spark, it is necessary to configure the Data Source on all openGauss nodes because `exec_on_extension` requires the creation of a Data Source object which needs to be accessible from all nodes in the openGauss cluster. This is different from `exec_hadoop_sql`, which only requires configuration on the node where the execution is taking place. The Data Source configuration is necessary for `exec_on_extension` to ensure that the connection to the Spark database instance is established correctly across all nodes.",
+        "expected_output": "The reason for needing to configure Data Source on all openGauss nodes when using exec_on_extension to connect Spark is that the exec_on_extension function needs to be able to find the corresponding Data Source object on all nodes. This is because the exec_on_extension function requires access to the Data Source object during execution, and if Data Source is only configured on some nodes, it will result in the inability to find the corresponding Data Source object on other nodes, thus failing to execute the function.\n\nAccording to the documentation, the exec_on_extension function needs to have Data Source configured on all openGauss nodes to ensure that the required Data Source object can be accessed successfully when executing the function on any node, thereby connecting to the Spark database instance and executing the corresponding SQL statements successfully.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "SQL on Spark\n概述\nSQL on Spark为用户提供访问Spark数据库实例的能力：发送SQL语句、处理返回结果。Extension Connector兼容了之前版本的此功能，并保留了原接口函数exec_hadoop_sql(text, text, text)。由于exec_hadoop_sql存在安全问题，只有赋权后才能使用，建议用户使用exec_on_extension函数。\n连接Spark数据库实例时，函数exec_hadoop_sql和exec_on_extension的区别如下：\n函数参数个数和意义不同：\nexec_hadoop_sql(text,text,text)参数意义：DSN、SQL、Encoding。\nexec_on_extension(text, text)参数意义：Data Source对象名称、SQL。\n需要ODBC配置不同：\nexec_hadoop_sql：当前执行节点上配置即可。\nexec_on_extension：所有openGauss节点上均需配置。\n执行方式不同：\nexec_hadoop_sql：无需创建Data Source。\nexec_on_extension：需要创建Data Source。\n支持的Spark数据类型\nSQL on Spark支持的数据类型，见下表。\n须知：\n对于Spark返回的数据类型，需要使用上表中对应的类型去接收（在AS子句中指定）。如果Spark返回的类型不在上表中，或没有按照指定对应关系去接收，则可能会出现结果不正确或转换失败。\n当Spark端数据类型定义为CHAR(n)时，对于字符串长度小于n的情况会自动补齐空格，当这种数据传输到openGauss并转换为text类型时，字符串尾部的空格保留。\nopenGauss的编码方式设置为SQL_ASCII时，length()函数返回的是字符串数据的字节数，而不是实际的字符数。例如，下面查询exec_on_extension返回数据的length时：select c2,length(c2) from exec_on_extension('spark','select * from a;') as (c1 int, c2 text);\n返回的第二列为字符串的字节数，而不是实际字符数。exec_hadoop_sql也有此特征。\n使用前的对接配置\n以下以使用exec_on_extension为例进行说明。以exec_hadoop_sql连接Spark时，无需创建Data Source。\n使用前的对接配置\n以下以使用exec_on_extension为例进行说明。以exec_hadoop_sql连接Spark时，无需创建Data Source。\n以操作系统用户omm登录数据库主节点。\n准备package.zip压缩包，放置于$GAUSSHOME/utilslib/fc_conf/$DSN下。路径不存在部分用户可自行创建，$DSN为以DSN为名的文件夹。DSN名必须由字母、数字、下划线组成。压缩包包含如下内容：\nKrbClient.zip\ndatasight-hiveodbc-1.0.0-1.el6.x86_64.rpm\nkuser_1544261037803_keytab.tar\n"
+        ]
+    }
+]

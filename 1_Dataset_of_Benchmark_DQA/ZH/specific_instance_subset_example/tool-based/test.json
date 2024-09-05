@@ -1,0 +1,20 @@
+[
+    {
+        "question": "我想知道customer表中2000年到2002年内的订单数量。",
+        "answer": "Thought: 我可以生成一个SQL查询来查询2000年到2002年内的订单数量，在这之前我需要先知道customer表中的列结构，找到代表订单数量的列。\n\nAction: database_structure_info\n\nAction_Input: columns\n\nObservation: [\\\"customer:['c_id#integer', 'c_d_id#integer', 'c_w_id#integer', 'c_first#character varying', 'c_middle#character', 'c_last#character varying', 'c_street_1#character varying', 'c_street_2#character varying', 'c_city#character varying', 'c_state#character varying', 'c_zip#character varying', 'c_phone#character varying', 'c_since#date', 'c_credit#character', 'c_credit_lim#numeric', 'c_discount#numeric', 'c_balance#numeric', 'c_ytd_payment#numeric', 'c_payment_cnt#integer', 'c_delivery_cnt#integer', 'c_data#character varying']\\\"]\n\nThought: 由工具输出的列名称，我认为订单数量可以由customer表中的COUNT(*)计算得到。现在我可以生成SQL语句了。\n\nAction: sql_executor\n\nAction_Input: \\\"SELECT COUNT(*) AS order_count FROM customer WHERE c_since >= '2000-01-01' AND c_since < '2003-01-01';\\\"\n\nObservation: {'answer':'[(3000,)]'}\n\nThought: 现在我知道了2000年到2002年内的订单数量为3000。\n\nFinal_Answer: customer表中2000年到2002年内的订单数量为3000。",
+        "tool": "sql_executor",
+        "field": "tool",
+        "format": [
+            {
+                "tool": "database_structure_info",
+                "Content requirement": "The input must be only one or more of the three keywords: table, column, key.",
+                "Format requirement": "format is as follows #type, #type."
+            },
+            {
+                "tool": "sql_executor",
+                "Content requirement": "The input must be only sql statements.You can only enter select type statements.",
+                "Format requirement": "format is as follows 'SELECT #columns FROM #table WHERE #condition GROUP BY #column ORDER BY #column #order LIMIT #number;'."
+            }
+        ]
+    }
+]

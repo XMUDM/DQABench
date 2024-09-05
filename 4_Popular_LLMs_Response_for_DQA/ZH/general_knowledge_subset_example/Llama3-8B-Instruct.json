@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "general",
+        "language": "zh",
+        "input": "如何从MySQL字段中减去一个值，且结果不小于零？\n\n我有一个类似于以下查询的查询：\n\n\n```\nUPDATE mytable SET count = count - 2\n```\n\n数字2是可变的。字段***count***永远不能小于零。\n\n我该如何做？",
+        "actual_output": "😊\n\n你可以使用 MySQL 的 `IF` 语句来实现这个功能。`IF` 语句可以检查一个条件是否成立，如果成立，则执行某个操作。如果不成立，则执行另一个操作。\n\n在你的情况下，你可以使用以下查询：\n```sql\nUPDATE mytable SET count = IF(count - 2 <= 0, 0, count - 2)\n```\n这个查询将检查 `count` 字段减去 2 是否小于等于 0。如果是，则将 `count` 设置为 0。如果不是，则将 `count` 减去 2。\n\n注意：`IF` 语句的第三个参数是可选的，如果你不提供第三个参数，`IF` 语句将返回 `NULL`。\n\n如果你想使用 `CASE` 语句来实现这个功能，也可以使用以下查询：\n```sql\nUPDATE mytable SET count = CASE WHEN count - 2 <= 0 THEN 0 ELSE count - 2 END\n```\n这两个查询都可以实现你的需求，但是 `IF` 语句可能更简洁一些。",
+        "expected_output": "使用`case`表达式：\n\n\n```\nUPDATE mytable SET count = case when count >= 2 then count - 2 else 0 end\n```\n\n符合ANSI SQL标准，即基本上可以在任何数据库管理系统产品中执行！",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    },
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "general",
+        "language": "zh",
+        "input": "如何查询内存数据库？\n\n我使用断开类创建了一个内存数据库。我已经填充了数据表，现在我想查询以选择数据表中的特定行。最简单的方法是什么？",
+        "actual_output": "😊\n\n内存数据库是指在计算机内存中存储和管理数据的数据库系统。由于内存数据库是存储在内存中，因此查询速度非常快。\n\n在内存数据库中，查询数据表中的特定行可以使用 SQL 语言。下面是一个简单的示例：\n\n假设你已经创建了一个名为 `my_table` 的数据表，并且已经填充了数据。\n\n**查询所有行**\n```sql\nSELECT * FROM my_table;\n```\n这将返回数据表中的所有行。\n\n**查询特定行**\n```sql\nSELECT * FROM my_table WHERE condition;\n```\n其中，`condition` 是一个逻辑表达式，用于指定要查询的行。例如：\n\n* 查询所有年龄大于 30 的行：\n```sql\nSELECT * FROM my_table WHERE age > 30;\n```\n* 查询所有名称为 \"John\" 的行：\n```sql\nSELECT * FROM my_table WHERE name = 'John';\n```\n**注意**：在内存数据库中，SQL 语句的执行速度非常快，因此你可以使用各种复杂的查询语句来查询数据表中的特定行。\n\n如果你使用的是 Java 语言，可以使用 JDBC (Java Database Connectivity) API 来连接内存数据库并执行 SQL 语句。下面是一个简单的示例代码：\n```java\nimport java.sql.*;\n\npublic class MemoryDBQuery {\n    public static void main(String[] args) {\n        // 创建连接\n        Connection conn = DriverManager.getConnection(\"jdbc:memory:\", \"username\", \"password\");\n\n        // 创建语句\n        Statement stmt = conn.createStatement();\n\n        // 执行查询\n        ResultSet rs = stmt.executeQuery(\"SELECT * FROM my_table WHERE age > 30\");\n\n        // 遍历结果\n        while (rs.next()) {\n            System.out.println(rs.getString(\"name\") + \" \" + rs.getInt(\"age\"));\n        }\n\n        // 关闭连接\n        conn.close();\n    }\n}\n```\n这个示例代码创建了一个连接到内存数据库的连接，然后执行了一个查询语句，最后遍历了结果集并打印出了查询结果。",
+        "expected_output": "如果您使用C#和`DataTable`，您可以像下面这样查询它：\n\n```\nprivate void GetRowsByFilter()\n{\n    DataTable table = DataSet1.Tables[\"Orders\"];\n    // 假设DataTable有一个名为Date的列。\n    string expression;\n    expression = \"Date > #1/1/00#\";\n    DataRow[] foundRows;\n\n    // 使用Select方法查找所有匹配过滤器的行。\n    foundRows = table.Select(expression);\n\n    // 打印每个返回行的第0列。\n    for(int i = 0; i < foundRows.Length; i ++)\n    {\n        Console.WriteLine(foundRows[i][0]);\n    }\n}\n```\n\n示例来自：<http://msdn.microsoft.com/en-GB/library/det4aw50.aspx>\n\n您还可以使用LINQ通过`DataTable.AsEnumarable`查询集合。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    }
+]

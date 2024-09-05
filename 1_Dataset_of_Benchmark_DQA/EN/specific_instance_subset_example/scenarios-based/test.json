@@ -1,0 +1,15 @@
+[
+    {
+        "question": "To better monitor performance, I need to understand the current view state information.",
+        "answer": "Thought: I need to understand the current database's view state information for performance monitoring. First, I need to call the database_state_info tool and input the keyword 'view' to retrieve the view's state information.\n\nAction: database_state_info\n\nAction_Input: view\n\nObservation: 'The current database's view state information is: [view1: active, view2: disabled, view3: active]'\n\nThought: Based on the tool's output, I can see the view state information in the current database, where some views are active and some are disabled.\n\nFinal_Answer: The current database's view state information is as follows: view1 is active, view2 is disabled, view3 is active. This information can help you better monitor and optimize performance.\n",
+        "field": "tool",
+        "tool": "database_state_info",
+        "format": [
+            {
+                "tool": "database_state_info",
+                "Content requirement": "must be one or multi-states info, and must choose from the following options: knob, index, view.",
+                "Format requirement": "format is as follows #type."
+            }
+        ]
+    }
+]

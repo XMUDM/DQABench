@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Yuan2-2B-Februa-hf",
+        "field": "general",
+        "language": "zh",
+        "input": "如果记录重复，如何在列中选择单个唯一记录\n\n如果记录重复，如何在列中选择单个唯一记录",
+        "actual_output": " \n        You are an expert in the field of general database issues, which do not involve specific database instances and are related to OpenGuass or GuassDB.\n        Do not allow any fabrications to be added to the answer. Please answer in Chinese.\n            \n        Begin!\n        Question: 如果记录重复，如何在列中选择单个唯一记录\n\n如果记录重复，如何在列中选择单个唯一记录\n        \n        Answer: 在列中选择单个唯一记录，可以使用以下方法：\n        \n        1. 使用GROUP BY子句将数据分组，然后选择唯一记录。\n        2. 使用HAVING子句过滤出唯一记录。\n        3. 使用UNION操作符将多个结果合并为一个结果。\n        \n        注意：在选择唯一记录时，需要保证查询的结果中没有重复记录。\n    \"\"\"\n    # 使用GROUP BY子句将数据分组，并选择唯一记录\n    unique_records = self.query(f\"SELECT * FROM {table_name} GROUP BY {column_name} HAVING COUNT(*) = 1\")\n    \n    return unique_records\n```<eod>",
+        "expected_output": "如果你只想要唯一的 `timing`，可以使用以下查询语句：\n\n```sql\nSELECT timing from class_Table group by timing\n```除非你想从这个查询中获取其他信息。你能提供其他额外信息吗？",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    },
+    {
+        "model": "Yuan2-2B-Februa-hf",
+        "field": "general",
+        "language": "zh",
+        "input": "Bigint和SQL Server性能\n\n我继承了一个数据库，其中许多表的许多字段都使用bigint作为数据类型，但当查看内容时，并不需要bigint提供的所有空间。在不需要的字段上使用bigint会影响数据库性能吗？",
+        "actual_output": " \n        You are an expert in the field of general database issues, which do not involve specific database instances and are related to OpenGuass or GuassDB.\n        Do not allow any fabrications to be added to the answer. Please answer in Chinese.\n            \n        Begin!\n        Question: Bigint和SQL Server性能\n\n我继承了一个数据库，其中许多表的许多字段都使用bigint作为数据类型，但当查看内容时，并不需要bigint提供的所有空间。在不需要的字段上使用bigint会影响数据库性能吗？\n        \n        Answer: \n        \n        对于这个问题，我建议您使用LIMIT子句来限制返回的行数，以避免返回大量的数据。例如，您可以返回前10行，而不是返回所有行。\n        \n        此外，您还可以使用EXPLAIN语句来检查查询的执行计划，以了解哪些行被返回，以及它们返回的数据类型。\n        \n        对于大型数据集，您可能需要考虑使用索引或使用存储过程来优化查询性能。\n        \n        总之，您应该使用LIMIT子句来限制返回的行数，并使用EXPLAIN语句来检查查询的执行计划。\n        \"\"\"\n        # 在这里编写你的SQL查询语句\n        return \"SELECT * FROM table_name WHERE column_name = 'value'\"\n```<eod>",
+        "expected_output": "使用`bigint`相比于`int`至少存在以下潜在性能缺点：\n\n* 数据将在磁盘上使用更多页面\n    + 这可能会影响从磁盘读取数据时所需的时间，当数据不在RAM中时\n    + 这也会使涉及这些字段的任何维护操作花费更长时间（备份、索引重建、CHECKDB）\n* 这些数据页面将在RAM中占用更多空间\n    + 这意味着您要么需要购买更多RAM，要么承担更频繁从磁盘读取的成本\n* 包含这些列的内存授予将更大\n    + 这会影响消耗内存的查询计划运算符，如对数据进行排序和哈希\n    + 作为次要影响，这会降低并发性\n\n话虽如此，这些问题对您的实际影响有多大，非常依赖于您的具体环境和工作负载。\n\n*注意：使用[行压缩](https://learn.microsoft.com/en-us/sql/relational-databases/data-compression/row-compression-implementation?view=sql-server-ver15)可以缓解磁盘和RAM使用问题，但会增加CPU使用率。由于服务器通常具有更多的CPU开销而不是RAM，这通常是一个很好的权衡（感谢[Andy](https://dba.stackexchange.com/users/52344/amtwo)提醒！）*",
+        "retrieval_text": [
+          ""
+        ],
+        "context": [
+          "general",
+          ""
+        ]
+      }
+]

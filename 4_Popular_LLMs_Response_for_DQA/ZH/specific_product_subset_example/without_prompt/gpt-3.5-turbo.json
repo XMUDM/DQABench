@@ -1,0 +1,32 @@
+[
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "zh",
+        "input": "什么是STAT_DATABASE_CONFLICTS？",
+        "actual_output": "STAT_DATABASE_CONFLICTS是一个统计数据，用于记录数据库中发生的冲突次数。数据库冲突通常发生在多个用户同时尝试对同一数据进行修改或操作时，导致数据不一致或操作失败。通过统计数据库冲突次数，可以帮助数据库管理员或开发人员识别和解决潜在的数据一致性问题。",
+        "expected_output": "根据文档内容，STAT_DATABASE_CONFLICTS是用来显示当前节点数据库冲突状态的统计信息。具体来说，该统计信息包括以下字段：\n\n1. datid：数据库标识。\n2. datname：数据库名称。\n3. confl_tablespace：冲突的表空间的数目。\n4. confl_lock：冲突的锁数目。\n5. confl_snapshot：冲突的快照数目。\n6. confl_bufferpin：冲突的缓冲区数目。\n7. confl_deadlock：冲突的死锁数目。\n\n因此，STAT_DATABASE_CONFLICTS提供了关于数据库冲突情况的详细统计信息，包括表空间、锁、快照、缓冲区和死锁等方面的数据，帮助用户了解数据库的冲突情况并进行相应的处理。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "STAT_DATABASE_CONFLICTS\n显示当前节点数据库冲突状态的统计信息。\n表 1  STAT_DATABASE_CONFLICTS字段\n名称 \n \n 类型 \n \n 描述 \n \n datid \n \n oid \n \n 数据库标识。 \n \n datname \n \n name \n \n 数据库名称。 \n \n confl_tablespace \n \n bigint \n \n 冲突的表空间的数目。 \n \n confl_lock \n \n bigint \n \n 冲突的锁数目。 \n \n confl_snapshot \n \n bigint \n \n 冲突的快照数目。 \n \n confl_bufferpin \n \n bigint \n \n 冲突的缓冲区数目。 \n \n confl_deadlock \n \n bigint \n \n 冲突的死锁数目。\n{\"point\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。\", \"ADM_TYPES视图描述数据库中的所有对象类型。\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。\", \"ADM_USERS视图存储关于数据库所有用户名信息。\", \"ADM_VIEWS视图存储关于数据库内的视图信息。\", \"这些系统视图同时存在于PG_CATALOG和SYS schema下。\", \"普通用户需要授权才能访问这些系统视图。\"], \"question\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\n\", \"要查看特定表的统计信息历史记录，可以使用ADM_TAB_STATS_HISTORY系统视图。该视图包含了数据库所有表的表统计信息历史记录，其中包括表的拥有者、表名、统计信息更新时间等字段。\\n\\n要查看特定表的统计信息历史记录，可以执行以下SQL查询语句：\\n\\n```sql\\nSELECT *\\nFROM ADM_TAB_STATS_HISTORY\\nWHERE table_name = 'your_table_name';\\n```\\n\\n在上面的查询语句中，将'your_table_name'替换为你要查看统计信息历史记录的具体表名。这样就可以获取特定表的统计信息历史记录，包括统计信息更新时间等信息。\\n\\n请注意，只有系统管理员权限才能访问ADM_TAB_STATS_HISTORY系统视图，普通用户需要获得相应的授权才能访问该视图。\", \"要查看表的平均行长和行数，可以使用ADM_TAB_STATISTICS系统视图。具体字段如下：\\n\\n- num_rows: 对象中的行数。\n"
+        ]
+    },
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "zh",
+        "input": "用户可以使用什么命令修改数据库属性？",
+        "actual_output": "用户可以使用ALTER TABLE命令来修改数据库表的属性，例如修改表的列名、数据类型、添加或删除列等。",
+        "expected_output": "用户可以使用以下命令修改数据库属性：\n\n1. 设置默认的模式搜索路径：\n\n```\nALTER DATABASE db_tpcc SET search_path TO pa_catalog,public;\n```\n\n2. 修改数据库表空间：\n\n```\nALTER DATABASE db_tpcc SET TABLESPACE tpcds;\n```\n\n3. 重新命名数据库：\n\n```\nALTER DATABASE db_tpcc RENAME TO human_tpcds;\n``` \n\n这些命令可以在数据库文档中找到，用户可以根据需要使用这些命令来修改数据库属性。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "修改数据库\n用户可以使用如下命令修改数据库属性（比如：owner、名称和默认的配置属性）。\n使用以下命令为数据库设置默认的模式搜索路径。\nopenGauss=# ALTER DATABASE db_tpcc SET search_path TO pa_catalog,public;\nALTER DATABASE\n使用如下命令修改数据库表空间。\nopenGauss=# ALTER DATABASE db_tpcc SET TABLESPACE tpcds;\nALTER DATABASE\n使用如下命令为数据库重新命名。\nopenGauss=# ALTER DATABASE db_tpcc RENAME TO human_tpcds;\nALTER DATABASE\n请避免直接连接或操作两个模板数据库（template0和template1）。\\n\\n通过以上步骤，您可以成功创建一个新的数据库，该数据库将会拷贝模板数据库的结构和内容作为初始状态。\", \"要查看数据库系统的数据库列表，可以使用以下两种方法：\\n\\n1. 使用元命令`\\\\l`：\\n```\\ngaussdb=# \\\\l\\n```\\n\\n2. 使用系统表`pg_database`查询数据库列表：\\n```\\ngaussdb=# SELECT datname FROM pg_database;\\n```\\n\\n这两种方法都可以列出数据库系统中的数据库列表。您可以选择其中一种方法来查看数据库列表。\", \"要修改数据库的默认模式搜索路径，用户可以使用以下命令：\\n\\n```sql\\nALTER DATABASE db_tpcc SET search_path TO pa_catalog,public;\\n```\\n\\n这条命令将数据库`db_tpcc`的默认模式搜索路径设置为`pa_catalog`和`public`。这样，在执行查询时，数据库将首先在这两个模式下搜索相应的表和对象。\n使用如下命令为数据库重新命名。\nopenGauss=# ALTER DATABASE db_tpcc RENAME TO human_tpcds;\nALTER DATABASE\n删除数据库\n用户可以使用DROP DATABASE命令删除数据库。这个命令删除了数据库中的系统目录，并且删除了磁盘上带有数据的数据库目录。用户必须是数据库的owner或者系统管理员才能删除数据库。当有人连接数据库时，删除操作会失败。删除数据库时请先连接到其他的数据库。\n使用如下命令删除数据库：\nopenGauss=# DROP DATABASE human_tpcds;\nDROP DATABASE\n"
+        ]
+    }
+]

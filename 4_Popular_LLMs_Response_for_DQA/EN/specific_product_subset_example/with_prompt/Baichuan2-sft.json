@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-sft",
+        "field": "gauss",
+        "language": "en",
+        "input": "How to use the provided test data for template training?",
+        "actual_output": " To use the provided test data for template training, you can follow these steps:\n\n1. Use the provided test data for template training:\n```bash\ngs_dbmind component sqldiag train -f ./sample_data/train.csv --model template --model-path ./template\n```\n\n2. Predict using the provided test data:\n```bash\ngs_dbmind component sqldiag predict -f ./sample_data/predict.csv --model template --model-path ./template --predicted-file ./result/t_result\n```\n\n3. Update the model using the provided test data:\n```bash\ngs_dbmind component sqldiag finetune -f ./sample_data/train.csv --model template --model-path ./template\n```\n\nBy following the above steps, you can use the provided test data for template training.",
+        "expected_output": "According to the documentation, the steps to perform template training using the provided test data are as follows:\n\n1. First, prepare historical log data for model training. The format of historical log data should be each sample containing an SQL statement and its execution time, separated by a newline.\n\n2. Perform template training using the following command:\n\n```\ngs_dbmind component sqldiag train -f ./sample_data/train.csv --model template --model-path ./template \n```\n\nWhere `-f ./sample_data/train.csv` specifies the path to the training data file, `--model template` indicates selecting the template model, and `--model-path ./template` specifies the path to save the model.\n\n3. After executing the above command, the model will be trained based on the provided training data, and once training is complete, the model will be saved in the specified path.\n\nBy following the above steps, you can use the provided test data for template training.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "操作步骤\n提供历史日志以供模型训练\n进行训练与预测操作。\n基于模板法的训练与预测：\n   gs_dbmind component sqldiag [train, predict] -f FILE --model template --model-path template_model_path \n基于DNN的训练与预测：\n   gs_dbmind component sqldiag [train, predict] -f FILE --model dnn --model-path dnn_model_path\n使用方法示例\n使用提供的测试数据进行模板化训练：\ngs_dbmind component sqldiag train -f ./sample_data/train.csv --model template --model-path ./template\n使用提供的测试数据进行模板化预测：\ngs_dbmind component sqldiag predict -f ./sample_data/predict.csv --model template --model-path ./template --predicted-file ./result/t_result\n使用提供的测试数据进行模板化模型更新：\n使用提供的测试数据进行模板化模型更新：\ngs_dbmind component sqldiag finetune -f ./sample_data/train.csv --model template --model-path ./template\n使用提供的测试数据进行DNN训练：\ngs_dbmind component sqldiag train -f ./sample_data/train.csv --model dnn --model-path ./dnn_model\n使用提供的测试数据进行DNN预测：\ngs_dbmind component sqldiag predict -f ./sample_data/predict.csv --model dnn --model-path ./dnn_model --predicted-file\n使用提供的测试数据进行DNN模型更新：\ngs_dbmind component sqldiag finetune -f ./sample_data/train.csv --model dnn --model-path ./dnn_model\n使用脚本获取训练集方式：\nload_sql_from_wdr.py [-h] --port PORT --start_time START_TIME\n                            --finish_time FINISH_TIME [--save_path SAVE_PATH]\n例如：\n    python load_sql_from_wdr.py --start_time \"2021-04-25 00:00:00\" --finish_time \"2021-04-26 14:00:00\" --port 5432  --save_path ./data.csv\n操作步骤\n提供历史日志以供模型训练\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-sft",
+        "field": "gauss",
+        "language": "en",
+        "input": "What are the key fields of the Data Source object's options field?",
+        "actual_output": " The key fields of the Data Source object's options field include: dsn, username, password, encoding. These fields correspond to the DSN in the odbc configuration file, user name and password for connecting to the target database, and character string encoding used for interaction with the target database. When creating a Data Source object, these fields can be specified or omitted as needed.",
+        "expected_output": "The key fields of the Data Source object's options field include the following:\n\n- dsn: Corresponds to the DSN in the ODBC configuration file.\n- username: Username for connecting to the target database.\n- password: Password for connecting to the target database.\n- encoding: String encoding method for interacting with the target database.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "参数说明\nsrc_name\n新建Data Source对象的名称，需在数据库内部唯一。\n取值范围：字符串，要符标识符的命名规范。\nTYPE\n新建Data Source对象的类型，可缺省。\n取值范围：空串或非空字符串。\nVERSION\n新建Data Source对象的版本号，可缺省或NULL值。\n取值范围：空串或非空字符串或NULL。\nOPTIONS\nData Source对象的选项字段，创建时可省略，如若指定，其关键字如下：\noptname\n选项名称。\n取值范围：dsn、 username、 password、 encoding。不区分大小写。\ndsn对应odbc配置文件中的DSN。\nusername/password对应连接目标库的用户名和密码。\nopenGauss在后台会对用户输入的username/password加密以保证安全性。该加密所需密钥文件需要使用gs_guc工具生成并使用gs_ssh工具发布到openGauss每个节点的$GAUSSHOME/bin目录下。username/password不应当包含'encryptOpt'前缀，否则会被认为是加密后的密文。\nencoding表示与目标库交互的字符串编码方式（含发送的SQL语句和返回的字符类型数据），此处创建对象时不检查encoding取值的合法性，能否正确编解码取决于用户提供的编码方式是否在数据库本身支持的字符编码范围内。\noptvalue\n选项值。\n取值范围：空或者非空字符串。\n示例\n```\n--创建一个空的Data Source对象，不含任何信息。\nopenGauss=# CREATE DATA SOURCE ds_test1;\n--创建一个Data Source对象，含TYPE信息，VERSION为NULL。\nopenGauss=# CREATE DATA SOURCE ds_test2 TYPE 'MPPDB' VERSION NULL;\n--创建一个Data Source对象，仅含OPTIONS。\nopenGauss=#  CREATE DATA SOURCE ds_test3 OPTIONS (dsn 'openGauss', encoding 'utf8');\n--创建一个Data Source对象，仅含OPTIONS。\nopenGauss=#  CREATE DATA SOURCE ds_test3 OPTIONS (dsn 'openGauss', encoding 'utf8');\n--创建一个Data Source对象，含TYPE, VERSION, OPTIONS。\nopenGauss=# CREATE DATA SOURCE ds_test4 TYPE 'unknown' VERSION '11.2.3' OPTIONS (dsn 'openGauss', username 'userid', password 'pwd@123456', encoding '');\n--删除Data Source对象。\nopenGauss=# DROP DATA SOURCE ds_test1;\nopenGauss=# DROP DATA SOURCE ds_test2;\nopenGauss=# DROP DATA SOURCE ds_test3;\nopenGauss=# DROP DATA SOURCE ds_test4;\n```\n相关链接\nALTER DATA SOURCE,  DROP DATA SOURCE\n"
+        ]
+    }
+]

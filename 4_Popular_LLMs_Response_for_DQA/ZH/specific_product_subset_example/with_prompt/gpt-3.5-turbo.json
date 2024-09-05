@@ -1,0 +1,32 @@
+[
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "zh",
+        "input": "pg_read_file函数用来做什么？它的输入参数有哪些？",
+        "actual_output": "pg_read_file函数用来读取一个文本文件的内容，可以指定从文件的哪个位置开始读取以及读取的长度。其输入参数包括文件名(filename)、偏移量(offset)和长度(length)。如果省略偏移量和长度，则将返回整个文件的内容。",
+        "expected_output": "pg_read_file函数用来返回一个文本文件的内容。其输入参数包括：\n\n1. filename：要读取的文件名，类型为text。\n2. offset：读取文件内容的起始位置，类型为bigint。如果是负数，则表示相对于文件结尾的偏移量。\n3. length：读取文件内容的长度，类型为bigint。如果省略offset和length，则返回整个文件内容。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "pg_read_file(filename text, offset bigint, length bigint)\n描述：返回一个文本文件的内容。\n返回值类型：text\n备注：pg_read_file返回一个文本文件的一部分，从offset开始，最多返回length字节（如果先达到文件结尾，则小于这个数值）。如果offset是负数，则它是相对于文件结尾回退的长度。如果省略了offset和length，则返回整个文件。\n示例：\n```\nopenGauss=# SELECT pg_read_file('postmaster.pid',0,100);\n             pg_read_file              \n53078                                +\n /srv/BigData/hadoop/data1/dbnode+\n 1500022474                           +\n 8000                                +\n /var/run/FusionInsight               +\n localhost                            +\n  2\n(1 row)\n```\npg_read_binary_file(filename text [, offset bigint, length bigint,missing_ok boolean])\n描述：返回一个二进制文件的内容。\n返回值类型：bytea\n备注：pg_read_binary_file的功能与pg_read_file类似，除了结果的返回值为bytea类型不一致，相应地不会执行编码检查。与convert_from函数结合，这个函数可以用来读取用指定编码的一个文件。\nopenGauss=# SELECT convert_from(pg_read_binary_file('filename'), 'UTF8');\npg_stat_file(filename text)\n描述：返回一个文本文件的状态信息。\n返回值类型：record\n备注：pg_stat_file返回一条记录，其中包含：文件大小、最后访问时间戳、最后更改时间戳、最后文件状态修改时间戳以及标识传入参数是否为目录的Boolean值。典型的用法：\nopenGauss=# SELECT * FROM pg_stat_file('filename');\nopenGauss=# SELECT (pg_stat_file('filename')).modification;\n示例：\n```\nopenGauss=# SELECT convert_from(pg_read_binary_file('postmaster.pid'), 'UTF8');\n             convert_from\n"
+        ]
+    },
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "gauss",
+        "language": "zh",
+        "input": "在创建openGauss docker镜像时需要提供什么？如何进行SHA256校验？",
+        "actual_output": "在创建openGauss docker镜像时，需要提供openGauss二进制安装包，并将以bz2结尾的包（openGauss-X.X.X-CentOS-64bit.tar.bz2）放到dockerfiles/<version>文件夹中。在运行buildDockerImage.sh脚本时，如果不指定-i参数，需要手动将SHA256校验结果写入sha256_file_amd64文件。确保有正确的yum源，并根据需要修改配置文件中的版本号。对于ARM64架构的openEuler 20.03 LTS，如果镜像下载不下来，可以从openEuler官方网站下载容器镜像压缩包并导入到本地镜像列表。在构建时遇到yum源下载超时时，可以检查代理设置或使用--network host参数使用宿主机的网络。",
+        "expected_output": "在创建openGauss docker镜像时，需要提供以下内容：\n\n1. openGauss二进制安装包，解压后将以bz2结尾的包（openGauss-X.X.X-CentOS-64bit.tar.bz2）放到dockerfiles/<version>文件夹中。可以从[https://opengauss.org/zh/download.html](https://opengauss.org/zh/download.html)下载，确保有正确的yum源。\n\n2. 如果不指定-i参数，需要手动提供SHA256校验结果。在运行buildDockerImage.sh脚本前，需要将校验结果写入sha256_file_amd64文件中。具体操作如下：\n   ```\n   cd /soft/openGauss-server/docker/dockerfiles/3.0.0\n   sha256sum openGauss-3.0.0-CentOS-64bit.tar.bz2 > sha256_file_amd64 \n   ```\n\n3. 如果是在ARM64 openEuler 20.03 LTS上创建镜像，需要从华为开源镜像站获取openEuler_aarch64.repo文件，并放到openGauss-server-master/docker/dockerfiles/3.0.0文件夹下。获取方法如下：\n   ```\n   wget -O openEuler_aarch64.repo https://mirrors.huaweicloud.com/repository/conf/openeuler_aarch64.repo\n   ```\n\nSHA256校验的具体操作是在获取openGauss二进制安装包后，使用sha256sum命令计算其SHA256值，并将结果写入sha256_file_amd64文件中。这样在运行buildDockerImage.sh脚本时，会自动进行校验以确保镜像的完整性和安全性。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "运行buildDockerImage.sh脚本时，如果不指定-i参数，此时默认提供SHA256检查，需要您手动将校验结果写入sha256_file_amd64文件。\n   ## 修改sha256校验文件内容\n   cd /soft/openGauss-server/docker/dockerfiles/3.0.0\n   sha256sum openGauss-3.0.0-CentOS-64bit.tar.bz2 > sha256_file_amd64\n安装前需要从华为开源镜像站获取openEuler_aarch64.repo文件，并放到openGauss-server-master/docker/dockerfiles/3.0.0文件夹下面。openEuler_aarch64.repo获取方法：\n   ```\n   wget -O openEuler_aarch64.repo https://mirrors.huaweicloud.com/repository/conf/openeuler_aarch64.repo\n```\n在dockerfiles文件夹运行buildDockerImage.sh脚本。\n说明\n对于使用其他版本的数据库构建容器镜像，可以参考openGauss-server/docker/dockerfiles/3.0.0里面的配置文件，只需要修改为对应的版本号即可。\n对于构建openEuler-arm的容器镜像，如果openeuler-20.03-lts:latest镜像下载不下来，可以在openEuler官方网站http://121.36.97.194/openEuler-20.03-LTS/docker_img/aarch64/下载容器镜像压缩包openEuler-docker.aarch64.tar.xz,然后使用docker load -i openEuler-docker.aarch64.tar.xz导入到本地镜像列表。\n在进行构建时候，如果遇到yum源下载超时，请检查下代理，也可以在buildDockerImage.sh脚本里面的docker build命令后加上--network host使用宿主机的网络。\n容器安装\n本章节主要介绍通过Docker安装openGauss，方便DevOps用户的安装、配置和环境设置。\n支持的架构和操作系统版本\nx86-64 CentOS 7.6\nARM64 openEuler 20.03 LTS\n配置准备\n使用 buildDockerImage.sh脚本构建docker镜像，buildDockerImage.sh是一个方便使用的shell脚本，提供SHA256的检查。\n创建openGauss docker镜像\n说明：\n安装前需要提供openGauss二进制安装包，解压后将以bz2结尾的包（openGauss-X.X.X-CentOS-64bit.tar.bz2）放到 dockerfiles/<version>文件夹。二进制包可以从  https://opengauss.org/zh/download.html下载，确保有正确的yum源。\n"
+        ]
+    }
+]

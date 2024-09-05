@@ -1,0 +1,15 @@
+[
+    {
+        "question": "最近数据库的响应时间变慢了，我想检查当前的CPU和IO性能情况。",
+        "answer": "Thought: 我需要查看数据库的CPU和IO性能情况，以便了解响应时间变慢的原因。我可以通过查询数据库的性能信息来获取这些数据。\n\nAction: database_performance_info\n\nAction_Input: cpu,io\n\nObservation: \n        {\n            'cpu': 'CPU利用率为70%，负载较高。',\n            'io': 'IO响应时间较长，磁盘IO利用率达到90%。'\n        }\n\nThought: 通过工具输出的信息，我发现CPU利用率较高且IO响应时间较长，这可能是导致数据库响应时间变慢的原因。需要进一步分析和优化CPU和IO性能。\n\nFinal_Answer: 根据查询结果显示，数据库的CPU利用率较高且IO响应时间较长，建议进一步优化数据库的CPU和IO性能以提升响应速度。\n    ",
+        "tool": "database_performance_info: cpu,io",
+        "field": "tool",
+        "format": [
+            {
+                "tool": "database_performance_info",
+                "Content requirement": "must be one or multi-states info, and must choose from the following options: cpu, io.",
+                "Format requirement": "format is as follows #type,#type."
+            }
+        ]
+    }
+]

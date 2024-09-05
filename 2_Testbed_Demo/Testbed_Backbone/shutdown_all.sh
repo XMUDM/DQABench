@@ -1,0 +1,2 @@
+# If the grep command on the mac device does not support the grep -P option, use Homebrew to install it. Or use the ggrep command
+ps -eo pid,user,cmd|grep -P 'server/api.py|webui.py|fastchat.serve|multiprocessing'|grep -v grep|awk '{print $1}'|xargs kill -9

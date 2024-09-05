@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-sft",
+        "field": "gauss",
+        "language": "zh",
+        "input": "SHOW MASTER STATUS 语句的语法格式是什么？",
+        "actual_output": " 根据文档内容，SHOW MASTER STATUS 语句的语法格式如下：\n\n```\nSHOW MASTER STATUS\n```\n\n该语句用于查看当前wal（xlog）日志的相关进度，包括xlog文件名、文件偏移位置和LSN等信息。在主库执行时，Xlog_Lsn和pg_current_xlog_location的结果一致；在非主库执行时，Xlog_Lsn和pg_last_xlog_replay_location的结果一致。主库用于查询当前xlog写入的实时进度，备库用于查询当前xlog回放的实时进度。",
+        "expected_output": "根据文档内容，SHOW MASTER STATUS语句的语法格式是：\n\n```\nSHOW MASTER STATUS\n```\n\n这条语句用于查看当前wal（xlog）日志的相关进度，返回结果包括Xlog_File_Name（当前处理的xlog文件名）、Xlog_File_Offset（当前处理的xlog的文件偏移位置）和Xlog_Lsn（当前xlog的LSN）。在主库执行时，Xlog_Lsn和pg_current_xlog_location的结果一致；在非主库执行时，Xlog_Lsn和pg_last_xlog_replay_location的结果一致。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "SHOW MASTER STATUS\n功能描述\n查看当前wal（xlog）日志的相关进度。\n注意事项\n该语句在非主库也可以执行。\n在主库执行时，Xlog_Lsn和pg_current_xlog_location的结果一致；在非主库执行时，Xlog_Lsn和pg_last_xlog_replay_location的结果一致。\n主库用该语句查询当前xlog写入的实时进度。\n备库用该语句查询当前xlog回放的实时进度。\n语法格式\n```\nSHOW MASTER STATUS\n```\n参数说明\nXlog_File_Name\n当前处理的xlog文件名。\nXlog_File_Offset\n当前处理的xlog的文件偏移位置。\nXlog_Lsn\n当前xlog的LSN。\n示例\nXlog_File_Offset\n当前处理的xlog的文件偏移位置。\nXlog_Lsn\n当前xlog的LSN。\n示例\nopenGauss=# show master status;\n      Xlog_File_Name      | Xlog_File_Offset |  Xlog_Lsn\n--------------------------+------------------+------------\n 000000010000000000000010 |          7142672 | 0/106CFD10\n(1 row)\n\", \"根据文档中提供的信息，要查看特定用户的账户状态和到期日期，可以使用ADM_USERS视图。该视图存储了数据库所有用户名信息，包括用户名称、账户状态、到期日期等字段。\\n\\n具体查询语句如下：\\n```sql\\nSELECT account_status, expiry_date\\nFROM ADM_USERS\\nWHERE username = '特定用户的用户名';\\n```\\n\\n在上述查询语句中，将\\\"特定用户的用户名\\\"替换为你要查询的具体用户的用户名，即可查看该用户的账户状态和到期日期信息。\", \"要查看特定视图的创建语句和文本长度，可以使用ADM_VIEWS系统视图。具体步骤如下：\\n\\n1. 查询特定视图的创建语句：\\n```sql\\nSELECT TEXT_VC\\nFROM ADM_VIEWS\\nWHERE view_name = 'your_view_name';\\n```\\n将'your_view_name'替换为你要查询的视图名称。\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-sft",
+        "field": "gauss",
+        "language": "zh",
+        "input": "在CLEAN CONNECTION中，如何删除指定用户上的连接？",
+        "actual_output": " 根据文档内容，要删除指定用户上的连接，可以使用以下语法：\n\n```\nCLEAN CONNECTION TO ALL TO USER username;\n```\n\n其中，`username`为要删除连接的用户名称。例如，如果要删除用户`jack`上的连接，可以执行以下命令：\n\n```\nCLEAN CONNECTION TO ALL TO USER jack;\n```\n\n这样就可以删除指定用户`jack`上的所有连接。",
+        "expected_output": "根据文档内容，要删除指定用户上的连接，可以使用以下命令：\n\n```\nCLEAN CONNECTION TO ALL TO USER username;\n```\n\n其中，`username`为要删除连接的用户名称。这条命令将会清理所有节点上指定用户的连接。\n\n如果需要强制关闭与指定用户相关的连接，可以使用以下命令：\n\n```\nCLEAN CONNECTION TO ALL FORCE TO USER username;\n```\n\n这条命令会发送SIGTERM信号给所有与指定用户相关的线程，然后强制关闭这些连接。\n\n请注意，以上命令仅在force模式下可以清理正在使用的正常连接。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "CLEAN CONNECTION\n功能描述\n用来清理数据库连接。允许在节点上清理指定数据库的指定用户的相关连接。\n注意事项\nopenGauss下不支持指定节点，仅支持TO ALL。\n该功能仅在force模式下，可以清理正在使用的正常连接。\n语法格式\nCLEAN CONNECTION\n      TO { COORDINATOR ( nodename [, ... ] ) | NODE ( nodename [, ... ] )| ALL [ CHECK ] [ FORCE ] }\n      [ FOR DATABASE dbname ]\n      [ TO USER username ];\n参数说明\nCHECK\n仅在节点列表为TO ALL时可以指定。如果指定该参数，会在清理连接之前检查数据库是否被其他会话连接访问。此参数主要用于DROP DATABASE之前的连接访问检查，如果发现有其他会话连接，则将报错并停止删除数据库。\nFORCE\n仅在节点列表为TO ALL时可以指定，如果指定该参数，所有和指定dbname和username相关的线程都会收到SIGTERM信号，然后被强制关闭。\nFORCE\n仅在节点列表为TO ALL时可以指定，如果指定该参数，所有和指定dbname和username相关的线程都会收到SIGTERM信号，然后被强制关闭。\nCOORDINATOR ( nodename [,  ... ] ) | NODE ( nodename [, ... ] ) | ALL\n删除指定节点上的连接。有三种场景：\n删除指定CN上的连接，openGauss不支持。\n删除指定DN上的连接，openGauss不支持。\n删除所有节点上的连接(TO ALL)，openGauss仅支持该场景。\ndbname\n删除指定数据库上的连接。如果不指定，则删除所有数据库的连接。\n取值范围：已存在数据库名。\nusername\n删除指定用户上的连接。如果不指定，则删除所有用户的连接。\n取值范围：已存在的用户。\n示例\n```\n--创建jack用户。\nCREATE USER jack PASSWORD 'Bigdata123@';\n--删除用户jack在数据库template1上的所有连接。\nCLEAN CONNECTION TO ALL FOR DATABASE template1 TO USER jack;\n--删除用户jack在数据库template1上的所有连接。\nCLEAN CONNECTION TO ALL FOR DATABASE template1 TO USER jack;\n--删除用户jack的所有连接。\nCLEAN CONNECTION TO ALL TO USER jack;\n--删除在数据库gaussdb上的所有连接。\nCLEAN CONNECTION TO ALL FORCE FOR DATABASE gaussdb;\n--删除用户jack。\nDROP USER jack;\n```\n"
+        ]
+    }
+]

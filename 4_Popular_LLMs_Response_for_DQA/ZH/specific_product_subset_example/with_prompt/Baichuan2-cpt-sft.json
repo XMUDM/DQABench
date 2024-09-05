@@ -1,0 +1,32 @@
+[
+    {
+        "model": "ours_v4_Baichuan2-cpt-sft",
+        "field": "gauss",
+        "language": "zh",
+        "input": "如何显示各节点中每个表（包括TOAST表）的状态信息？",
+        "actual_output": " 要显示各节点中每个表（包括TOAST表）的状态信息，您可以使用以下查询：\n\n```sql\nSELECT * FROM STAT_ALL_TABLES;\n```\n\n这条查询将返回当前节点中每个表（包括TOAST表）的状态信息，包括表的OID、Schema名、表名、顺序扫描数、顺序扫描抓取的活跃行数、索引扫描数、索引扫描抓取的活跃行数等信息。\n\n请注意，STAT_ALL_TABLES中的数据是聚合数据，如果您需要查看具体节点中每个表的状态信息，可以考虑使用其他视图或查询来获取更详细的信息。",
+        "expected_output": "根据文档内容，要显示各节点中每个表（包括TOAST表）的状态信息，可以使用以下查询：\n\n```sql\nSELECT * FROM STAT_ALL_TABLES;\n```\n\n这条查询将返回当前节点中每个表的状态信息，包括表的OID、Schema名、表名、顺序扫描数、顺序扫描抓取的活跃行数、索引扫描数、索引扫描抓取的活跃行数、插入行数、更新行数、删除行数、HOT更新行数、估计活跃行数、估计不活跃行数、最后一次手动清理时间、上次被autovacuum守护线程清理时间、上次手动分析时间、上次被autovacuum守护线程分析时间、手动清理次数、autovacuum清理次数、手动分析次数、autovacuum守护线程分析次数。\n\n通过执行上述查询，您可以获取到所需的每个表的状态信息。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "版权所有 © 华为云计算技术有限公司\n2238\n13.2.5.9 GLOBAL_STAT_SYS_TABLES\n显示集群各个节点pg_catalog、information_schema以及pg_toast模式下所有系统表\n的统计信息（包含CN与DN节点的状态信息，在CN节点使用，不汇总）。\n表 13-38 GLOBAL_STAT_SYS_TABLES 字段\n名称\n类型\n描述\nnode_name\nname\n节点名称。\nrelid\noid\n表的OID。\nschemaname\nname\n该表所在的Schema名。\nrelname\nname\n表名。\nseq_scan\nbigint\n该表发起的顺序扫描数。\nseq_tup_read\nbigint\n顺序扫描抓取的活跃行数。\nidx_scan\nbigint\n该表发起的索引扫描数。\nidx_tup_fetch\nbigint\n索引扫描抓取的活跃行数。\nbigint\n该索引上执行的索引扫描次数。\nidx_tup_rea\nd\nbigint\n该索引上扫描返回的索引项数。\nidx_tup_fetc\nh\nbigint\n使用该索引的简单索引扫描在原表中抓取的活跃行\n数。\n13.2.5.13 STAT_ALL_TABLES\n显示数据库当前节点每个表（包括TOAST表）的状态信息。\n表 13-42 STAT_ALL_TABLES 字段\n名称\n类型\n描述\nrelid\noid\n表的OID。\nschemaname\nname\n该表所在的Schema名。\nrelname\nname\n表名。\nseq_scan\nbigint\n该表发起的顺序扫描数。\n云数据库 GaussDB\n分布式版开发指南\n13 Schema\n文档版本 01 (2023-11-09)\n版权所有 © 华为云计算技术有限公司\n2241\n文档版本 01 (2023-11-09)\n版权所有 © 华为云计算技术有限公司\n2239\n名称\n类型\n描述\nautoanalyze_c\nount\nbigint\n该表被autovacuum守护线程分析的次\n数。\n13.2.5.10 STAT_SYS_INDEXES\n显示当前节点pg_catalog、information_schema以及pg_toast模式中所有系统表的索\n引状态信息。\n表 13-39 STAT_SYS_INDEXES 字段\n名称\n类型\n描述\nrelid\noid\n该索引的表的OID。\nindexrelid\noid\n索引的OID。\nschemanam\ne\nname\n索引所在的Schema名。\nrelname\nname\n索引的表名。\nindexrelna\nme\nname\n索引名。\nidx_scan\nbigint\n"
+        ]
+    },
+    {
+        "model": "ours_v4_Baichuan2-cpt-sft",
+        "field": "gauss",
+        "language": "zh",
+        "input": "如何查看本地UDF Master和Work进程数？这个函数的返回值类型是什么？",
+        "actual_output": " 根据文档内容，要查看本地UDF Master和Work进程数，可以使用函数`fenced_udf_process(integer)`。该函数的描述是“查看本地UDF Master和Work进程数”，参数为1时查看master进程数，参数为2时查看worker进程数，参数为3时杀死所有worker进程。该函数的返回值类型是text。\n\n因此，要查看本地UDF Master和Work进程数，可以执行以下SQL语句：\n\n```sql\nSELECT fenced_udf_process(1);\n```\n\n这将返回本地UDF Master进程数。如果需要查看Worker进程数，可以执行以下SQL语句：\n\n```sql\nSELECT fenced_udf_process(2);\n```\n\n这将返回本地UDF Worker进程数。",
+        "expected_output": "根据文档内容，要查看本地UDF Master和Work进程数，可以使用函数`fenced_udf_process(integer)`。入参为1时查看master进程数，入参为2时查看worker进程数，入参为3时杀死所有worker进程。该函数的返回值类型是`text`。\n\n因此，要查看本地UDF Master进程数，可以执行以下SQL语句：\n\n```sql\nSELECT fenced_udf_process(1);\n```\n\n要查看本地UDF Work进程数，可以执行以下SQL语句：\n\n```sql\nSELECT fenced_udf_process(2);\n```",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "pg_stat_get_cu_hdd_sync(oid)\n描述：获取当前节点当前数据库中一个列存表从磁盘同步读取CU次数。\n返回值类型：bigint\npg_stat_get_cu_hdd_asyn(oid)\n描述：获取当前节点当前数据库中一个列存表从磁盘异步读取CU次数。\n返回值类型：bigint\npg_stat_get_db_cu_mem_hit(oid)\n描述：获取当前节点一个数据库CU内存命中次数。\n返回值类型：bigint\npg_stat_get_db_cu_hdd_sync(oid)\n描述：获取当前节点一个数据库从磁盘同步读取CU次数。\n返回值类型：bigint\nfenced_udf_process(integer)\n描述：查看本地UDF Master和Work进程数。入参为1时查看master进程数，入参为2时查看worker进程数，入参为3时杀死所有worker进程。\n返回值类型：text\npg_stat_get_function_calls(oid)\n描述：函数已被调用次数。\n返回值类型：bigint\npg_stat_get_function_self_time(oid)\n描述：只有在此函数上所花费的时间。此函数调用其它函数上花费的时间被排除在外。\n返回值类型：bigint\npg_stat_get_backend_idset()\n描述：设置当前活动的服务器进程数（从1到活动服务器进程的数量）。\n返回值类型：setofinteger\npg_stat_get_backend_pid(integer)\n描述：给定的服务器线程的线程ID。\n返回值类型：bigint\npg_stat_get_backend_dbid(integer)\n描述：给定服务器进程的数据库ID。\n返回值类型：oid\npg_stat_get_backend_userid(integer)\n描述：给定服务器进程的用户ID。\n返回值类型：oid\n属性\n属性值\n描述\nname\nclass_a:workload_a1\nclass和workload名称\nclass\nclass_a\n"
+        ]
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Yuan2-2B-Februa-hf",
+        "field": "gauss",
+        "language": "zh",
+        "input": "如何使用date_part函数提取特定时间的季度？",
+        "actual_output": " 如何使用date_part函数提取特定时间的季度？<sep> 要使用date_part函数提取特定时间的季度，可以使用以下步骤：\n1. 导入datetime模块。\n2. 使用datetime.date.today()函数获取当前日期。\n3. 使用date_part函数提取日期的季度。\n4. 将提取的季度值转换为整数，并返回结果。\n下面是一个示例代码：\n```python\nimport datetime\ndef extract_quarter(date):\n    current_date = datetime.date.today()\n    quarter = int(current_date.month / 3)\n    return quarter\n# 示例用法\ndate = datetime.date(2023, 6, 15)\nquarter = extract_quarter(date)\nprint(quarter)\n```\n在上述示例中，我们导入了datetime模块，并定义了一个名为extract_quarter的函数。该函数接受一个日期参数，并使用date_part函数提取该日期的季度。然后，我们使用datetime.date.today()获取当前日期，并计算出当前日期所在季度的索引。最后，我们将索引转换为整数，并返回结果。\n在示例用法中，我们使用datetime.date(2023, 6, 15)作为参数调用extract_quarter函数。然后，将返回的季度值打印出来。<eod>",
+        "expected_output": "要使用date_part函数提取特定时间的季度，可以使用以下语法：\n\n```\nSELECT EXTRACT(QUARTER FROM timestamp_column);\n```\n\n例如，如果要提取特定时间戳字段`timestamp_column`的季度，可以使用以下查询：\n\n```\nSELECT EXTRACT(QUARTER FROM TIMESTAMP '2001-02-16 20:38:40');\n```\n\n这将返回该时间戳所在的季度（1-4）。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "7\n(1 row)\n```\nyear\n年份域。\n```\nopenGauss=# SELECT EXTRACT(YEAR FROM TIMESTAMP '2001-02-16 20:38:40');\n date_part \n  2001\n(1 row)\n```\ndate_part\ndate_part函数是在传统的Ingres函数的基础上制作的（该函数等效于SQL标准函数extract）：\ndate_part('field', source)\n这里的field参数必须是一个字符串，而不是一个名称。有效的field与extract一样，详细信息请参见EXTRACT。\n示例：\n```\nopenGauss=# SELECT date_part('day', TIMESTAMP '2001-02-16 20:38:40');\n date_part\n(1 row)\n```\n```\nopenGauss=# SELECT date_part('hour', INTERVAL '4 hours 3 minutes');\n date_part\n(1 row)\n```\nminute\n分钟域（0-59）。\n```\nopenGauss=# SELECT EXTRACT(MINUTE FROM TIMESTAMP '2001-02-16 20:38:40');\n date_part \n    38\n(1 row)\n```\nmonth\n如果source为timestamp，表示一年里的月份数（1-12）。\n```\nopenGauss=# SELECT EXTRACT(MONTH FROM TIMESTAMP '2001-02-16 20:38:40');\n date_part \n     2\n(1 row)\n```\n如果source为interval，表示月的数目，然后对12取模（0-11）。\n```\nopenGauss=# SELECT EXTRACT(MONTH FROM INTERVAL '2 years 13 months');\n date_part \n     1\n(1 row)\n```\n1\n(1 row)\n```\nquarter\n该天所在的该年的季度（1-4）。\n```\nopenGauss=# SELECT EXTRACT(QUARTER FROM TIMESTAMP '2001-02-16 20:38:40');\n date_part \n     1\n(1 row)\n```\nsecond\n秒域，包括小数部分（0-59）。\n```\nopenGauss=# SELECT EXTRACT(SECOND FROM TIME '17:12:28.5');\n date_part \n  28.5\n(1 row)\n```\ntimezone\n与UTC的时区偏移量，单位为秒。正数对应UTC东边的时区，负数对应UTC西边的时区。\ntimezone_hour\n时区偏移量的小时部分。\ntimezone_minute\n时区偏移量的分钟部分。\n"
+        ]
+    },
+    {
+        "model": "Yuan2-2B-Februa-hf",
+        "field": "gauss",
+        "language": "zh",
+        "input": "PG_STAT_SYS_TABLES视图中的relname字段表示什么？",
+        "actual_output": " PG_STAT_SYS_TABLES视图中的relname字段表示什么？<sep> 在SQL Server中，视图中的relname字段表示该表中实际存储的数据类型和长度。例如，如果该表包含一个字段名为\"name\"，其数据类型为\"VARCHAR(100)\"，则表示该字段实际存储的是长度为100的字符串类型数据。<eod>",
+        "expected_output": "根据文档内容，PG_STAT_SYS_TABLES视图中的relname字段表示系统表的表名。在该视图中，relname字段的类型为name，描述为表名，用于显示系统表的名称。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "PG_STAT_SYS_TABLES\nPG_STAT_SYS_TABLES视图显示pg_catalog、information_schema模式的所有命名空间中系统表的统计信息。\n表 1  PG_STAT_SYS_TABLES字段\n名称 \n \n 类型 \n \n 描述 \n \n relid \n \n oid \n \n 表的OID。 \n \n schemaname \n \n name \n \n 该表的模式名。 \n \n relname \n \n name \n \n 表名。 \n \n seq_scan \n \n bigint \n \n 该表发起的顺序扫描数。\n{\"point\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。\", \"ADM_TYPES视图描述数据库中的所有对象类型。\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。\", \"ADM_USERS视图存储关于数据库所有用户名信息。\", \"ADM_VIEWS视图存储关于数据库内的视图信息。\", \"这些系统视图同时存在于PG_CATALOG和SYS schema下。\", \"普通用户需要授权才能访问这些系统视图。\"], \"question\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\n如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。如何查看特定表的统计信息历史记录?\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。如何查看表的平均行长和行数?\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。如何查看特定触发器的触发事件类型?\", \"ADM_TYPES视图描述数据库中的所有对象类型。如何查看特定对象类型的属性数?\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。如何查看特定对象类型的字段名和数据类型?\", \"ADM_USERS视图存储关于数据库所有用户名信息。如何查看特定用户的账户状态和到期日期?\", \"ADM_VIEWS视图存储关于数据库内的视图信息。如何查看特定视图的创建语句和文本长度?\"], \"answer\": [\"要查看特定用户被授予的权限，可以通过查询ADM_TAB_PRIVS视图来实现。\n"
+        ]
+    }
+]

@@ -1,0 +1,23 @@
+[
+    {
+        "question": "I hope to improve query efficiency by adjusting the memory cache settings of the database. I need to understand the current cache usage status and configuration.",
+        "answer": "Thought: First, I need to understand the current database cache configuration and the adjustable knob parameters. Then, I also need to check the database cache performance information to evaluate the current cache usage status.\n\nAction: database_state_info\n        Action_Input: knob\n\nObservation: \n        {\n            'buffer_pool_size': '8GB',\n            'shared_buffers': '4GB',\n            'max_connections': '1000',\n            'effective_cache_size': '16GB'\n        }\n\nThought: Using the database_state_info tool, I obtained the database cache configuration information, including parameters such as buffer_pool_size, shared_buffers, max_connections, and effective_cache_size.\n\nAction: database_performance_info\n        Action_Input: cache\n\nObservation: \n        {\n            'cache_hit_ratio': '0.85',\n            'cache_eviction_rate': '100MB/s',\n            'cache_usage': '70%'\n        }\n\nThought: Using the database_performance_info tool, I obtained the performance information of the database cache, including metrics such as cache hit ratio, cache eviction rate, and cache usage.\n\nFinal_Response: Based on the database's cache configuration information and performance metrics, further evaluation of the current cache usage situation can be conducted to adjust relevant knob parameters to improve query efficiency.\n    \n",
+        "field": "tool",
+        "tool": [
+            "database_state_info",
+            "database_performance_info"
+        ],
+        "format": [
+            {
+                "tool": "database_state_info",
+                "Content requirement": "must be one or multi-states info, and must choose from the following options: knob, index, view.",
+                "Format requirement": "format is as follows #type"
+            },
+            {
+                "tool": "database_performance_info",
+                "Content requirement": "must be one or multi-states info, and must choose from the following options: cache, query, connection.",
+                "Format requirement": "format is as follows #type"
+            }
+        ]
+    }
+]

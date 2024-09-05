@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-sft",
+        "field": "general",
+        "language": "en",
+        "input": "How to use oracle check constraints to limit number of registration?\n\nI've a user table with unique user\\_id. User can register using there id. Now I want to limit the max. registration per user using CHECK constraints. so I use this:\n\n\n```\n.... CHECK(select count(user_id) from user where ... ...)\n```\n\nBut it's show subquery cannot use in check constraints.\n\nCan anyone tell me how can I add this condition?",
+        "actual_output": " You need to create a function based index on `user` table that will return number of rows matching your condition.\n\n\n```\nCREATE UNIQUE INDEX USER_IDX ON user (user_id)\nWHERE  COUNT(*) <= 10;\n```\n\n> \n> Function-based indexes are used when you want to filter data in a way that is not supported directly by a standard b-tree index. For example, you might want to filter on the result of an expression, such as `WHERE id > 2*3`, or on the value returned by a user-defined function, such as `WHERE f(id) = 'ABC'`.\n> \n> \n> \n\n[Oracle documentation](http://docs.oracle.com/cd/B19306_01/server.102/b14200/statements_7001.htm#i2121815)",
+        "expected_output": "Under certain conditions, you can enforce table restrictsion with *materialized views*:\n\n\n```\ncreate table tq84_t (\n  user_id   number,\n  foo       varchar2(10),\n  constraint pk_tq84_t primary key (user_id, foo)\n);\n\ncreate materialized view log on tq84_t;\n\ncreate materialized view tq84_mv \n refresh on commit\nas\n  select user_id, count(*) cnt\n    from tq84_t\n   group by user_id;\n\nalter table tq84_mv\n  add constraint check_max_2_registrations \n  check (cnt < 3);\n```\n\nWith this materialized view, Oracle checks the constraint on the materialized view when you commit:\n\n\n```\ninsert into tq84_t values (1, 'a');\ninsert into tq84_t values (1, 'b');\n\ncommit;\n```\n\nThis works. The following doesn't:\n\n\n```\ninsert into tq84_t values (1, 'c');\n\ncommit;\n```\n\nIt fails with\n\n\n```\nORA-12008: error in materialized view refresh path\nORA-02290: check constraint (META.CHECK_MAX_2_REGISTRATIONS) violated\n```",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    },
+    {
+        "model": "Baichuan2-sft",
+        "field": "general",
+        "language": "en",
+        "input": "Is using SUM() twice suboptimal?\n\nI know I have to write `SUM` twice, if I wish to use it in a `HAVING` clause (or use a derived table otherwise):\n\n\n```\nSELECT  id,\n  sum(hours) AS totalhours\n  FROM mytable\n  GROUP BY id\n  HAVING sum(hours) > 50;\n```\n\nMy question now is, whether or not this is suboptimal. As a programmer, this query looks like the DB will calculate the sum twice. Is that so, or should I rely on optimizations the DB engine will do for me?\n\nUpdate: an explain of a comparable query:\n\n\n```\npostgres=> explain select sum(counttodo) from orderline group by orderlineid having sum(counttodo) > 100;\n                             QUERY PLAN                             \n--------------------------------------------------------------------\n HashAggregate  (cost=1.31..1.54 rows=18 width=8)\n   Filter: (sum(counttodo) > 100)\n   ->  Seq Scan on orderline  (cost=0.00..1.18 rows=18 width=8)\n(3 rows)\n```",
+        "actual_output": " You can rewrite your query as follows:\n\n\n```\nselect id, sum(hours) as totalhours\nfrom mytable\ngroup by id\nhaving sum(hours) > 50\nlimit 1;\n```\n\nThis way you only need one `sum()`. But note that this query will only return the first row that matches the condition. If you want all matching rows then you'll need two sums again.",
+        "expected_output": "The sum is only computed once.\n\nI verified this using\n\n\n```\ncreate table mytable (id int, hours int);\ninsert into mytable values (1, 60);\nselect sum(hours) from mytable group by id having sum(hours) > 50;\n```\n\nand then used a debugger to check how many times `int4_sum` (the transition function behind the `sum` aggregate) was called: once.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    }
+]

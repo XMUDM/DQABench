@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-sft",
+        "field": "gauss",
+        "language": "zh",
+        "input": "在openGauss中，gs_checkos工具的语法包括哪些？",
+        "actual_output": " gs_checkos -i ITEM [-f HOSTFILE] [-h HOSTNAME] [-X XMLFILE] [--detail] [-o OUTPUT] [-l LOGFILE]\n\n其中参数i表示：\n\n–i, --item=ITEM：指定检查项。gs_checkos帮助命令如下：\n\ngs_checkos -? | --help\n\n查看gs_checkos帮助信息\n\ngs_checkos [-f HOSTFILE] [-h HOSTNAME] [-X XMLFILE] [-o OUTPUT] [-l LOGFILE] [--detail]\n\n查看gs_checkos帮助信息\n\n其中参数f表示：\n\n–f, --filename=FILENAME：读取配置文件。\n\n其中参数h表示：\n\n–h, --hostname=HOSTNAME：指定主机名称。\n\n其中参数X表示：\n\n–X, --xmlfile=XMLFILE：指定xml配置文件。\n\n其中参数o表示：\n\n–o, --output=OUTPUT：指定输出文件。\n\n其中参数l表示：\n\n–l, --logfile=LOGFILE：指定日志文件及存放路径。\n\n其中参数--detail表示：\n\n–--detail, -D：只检查升级相关的项。\n\n其中参数-h表示：\n\n–-h, --help：打印帮助信息。",
+        "expected_output": "根据文档内容，gs_checkos工具的语法包括以下几种：\n\n1. 检查操作系统信息：\n\n   ```\n   gs_checkos -i ITEM [-f HOSTFILE] [-h HOSTNAME] [-X XMLFILE] [--detail] [-o OUTPUT] [-l LOGFILE] \n   ```\n\n2. 显示帮助信息：\n\n   ```\n   gs_checkos -? | --help \n   ```\n\n3. 显示版本号信息：\n\n   ```\n   gs_checkos -V | --version\n   ```\n\n用户可以根据需要选择不同的语法来执行gs_checkos工具，例如检查操作系统信息、显示帮助信息或显示版本号信息。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "gs_checkos\n背景信息\ngs_checkos工具用来帮助检查操作系统、控制参数、磁盘配置等内容，并对系统控制参数、I/O配置、网络配置和THP服务等信息进行配置。\n前提条件\n当前的硬件和网络环境正常。\n各主机间root互信状态正常。\n只能使用root用户执行gs_checkos命令。\n说明：\n该工具不支持独立调用，出于安全考虑，企业版安装方式下，前置完成后会自动删除。\n语法\n检查操作系统信息\ngs_checkos -i ITEM [-f HOSTFILE] [-h HOSTNAME] [-X XMLFILE] [--detail] [-o OUTPUT] [-l LOGFILE]\n显示帮助信息\ngs_checkos -? | --help\n显示版本号信息\ngs_checkos -V | --version\n参数说明\n显示帮助信息\ngs_checkos -? | --help\n显示版本号信息\ngs_checkos -V | --version\n参数说明\n-i\n列表编号。格式：-i A、-i B1、-i A1 -i A2或-i A1,A2。\n取值范围：A1...A14、B1...B8。\n 说明： \nA1...A14 表示只检查操作系统参数，并不设置。\nB1...B8 表示将参数系统参数设置为期望值。\nA和B不能同时输入。\n详细的检查项请参见表1。\n-f\n主机名称列表文件。\n 说明： \n-f和-h参数不能同时使用。\n取值范围：主机名称的列表。\n-h\n指定需要检查的主机名称，可以同时指定多个主机，主机之间使用“,”分割。\n取值范围：openGauss的主机名称。如果不指定主机，则检查当前主机。\n-X\nopenGaussXML配置文件。\n-X\nopenGaussXML配置文件。\n--detail\n显示检查结果详情。\n-o\n指定OS检查报告输出到指定的文件。\n不指定则将检查结果输出到屏幕上。\n-l\n指定日志文件及存放路径。\n默认值：/tmp/gs_checkos/gs_checkos-YYYY-MM-DD_hhmmss.log。\n-?, --help\n显示帮助信息。\n-V, --version\n显示版本号信息。\n表 1  操作系统检查项\n编号 \n \n 检查项 \n \n 检查项详细说明 \n \n A1 \n \n 操作系统版本（OS version status） \n \n 操作系统版本检查：保证主机平台是支持的openEuler和CentOS平台中的一种。同时保证 openGauss 各个主机的平台是属于同一混编范围的。 \n \n A2 \n \n 内核版本（Kernel version status） \n \n 内核版本检查。\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-sft",
+        "field": "gauss",
+        "language": "zh",
+        "input": "在openGauss中，查询GS_WLM_USER_RESOURCE_HISTORY系统表需要什么权限？",
+        "actual_output": " 查询GS_WLM_USER_RESOURCE_HISTORY系统表需要sysadmin权限。",
+        "expected_output": "查询GS_WLM_USER_RESOURCE_HISTORY系统表需要sysadmin权限，并且仅在数据库postgres下面查询时有数据。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "GS_WLM_USER_RESOURCE_HISTORY\nGS_WLM_USER_RESOURCE_HISTORY系统表存储与用户使用资源相关的信息。该系统表的每条记录都是对应时间点某用户的资源使用情况，包括：内存、CPU核数、存储空间、临时空间、算子落盘空间、逻辑IO流量、逻辑IO次数和逻辑IO速率信息。其中，内存、CPU、IO相关监控项仅记录用户复杂作业的资源使用情况。对于IO相关监控项，当参数enable_logical_io_statistics为on时才有效；当参数enable_user_metric_persistent为on时，才会开启用户监控数据保存功能。GS_WLM_USER_RESOURCE_HISTORY系统表的数据来源于PG_TOTAL_USER_RESOURCE_INFO视图。查询该系统表需要sysadmin权限，且仅在数据库postgres下面查询时有数据。\n表 1  GS_WLM_USER_RESOURCE_HISTORY\n名称 \n \n 类型 \n \n 描述 \n \n username\n表 1  GS_WLM_USER_RESOURCE_HISTORY\n名称 \n \n 类型 \n \n 描述 \n \n username \n \n text \n \n 用户名 \n \n timestamp \n \n timestamp with time zone \n \n 时间戳 \n \n used_memory \n \n integer \n \n 正在使用的内存大小，单位MB。 \n \n total_memory \n \n integer \n \n 可以使用的内存大小，单位为MB。值为0表示未限制最大可用内存，其限制取决于数据库最大可用内存。 \n \n used_cpu \n \n real \n \n 正在使用的CPU核数。 \n \n total_cpu \n \n integer \n \n 该机器节点上，用户关联控制组的CPU核数总和。 \n \n used_space\n如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。如何查看特定表的统计信息历史记录?\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。如何查看表的平均行长和行数?\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。如何查看特定触发器的触发事件类型?\", \"ADM_TYPES视图描述数据库中的所有对象类型。如何查看特定对象类型的属性数?\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。如何查看特定对象类型的字段名和数据类型?\", \"ADM_USERS视图存储关于数据库所有用户名信息。如何查看特定用户的账户状态和到期日期?\", \"ADM_VIEWS视图存储关于数据库内的视图信息。如何查看特定视图的创建语句和文本长度?\"], \"answer\": [\"要查看特定用户被授予的权限，可以通过查询ADM_TAB_PRIVS视图来实现。\n"
+        ]
+    }
+]

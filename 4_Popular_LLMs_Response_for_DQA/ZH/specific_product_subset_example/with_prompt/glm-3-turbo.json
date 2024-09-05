@@ -1,0 +1,32 @@
+[
+    {
+        "model": "glm-3-turbo",
+        "field": "gauss",
+        "language": "zh",
+        "input": "Bgwriter是什么？它的作用是什么？",
+        "actual_output": "Bgwriter是数据库启动时创建的一个后台写线程，它的作用是将数据库中的脏页面写入到持久性设备（如磁盘）中。脏页面是指那些已经被修改但还没有写入磁盘的页面。Bgwriter线程负责将这些脏页面定期写入磁盘，以确保数据库的一致性和持久性。",
+        "expected_output": "Bgwriter是数据库启动时创建的一个后台写线程，用于将数据库中脏页面写入到持久性设备（例如磁盘）中。其作用是确保数据库中的数据在内存中和持久性设备之间的一致性，即将内存中的脏数据（已被修改但尚未写入磁盘）及时写入磁盘，以保证数据的持久性和可靠性。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "数据库启动时创建的一个后台写线程，此线程用于将数据库中脏页面写入到持久性设备（例如磁盘）中。 \n \n bit \n \n 比特。计算机处理的最小的信息单位。比特用来表示二进制数字1或0，或者一种逻辑条件真或假。在物理上，比特表示一个电路上高或低的电压点或者磁盘上的磁化单程或其它。一个单独的比特位所传达的信息很少有意义的。然而，一个8位组却构成了一个字节，可用于表示如一个英文字母，十进制数字，或其它字符等多种类型的信息。 \n \n Bloom Filter\n术语表\n表 1  术语表\n术语 \n \n 解释 \n \n A – E \n \n ACID \n \n 在可靠数据库管理系统（DBMS）中，事务（transaction）所应该具有的四个特性：原子性（Atomicity）、一致性（Consistency）、隔离性（Isolation）和持久性（Durability）。 \n \n AZ \n \n Available Zone，通常指一个机房。 \n \n Bgwriter \n \n 数据库启动时创建的一个后台写线程，此线程用于将数据库中脏页面写入到持久性设备（例如磁盘）中。 \n \n bit"
+        ]
+    },
+    {
+        "model": "glm-3-turbo",
+        "field": "gauss",
+        "language": "zh",
+        "input": "GS_WLM_REBUILD_USER_RESOURCE_POOL视图的字段gs_wlm_rebuild_user_resource_pool表示什么？",
+        "actual_output": "GS_WLM_REBUILD_USER_RESOURCE_POOL视图的字段gs_wlm_rebuild_user_resource_pool是一个布尔类型字段，用来表示重建内存中用户资源池信息的结果。如果值为t，表示重建成功；如果值为f，表示重建失败。这个视图主要用于在当前连接节点上重建用户的资源池信息，在资源池信息缺失或错乱时用作补救措施。查询这个视图需要sysadmin权限。",
+        "expected_output": "字段gs_wlm_rebuild_user_resource_pool表示在查询GS_WLM_REBUILD_USER_RESOURCE_POOL视图时，返回的结果中是否成功重建了内存中用户资源池信息。具体来说，当该字段的取值为\"t\"时，表示重建成功；当取值为\"f\"时，表示重建失败。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "GS_WLM_REBUILD_USER_RESOURCE_POOL\n该视图用于在当前连接节点上重建内存中用户的资源池信息，无输出。只是用于资源池信息缺失或者错乱时用作补救措施。查询该视图需要sysadmin权限。\n表 1  GS_WLM_REBUILD_USER_RESOURCE_POOL的字段\n名称 \n \n 类型 \n \n 描述 \n \n gs_wlm_rebuild_user_resource_pool \n \n boolean \n \n 重建内存中用户资源池信息结果。t为成功，f为失败。\n\", \"根据文档中提供的信息，要查看特定用户的账户状态和到期日期，可以使用ADM_USERS视图。该视图存储了数据库所有用户名信息，包括用户名称、账户状态、到期日期等字段。\\n\\n具体查询语句如下：\\n```sql\\nSELECT account_status, expiry_date\\nFROM ADM_USERS\\nWHERE username = '特定用户的用户名';\\n```\\n\\n在上述查询语句中，将\\\"特定用户的用户名\\\"替换为你要查询的具体用户的用户名，即可查看该用户的账户状态和到期日期信息。\", \"要查看特定视图的创建语句和文本长度，可以使用ADM_VIEWS系统视图。具体步骤如下：\\n\\n1. 查询特定视图的创建语句：\\n```sql\\nSELECT TEXT_VC\\nFROM ADM_VIEWS\\nWHERE view_name = 'your_view_name';\\n```\\n将'your_view_name'替换为你要查询的视图名称。\n{\"point\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\", \"ADM_TAB_STATISTICS显示数据库中所有表的优化程序统计信息。\", \"ADM_TRIGGERS视图存储关于数据库内的触发器信息。\", \"ADM_TYPES视图描述数据库中的所有对象类型。\", \"ADM_TYPE_ATTRS视图描述当前数据库对象类型的属性。\", \"ADM_USERS视图存储关于数据库所有用户名信息。\", \"ADM_VIEWS视图存储关于数据库内的视图信息。\", \"这些系统视图同时存在于PG_CATALOG和SYS schema下。\", \"普通用户需要授权才能访问这些系统视图。\"], \"question\": [\"ADM_TAB_PRIVS视图存储数据库中的所有对象授权信息，需要系统管理员权限才能访问。如何查看特定用户被授予的权限?\", \"ADM_TAB_STATS_HISTORY系统视图提供数据库所有表的表统计信息历史。\n"
+        ]
+    }
+]

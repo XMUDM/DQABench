@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-sft",
+        "field": "tool",
+        "language": "zh",
+        "input": "数据库的连接权限管理策略是什么，如何确定当前所有活跃连接的权限等级？",
+        "actual_output": " Thought: 我需要查询数据库的状态信息来获取连接权限管理策略以及确定当前所有活跃连接的权限等级。\n\n Action: database_state_info\n\n Action_Input: knob=connection_permission_level\n\n Observation:",
+        "expected_output": "Thought: 对于数据库的连接权限管理策略，我可以通过查询数据库的状态信息来获取连接权限的配置。然后，我可以通过执行SQL语句来确定当前所有活跃连接的权限等级。\n\nAction: database_state_info\n\nAction_Input: knob=connection_permission\n\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: must be one or multi-states info, and must choose from the following options: knob, index, view.\nFormat requirement: format is as follows #type=#specific_value.\n\ntool: sql_executor\nContent requirement: must be a SQL query statement.\nFormat requirement: format is as follows #type '            #query_statement            '\n\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-sft",
+        "field": "tool",
+        "language": "zh",
+        "input": "数据库的连接权限管理策略是什么，如何确定当前所有活跃连接的权限等级？",
+        "actual_output": "调用工具失败",
+        "expected_output": "Thought: 对于数据库的连接权限管理策略，我可以通过查询数据库的状态信息来获取连接权限的配置。然后，我可以通过执行SQL语句来确定当前所有活跃连接的权限等级。\n\nAction: database_state_info\n\nAction_Input: knob=connection_permission\n\nObservation: 'connection_permission': 'Restricted'\n\nThought: 从工具输出的结果可知，数据库的连接权限管理策略为Restricted，接下来我可以查询当前所有活跃连接的权限等级。\n\nAction: sql_executor\n\nAction_Input: '\n            SELECT user, privilege_type \n            FROM information_schema.role_table_grants \n            WHERE grantee IN (SELECT DISTINCT usename FROM pg_stat_activity);\n        '\n\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: must be one or multi-states info, and must choose from the following options: knob, index, view.\nFormat requirement: format is as follows #type=#specific_value.\n\ntool: sql_executor\nContent requirement: must be a SQL query statement.\nFormat requirement: format is as follows #type '            #query_statement            '\n\n"
+        ]
+    }
+]

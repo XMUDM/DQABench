@@ -1,0 +1,23 @@
+[
+    {
+        "question": "How to evaluate the concurrent query processing capability of the GaussDB database to ensure performance is not affected during peak hours?",
+        "answer": "Thought: To evaluate the database's concurrent query processing capability, I need to understand the performance information of the database and recent workload situations in order to identify potential performance bottlenecks.\n\nAction: database_performance_info\n\nAction_Input: cpu, io, cache\n\nObservation: \n        {\n            'cpu': 'CPU utilization is 70%',\n            'io': 'Disk IO response time is 10ms',\n            'cache': 'Cache hit ratio is 90%'\n        }\n\nThought: Based on the performance information, it is noted that CPU utilization is high, IO response time is long, and cache hit ratio is high, indicating potential performance bottlenecks. The next step is to examine the recent workload situation.\n\nAction: workload_info\n\nAction_Input: None\n\nObservation: \n        {\n            'most_frequent_query': 'SELECT * FROM table_name WHERE condition;'\n        }\n\nThought: The most frequently executed query recently is SELECT * FROM table_name WHERE condition;, which can help me understand the hot queries in the database and further evaluate the concurrent query processing capability.\n\nFinal_Answer: By analyzing the performance information of the database and recent workload situations, the concurrent query processing capability of the GaussDB database can be evaluated to ensure performance is not affected during peak hours. It is recommended to optimize high-frequency queries, adjust indexes, or partitioning strategies to enhance performance.\n",
+        "field": "tool",
+        "tool": [
+            "database_performance_info",
+            "workload_info"
+        ],
+        "format": [
+            {
+                "tool": "database_performance_info",
+                "Content requirement": "must be one or multi-states info, and must choose from the following options: cpu, io, cache.",
+                "Format requirement": "format is as follows #type, #type, #type."
+            },
+            {
+                "tool": "workload_info",
+                "Content requirement": "Input as None",
+                "Format requirement": "Input as None"
+            }
+        ]
+    }
+]

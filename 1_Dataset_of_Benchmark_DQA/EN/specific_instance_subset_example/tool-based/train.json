@@ -1,0 +1,15 @@
+[
+    {
+        "question": "I want to understand the performance information of the database's CPU and cache in order to evaluate the system's bottlenecks.",
+        "answer": "Thought: To understand the performance information of the database's CPU and cache, I can use the database_performance_info tool to query the CPU and cache performance information.\n\nAction: database_performance_info\n\nAction_input: cpu,cache\n\nObservation: \"cpu: {'user': 50, 'system': 10, 'idle': 40}, cache: {'hit rate': 0.85}\"\n\nThought: Based on the tool's output, in the database's CPU usage, the user state accounts for 50%, the system state accounts for 10%, and the idle state accounts for 40%. At the same time, the database's cache hit rate is 85%.\n\nFinal_Answer: To evaluate the system's bottlenecks, the database's CPU usage is 50% (user state) + 10% (system state), with the idle state accounting for 40%. The cache hit rate is 85%, meaning 85% of queries can retrieve data from the cache without needing to read from the disk. Based on these metrics, it can be preliminarily determined that the system's bottleneck may be due to insufficient CPU performance or cache hit rate. Consider optimizing queries, increasing hardware resources, or adjusting cache strategies to improve system performance.",
+        "tool": "database_performance_info",
+        "field": "tool",
+        "format": [
+            {
+                "tool": "database_performance_info",
+                "Content requirement": "The input must be only one or more of the three keywords: cpu, io, cache.",
+                "Format requirement": "format is as follows #type,#type."
+            }
+        ]
+    }
+]

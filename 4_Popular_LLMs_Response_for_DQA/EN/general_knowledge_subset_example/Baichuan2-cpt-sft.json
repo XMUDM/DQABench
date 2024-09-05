@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "general",
+        "language": "en",
+        "input": "Check database connectivity\n\nI'm writing a unix script to check for database connectivity in a server. When my database connection gets errored out or when there is delay observed in connecting to the database, I want the output as \"Not connected\". In case it gets connected, my output should be \"Connected\". It is a Oracle databse.\n\nWhen there is delay in database connectivity, my code is not working and my script gets hung. What changes should I make in my code so that it is able to handle both the conditions(when I get an error connecting to the database and when there is delay observed in connecting to the database)??\n\n\n```\nif sqlplus $DB_USER/$DB_PASS@$DB_INSTANCE< /dev/null | grep 'Connected to'; then\necho \"Connectivity is OK\"\nelse\necho \"No Connectivity\"\nfi\n```",
+        "actual_output": " To ensure your script can handle both errors in database connectivity and delays, you need to modify your code to include a timeout setting. This will prevent your script from getting stuck while waiting for the database connection. \n\nHere is how you can adjust your script:\n\n1. Add a timeout parameter after the `sqlplus` command:\n   \n   ```bash\n   if sqlplus $DB_USER/$DB_PASS@$DB_INSTANCE < /dev/null timeout 5; then\n       echo \"Connectivity is OK\"\n   else\n       echo \"No Connectivity\"\n   fi\n   ```\n\n2. Set the timeout value based on your requirements. You can adjust the number of seconds (e.g., 5 seconds) to suit your needs.\n\nBy adding the timeout parameter, your script will now exit gracefully after a specified time if the database connection fails or experiences delays. This will help prevent your script from getting stuck and ensure it can handle various scenarios effectively.",
+        "expected_output": "The first thing to add to your code is a timeout. Checking database connectivity is not easy and there can be all kinds of problems in the various layers that your connection passes. A timeout gives you the option to break out of a hanging session and continue the task with reporting that the connection failed.\n\ngoogleFu gave me a few nice examples:\n[Timeout a command in bash without unnecessary delay](https://stackoverflow.com/questions/687948/timeout-a-command-in-bash-without-unnecessary-delay)",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    },
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "general",
+        "language": "en",
+        "input": "Select bigger data From a table\n\n```\nborrow_id borrower_id book_id borrow_date expected_return_date\n        1          19       6 0000-00-00  0000-00-00\n        2           1      10 0000-00-00  0000-00-00\n        3          20       1 0000-00-00  0000-00-00\n        4          18       3 2016-04-30  2016-05-02\n        5          19       8 2016-04-30  2016-05-03\n        6          21       7 2016-04-30  2016-05-03\n        7          22      14 2016-01-05  0000-00-00\n        8          13       1 2016-05-02  2016-06-04\n        9          18       3 2016-06-02  2016-05-26\n       12          23      14 2016-06-02  2016-05-03\n       13           1       5 2016-05-02  0000-00-00\n       14          23       1 2016-05-02  2016-05-03\n```\n\nThis is my table. For same values of borrower\\_id column I want one borrow\\_id which is bigger of all. for example there are borrower\\_id 19 two times.I want borrow\\_id 5 row not borrow\\_id 1 row as 5>1.\n\nWhat will be the query for that?",
+        "actual_output": " To select the record with the highest `borrow_id` for each unique `borrower_id`, you can use the following SQL query:\n\n```sql\nSELECT * FROM your_table t1 WHERE borrow_id = (SELECT MAX(borrow_id) FROM your_table t2 WHERE t1.borrower_id = t2.borrower_id);\n```\n\nIn this query, replace `your_table` with the actual name of your table. This query will return the records where the `borrow_id` is the highest for each distinct `borrower_id`.",
+        "expected_output": "You can use a where in with a subselect grop by \n\n\n```\n select * from my_table \n where (borrow_id, borrower_id)  in  (select max(borrow_id), borrower_id \n       from my_table group by borrower_id);\n```",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    }
+]

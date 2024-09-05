@@ -1,0 +1,32 @@
+[
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "tool",
+        "language": "en",
+        "input": "I want to know the current backup strategy configuration of the database to ensure quick data recovery in case of failure.",
+        "actual_output": "Thought: To determine the current backup strategy configuration of the database, we need to gather information related to database backup settings and schedules.\nAction: database_state_info\nAction_Input: knob, backup_strategy_configuration\nObservation:",
+        "expected_output": "Thought: I need to query the backup strategy configuration of the database to ensure quick data recovery in case of failure. First, I need to use the tool database_state_info to obtain the backup strategy configuration information.\n\nAction: database_state_info\n\nAction_Input: knob, Backup Strategy\n\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: must be one or multi-states info, and must choose from the following options: knob, index, view.\nFormat requirement: format is as follows #type, #specific_value.\n\n"
+        ]
+    },
+    {
+        "model": "gpt-3.5-turbo-0125",
+        "field": "tool",
+        "language": "en",
+        "input": "I want to know the current backup strategy configuration of the database to ensure quick data recovery in case of failure.",
+        "actual_output": "Thought: To determine the current backup strategy configuration of the database, we need to gather information related to database backup settings and schedules.\nAction: database_state_info\nAction_Input: knob, backup_strategy_configuration\nObservation: Backup strategy configuration information is as follows:\n{\n'Backup Strategy 1': 'Automatically perform a full backup every day at midnight',\n'Backup Strategy 2': 'Perform a full backup every Sunday and incremental backups daily at midnight'\n}\n\nFinal_Answer: The current backup strategy configuration of the database includes automatically performing a full backup every day at midnight and performing a full backup every Sunday with incremental backups daily at midnight.",
+        "expected_output": "Thought: I need to query the backup strategy configuration of the database to ensure quick data recovery in case of failure. First, I need to use the tool database_state_info to obtain the backup strategy configuration information.\n\nAction: database_state_info\n\nAction_Input: knob, Backup Strategy\n\nObservation: Backup strategy configuration information is as follows:\n{\n'Backup Strategy 1': 'Automatically perform a full backup every day at midnight',\n'Backup Strategy 2': 'Perform a full backup every Sunday and incremental backups daily at midnight'\n}\n\nThought: Based on the backup strategy configuration information output by the tool, the database currently adopts two backup strategies, which are automatically performing a full backup every day at midnight and performing a full backup every Sunday, along with incremental backups daily at midnight.\n\nFinal_Answer: The current backup strategy configuration of the database is to automatically perform a full backup every day at midnight and perform a full backup every Sunday, along with incremental backups daily at midnight. This backup strategy ensures quick data recovery in case of failure.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: database_state_info\nContent requirement: must be one or multi-states info, and must choose from the following options: knob, index, view.\nFormat requirement: format is as follows #type, #specific_value.\n\n"
+        ]
+    }
+]

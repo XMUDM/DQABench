@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, what flexible data import methods does openGauss database provide?",
+        "actual_output": " According to the documentation, openGauss database provides the following flexible data import methods:\n\n1. **INSERT**: Insert one or more rows of data at a time.\n2. **COPY**: Import data from a file into a table using the COPY FROM STDIN statement.\n3. **gsql tool's \\copy meta-command**: Similar to the COPY command but does not require the client to be in interactive mode.\n4. **gs_restore**: Import data and object definitions from a backup into a database using the gs_restore tool.\n5. **gs_dump and gs_dumpall**: Export data and object definitions from a database or all databases to a file, supporting the recovery of data and objects to a specified time point.\n\nTherefore, openGauss database provides these flexible data import methods for users to choose based on their needs.",
+        "expected_output": "openGauss database provides the following flexible data import methods:\n\n1. **INSERT**: Insert one or more rows of data through the INSERT statement, as well as insert data from a specified table.\n\n2. **COPY**: Write data directly to the openGauss database using the COPY FROM STDIN statement. When using the CopyManager interface of the JDBC driver to write data from other databases to the openGauss database, it has the advantage of business data not needing to be landed as files.\n\n3. **\\copy meta-command of gsql tool**: Different from directly using the SQL statement COPY, this command can only read/write files located on the local machine of the gsql client. It is important to note that \\COPY is only suitable for small batches of well-formatted data import, does not preprocess illegal characters, lacks fault tolerance, and is not suitable for scenarios with abnormal data. Therefore, when importing data, the COPY method should be preferred.\n\nIn summary, openGauss database provides INSERT, COPY, and gsql meta-command \\copy as three flexible data import methods, allowing users to choose the appropriate method for data import operations based on specific requirements.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "openGauss数据库提供了灵活的数据入库方式：INSERT、COPY以及gsql元命令\\copy。各方式具有不同的特点，具体请参见表1。\n表 1  导入方式特点说明\n方式 \n \n 特点 \n \n INSERT \n \n 通过INSERT语句插入一行或多行数据，及从指定表插入数据。 \n \n COPY \n \n 通过COPY FROM STDIN语句直接向 openGauss 数据库 写入数据。 \n 通过JDBC驱动的CopyManager接口从其他数据库向 openGauss 数据库写入数据时，具有业务数据无需落地成文件的优势。 \n \n gsql工具的元命令\\copy \n \n 与直接使用SQL语句COPY不同，该命令读取/写入的文件只能是gsql客户端所在机器上的本地文件。 \n  说明：  \\COPY只适合小批量、格式良好的数据导入，不会对非法字符做预处理，也无容错能力，无法适用于含有异常数据的场景。导入数据应优先选择COPY。\n导入数据\n通过INSERT语句直接写入数据\n使用COPY FROM STDIN导入数据\n使用gsql元命令导入数据\n使用gs_restore命令导入数据\n更新表中数据\n深层复制\n分析表\n对表执行VACUUM\n管理并发写入操作\nopenGauss数据库提供了灵活的数据入库方式：INSERT、COPY以及gsql元命令\\copy。各方式具有不同的特点，具体请参见表1。\n表 1  导入方式特点说明\n\", \"要通过拷贝模板数据库来创建新数据库，可以按照以下步骤进行操作：\\n\\n1. 首先，连接到GaussDB数据库系统，确保您具有创建数据库的权限或者是数据库的系统管理员权限。\\n\\n2. 使用以下命令创建一个新的数据库，例如命名为\\\"new_database_name\\\"：\\n```sql\\nCREATE DATABASE new_database_name;\\n```\\n\\n3. 当结果显示为\\\"CREATE DATABASE\\\"时，表示创建成功。\\n\\n默认情况下，创建数据库实际上是通过拷贝模板数据库来创建新数据库，而默认情况下会拷贝\\\"template0\\\"模板数据库。请避免直接连接或操作两个模板数据库（template0和template1）。\\n\\n通过以上步骤，您可以成功创建一个新的数据库，该数据库将会拷贝模板数据库的结构和内容作为初始状态。\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-cpt-sft",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, what does the blks_hit field in GLOBAL_STATIO_ALL_SEQUENCES represent?",
+        "actual_output": " In GLOBAL_STATIO_ALL_SEQUENCES, the blks_hit field represents the number of cache hits in the sequence. Specifically, it indicates the number of times data was retrieved from memory cache when accessing the sequence, rather than reading data from disk. The higher this value, the more frequently the sequence is accessed in memory, reducing the number of times data is read from disk and improving performance.",
+        "expected_output": "The blks_hit field in GLOBAL_STATIO_ALL_SEQUENCES represents the number of cache hits in the sequence. Specifically, it indicates the number of times data was retrieved from memory cache when accessing the sequence, rather than reading data from disk. The higher the value of this field, the more frequently the data in the sequence is accessed in memory, which may result in better performance.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "GLOBAL_STATIO_ALL_SEQUENCES\nGLOBAL_STATIO_ALL_SEQUENCES包含各节点的数据库中每个序列的每一行，显示特定序列关于I/O的统计。\n表 1  GLOBAL_STATIO_ALL_SEQUENCES字段\n名称 \n \n 类型 \n \n 描述 \n \n node_name \n \n name \n \n 数据库进程名称。 \n \n relid \n \n oid \n \n 序列OID。 \n \n schemaname \n \n name \n \n 序列中模式名。 \n \n relname \n \n name \n \n 序列名。 \n \n blks_read \n \n bigint \n \n 从序列中读取的磁盘块数。 \n \n blks_hit \n \n bigint \n \n 序列中缓存命中数。\n列存表适合数据批量插入、更新较少和以查询为主统计分析类的场景。\", \"根据文档内容，选择行存表和列存表的具体情况如下：\\n\\n1. 行存表（Row Store Table）：\\n   - 数据按行存储到硬盘分区上，即一行数据是连续存储。\\n   - 适用于对数据需要经常更新的场景，如有频繁的INSERT、UPDATE操作。\\n   - 默认情况下，创建的表为行存储。\\n\\n2. 列存表（Column Store Table）：\\n   - 数据按列存储到硬盘分区上，即一列所有数据是连续存储的。\\n   - 适用于数据批量插入、更新较少和以查询为主统计分析类的场景。\\n   - 不适合点查询，但适合统计分析类查询和即席查询。\\n\\n选择行存表还是列存表的考虑因素包括：\\n- 更新频繁程度：频繁更新选择行存表。\\n- 插入频繁程度：少量频繁插入选择行存表，大批量插入选择列存表。\n\", \"行存储和列存储各有什么优缺点？\\n\\n行存储和列存储是两种不同的存储模型，它们各有优缺点，适用于不同的场景：\\n\\n行存储的优点：\\n1. 数据被保存在一起，INSERT/UPDATE操作容易。\\n2. 适合频繁进行增删改操作的场景。\\n\\n行存储的缺点：\\n1. SELECT查询时即使只涉及某几列，所有数据也都会被读取，可能导致性能下降。\\n\\n列存储的优点：\\n1. 查询时只有涉及到的列会被读取，提高查询效率。\\n2. 投影(Projection)效率高。\\n3. 任何列都能作为索引。\\n\\n列存储的缺点：\\n1. SELECT完成时，被SELECT的列要重新组装，可能影响性能。\\n2. INSERT/UPDATE操作相对复杂。\\n\\n总体来说，如果表的字段比较多（大宽表），查询中涉及到的列不多的情况下，适合使用列存储。如果表的字段个数比较少，查询大部分字段，那么选择行存储比较好。\n"
+        ]
+    }
+]

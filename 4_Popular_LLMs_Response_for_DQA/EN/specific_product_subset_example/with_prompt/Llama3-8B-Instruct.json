@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "gauss",
+        "language": "en",
+        "input": "How is the support component defined?",
+        "actual_output": "According to the provided knowledge, the support component is defined as a module provided by DBMind to support the deployment and implementation of the entire service and solution. It is not an AI function itself, but rather an essential part of the overall service system, used to support the rapid implementation of autonomous operation and maintenance solutions, such as the Prometheus Exporter component.",
+        "expected_output": "The support component refers to the modules provided by DBMind to support the deployment and implementation of the entire service and solution. They are not AI functions themselves, but they play a crucial role in the entire service system, enabling the rapid implementation of the autonomous operation and maintenance solution, such as exporters used for collecting database metrics.\n\nOne of the support components mentioned in the documentation is the **Prometheus Exporter component**. This component is a tool used to collect database metrics, exporting performance indicators, operational status, and other data to the Prometheus monitoring system for monitoring and analysis. Through the Prometheus Exporter component, users can monitor the database's operation in real-time, promptly identify issues, and take necessary actions to enhance the stability and performance of the database.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "DBMind的支持组件\n支持组件是指DBMind提供的用于支撑整个服务、解决方案能够部署和实施的模块。它们本身不是AI功能，却是整个服务体系中非常重要的一环，用于支撑整个自治运维解决方案的快速实施，如用于采集数据库指标的exporter等。\nPrometheus Exporter组件\n{\"point\": [\"创建数据库用户包括创建用户和设置用户权限\", \"创建和管理数据库需要具备相应权限，可以通过拷贝模板数据库来创建新数据库\", \"规划存储模型包括行列混合存储的优缺点以及适用场景\", \"创建和管理表空间可以控制数据库安装的磁盘布局，包括创建、查询、修改和删除表空间\", \"创建和管理表包括创建表和向表中插入数据的操作\"], \"question\": [\"如何创建一个新的数据库用户？\", \"如何设置一个用户为系统管理员？\", \"如何通过拷贝模板数据库来创建新数据库？\", \"如何查看数据库系统的数据库列表？\", \"如何修改数据库的默认模式搜索路径？\", \"如何删除一个数据库？\", \"行存储和列存储各有什么优缺点？\", \"如何创建一个行存表？\", \"如何创建一个列存表？\", \"如何选择行存表和列存表？\", \"如何创建一个新的表空间？\", \"如何查询表空间的当前使用情况？\", \"如何修改一个表空间的名称？\", \"如何删除一个表空间？\", \"如何创建一个新的表？\", \"如何向表中插入数据？\n\\n\\n总体来说，如果表的字段比较多（大宽表），查询中涉及到的列不多的情况下，适合使用列存储。如果表的字段个数比较少，查询大部分字段，那么选择行存储比较好。在实际应用中，可以根据具体的业务需求和数据特点来选择合适的存储模型。\", \"根据文档内容，创建一个行存表的操作步骤如下：\\n\\n1. 使用如下命令创建一个新的行存表customer_t1：\\n\\n```sql\\ngaussdb=# CREATE TABLE customer_t1\\n(\\n   c_customer_sk             integer,\\n   c_customer_id             char(5),\\n   c_first_name              char(6),\\n   c_last_name               char(8)\\n);\\n```\\n\\n2. 当结果显示为`CREATE TABLE`时，表示创建成功。\\n\\n这样就成功创建了一个行存表customer_t1，其中包含字段c_customer_sk、c_customer_id、c_first_name和c_last_name。\n"
+        ]
+    },
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "gauss",
+        "language": "en",
+        "input": "What are the fields in the PG_STAT_BGWRITER view?",
+        "actual_output": "Based on the provided knowledge, the fields in the PG_STAT_BGWRITER view are:\n\n1. checkpoints_timed - bigint - The number of timed checkpoints executed.\n2. checkpoints_req - bigint - The number of requested checkpoints executed.\n3. checkpoint_write_time - double precision - The total time spent in checkpoint processing, where files are written to disk, in milliseconds.\n4. checkpoint_sync_time - double precision - The total time spent in checkpoint processing, where files are synchronized to disk, in milliseconds.\n\nThese fields provide statistics about the background writer process's activity.",
+        "expected_output": "The fields in the PG_STAT_BGWRITER view are as follows:\n\n1. checkpoints_timed: bigint type, describes the number of scheduled checkpoints performed.\n2. checkpoints_req: bigint type, describes the number of requested checkpoints performed.\n3. checkpoint_write_time: double precision type, describes the total time spent in the checkpoint processing portion where files are written to disk, in milliseconds.\n4. checkpoint_sync_time: double precision type, describes the total time spent in the checkpoint processing portion where files are synced to disk, in milliseconds.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "PG_STAT_BGWRITER\nPG_STAT_BGWRITER视图显示关于后端写进程活动的统计信息。\n表 1  PG_STAT_BGWRITER字段\n名称 \n \n 类型 \n \n 描述 \n \n checkpoints_timed \n \n bigint \n \n 执行的定期检查点数。 \n \n checkpoints_req \n \n bigint \n \n 执行的需求检查点数。 \n \n checkpoint_write_time \n \n double precision \n \n 花费在检查点处理部分的时间总量，其中文件被写入到磁盘，以毫秒为单位。 \n \n checkpoint_sync_time \n \n double precision \n \n 花费在检查点处理部分的时间总量，其中文件被同步到磁盘，以毫秒为单位。\n列存表适合数据批量插入、更新较少和以查询为主统计分析类的场景。"
+        ]
+    }
+]

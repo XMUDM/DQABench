@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-sft",
+        "field": "general",
+        "language": "zh",
+        "input": "如何克服SQLite视图的限制\n\n在SQLite中，`View`存在以下限制：\n\n* 是只读的\n* 不能进行`UPDATE`操作\n\n以下是情况：\n\n有4个表`A`、`B`、`C`和`D`，必须创建一个`View`，其中包含所有四个表的数据，并且有条件。以下是伪代码构造：\n\n```\nCREATE VIEW AS E SELECT A.A1, A.A2, A.A3, A.A4, B.B1, C.C1, C.C2, D.D1, D.D2 FROM A, B, C, D\nWHERE A.X = 'SOME STRING' AND\n    A.FK = C.PK AND\n    A.Y = B.Z AND \n    D.G = A.PK AND\n    D.H = 'SOME STRING'\n```\n\n要求是，无论`D`中是否有匹配，剩余的匹配都应该被填充（在`D`的列中为0值）。毫无疑问，上述构造在存在匹配的`D`行时有效，但如果没有`D`匹配，则显然返回一个空的视图。\n\n如何使用`CASE`语句或`SELECT`子查询（或完全不同的构造，比如`INSTEAD OF`触发器）满足这个要求？\n\n非常感谢数据库专家们能够发布***确切***的构造。提前非常感谢！",
+        "actual_output": " 您可以使用[`LEFT JOIN`](http://en.wikipedia.org/wiki/Join_%28SQL%29#Left_join)来实现：\n\n```\nCREATE VIEW AS E SELECT A.A1, A.A2, A.A3, A.A4, B.B1, C.C1, C.C2, D.D1, D.D2 FROM A\nLEFT JOIN B ON A.Y = B.Z\nLEFT JOIN C ON A.FK = C.PK\nLEFT JOIN D ON D.G = A.PK AND D.H = 'SOME STRING'\nWHERE A.X = 'SOME STRING';\n```",
+        "expected_output": "首先，使用显式连接：\n\n```\nSELECT A.A1, A.A2, A.A3, A.A4, B.B1, C.C1, C.C2, D.D1, D.D2\nFROM A\nJOIN B ON A.Y = B.Z\nJOIN C ON A.FK = C.PK\nJOIN D ON D.G = A.PK\nWHERE A.X = 'SOME STRING'\n  AND D.H = 'SOME STRING';\n```\n\n然后，当您想保留没有匹配的行时，可以使用[外连接](http://en.wikipedia.org/wiki/Join_%28SQL%29#Outer_join)：\n\n```\nFROM A\nJOIN B ON A.Y = B.Z\nJOIN C ON A.FK = C.PK\nLEFT JOIN D ON D.G = A.PK AND D.H = 'SOME STRING'\nWHERE A.X = 'SOME STRING';\n```\n\n（`D.H`的比较必须作为连接条件的一部分，因为对于缺失的行，`D.H`为NULL，而在WHERE子句中比较将失败。）",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    },
+    {
+        "model": "Baichuan2-sft",
+        "field": "general",
+        "language": "zh",
+        "input": "条件查询Postgres\n\nPG表如下所示：\n\n\n```\nid - name   - type\n1  - Name 1 - Type A\n2  - Name 1 - Type B\n3  - Name 2 - Type A\n4  - Name 2 - Type B\n5  - Name 3 - Type A\n```\n\n我想编写一个查询，只列出具有'Type A'记录但没有'Type B'记录的Name行。 \n\n我希望得到的结果如下：\n\n\n```\n5  - Name 3 - Type A\n```",
+        "actual_output": " 您可以使用`EXISTS`运算符：\n\n\n```\nSELECT id, name, type\nFROM my_table t\nWHERE type = 'Type A'\nAND NOT EXISTS (\n    SELECT 1\n    FROM my_table t2\n    WHERE t2.name = t.name\n    AND t2.type = 'Type B'\n)\n```",
+        "expected_output": "您可以使用嵌套查询：\n\n\n```\nselect t.*\nfrom table_name t\nwhere not exists(\n    select 1\n    from table_name it\n    where t.name = it.name\n    and it.type = 'Type B'\n)\nand t.type = 'Type A'\n```",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "general",
+            ""
+        ]
+    }
+]

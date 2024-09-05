@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "gauss",
+        "language": "zh",
+        "input": "bit类型的数据必须准确匹配长度n，如果存储短或者长的数据会发生什么？",
+        "actual_output": "当在OpenGauss或GaussDB中存储短或长的数据到bit(n)或bit varying(n)类型列时，会发生错误。这两种类型要求数据的长度精确匹配n位数。如果需要存储短或长的数据，可以使用显式类型转换来调整数据的长度，但这可能会导致意外的结果。因此，在使用这些类型时需要确保数据的长度与类型的要求相匹配。",
+        "expected_output": "根据文档内容，bit类型的数据必须准确匹配长度n，如果存储短或者长的数据会报错。具体来说：\n\n- 如果存储的bit类型数据长度短于指定的长度n，会报错，如插入长度为2的数据到bit(3)类型的列中会报错。\n- 如果存储的bit varying类型数据超过了指定的长度n，会被拒绝，如插入长度为3的数据到bit varying(2)类型的列中会被拒绝。\n\n因此，如果存储短或者长的数据到bit类型的列中，会导致数据插入失败或被拒绝。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "位串类型\n位串就是一串1和0的字符串。它们可以用于存储位掩码。\nopenGauss支持两种位串类型：bit(n)和bit varying(n)，这里的n是一个正整数。\nbit类型的数据必须准确匹配长度n，如果存储短或者长的数据都会报错。bit varying类型的数据是最长为n的变长类型，超过n的类型会被拒绝。一个没有长度的bit等效于bit(1)，没有长度的bit varying表示没有长度限制。\n说明：\n如果用户明确地把一个位串值转换成bit(n)，则此位串右边的内容将被截断或者在右边补齐零，直到刚好n位，而不会抛出任何错误。\n如果用户明确地把一个位串数值转换成bit varying(n)，如果它超过了n位，则它的右边将被截断。\n如果用户明确地把一个位串数值转换成bit varying(n)，如果它超过了n位，则它的右边将被截断。\n```\n--创建表。\nopenGauss=# CREATE TABLE bit_type_t1 \n(\n    BT_COL1 INTEGER,\n    BT_COL2 BIT(3),\n    BT_COL3 BIT VARYING(5)\n) ;\n--插入数据。\nopenGauss=# INSERT INTO bit_type_t1 VALUES(1, B'101', B'00');\n--插入数据的长度不符合类型的标准会报错。\nopenGauss=# INSERT INTO bit_type_t1 VALUES(2, B'10', B'101');\nERROR:  bit string length 2 does not match type bit(3)\nCONTEXT:  referenced column: bt_col2\n--将不符合类型长度的数据进行转换。\nopenGauss=# INSERT INTO bit_type_t1 VALUES(2, B'10'::bit(3), B'101');\n--查看数据。\nopenGauss=# SELECT * FROM bit_type_t1;\n bt_col1 | bt_col2 | bt_col3 \n---------+---------+---------\n       1 | 101     | 00\n       2 | 100     | 101\n(2 rows)\n--删除表。\nopenGauss=# DROP TABLE bit_type_t1;\n```\n"
+        ]
+    },
+    {
+        "model": "Baichuan2-13B-Chat",
+        "field": "gauss",
+        "language": "zh",
+        "input": "请举例说明如何使用PREDICT BY进行推测任务？",
+        "actual_output": "在使用PREDICT BY进行推测任务时，可以调用已经训练好的模型来进行预测。例如，以下SQL语句使用了名为price_model的模型对houses表中id为1的房屋的价格进行预测：\n\n```sql\nSELECT id, PREDICT BY price_model (FEATURES size,lot), price\nFROM houses WHERE id = 1;\n```\n\n在这个例子中，PREDICT BY函数后接了模型名称price_model和一个FEATURES子句，指定了输入特征列名为size和lot。这个查询将返回房屋id为1的预测价格。",
+        "expected_output": "根据文档内容，使用PREDICT BY进行推测任务的示例如下：\n\n假设我们有一个名为`price_model`的模型，该模型用于预测房屋价格，其中`size`和`lot`是输入特征列名。我们可以通过以下SQL语句进行推测任务：\n\n```\nSELECT id, PREDICT BY price_model (FEATURES size, lot), price\nFROM houses;\n```\n\n在这个示例中，我们从名为`houses`的表中选择`id`、通过`price_model`模型预测的价格以及实际价格`price`。通过这个查询，我们可以使用已经训练好的`price_model`模型对房屋价格进行推测。",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "PREDICT BY\n功能描述\n利用完成训练的模型进行推测任务。\n注意事项\n调用的模型名称在系统表gs_model_warehouse中可查看到。\n语法格式\nPREDICT BY model_name [ (FEATURES attribute [, attribute] +]) ]\n参数说明\nmodel_name\n用于推测任务的模型名称。\n取值范围：字符串，需要符合标识符的命名规则。\nattribute\n推测任务的输入特征列名。\n取值范围：字符串，需要符合标识符的命名规则。\n示例\nSELECT id, PREDICT BY price_model (FEATURES size,lot), price\nFROM houses;\n相关链接\nCREATE MODEL，DROP MODEL\n"
+        ]
+    }
+]

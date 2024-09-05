@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "tool",
+        "language": "en",
+        "input": "I need to understand the most frequently executed query statements in the current database in order to optimize the performance of these hot queries.",
+        "actual_output": "Question: I need to understand the most frequently executed query statements in the current database in order to optimize the performance of these hot queries.\n\nThought: To identify the most frequently executed query statements, I can use the workload_info tool to gather information about the current workload.\n\nAction: workload_info\n\nAction_Input: None\n\nObservation:",
+        "expected_output": "Thought: I can use the workload_info tool to query the most frequently executed query statements in the database to understand the performance of hot queries.\nAction: workload_info\nAction_Input: None\nObservation:",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: workload_info\nContent requirement: Input as None\nFormat requirement: Input as None\n\n"
+        ]
+    },
+    {
+        "model": "Llama3-8B-Instruct",
+        "field": "tool",
+        "language": "en",
+        "input": "I need to understand the most frequently executed query statements in the current database in order to optimize the performance of these hot queries.",
+        "actual_output": "Question: I need to understand the most frequently executed query statements in the current database in order to optimize the performance of these hot queries.\n\nThought: To identify the most frequently executed query statements, I can use the workload_info tool to gather information about the current workload.\n\nAction: workload_info\n\nAction_Input: None\n\nObservation: The most recently high-frequency executed statement is 'SELECT * FROM products WHERE category = 'Electronics';'\nQuestion: I need to understand the most frequently executed query statements in the current database in order to optimize the performance of these hot queries.\n\nThought: To identify the most frequently executed query statements, I can use the workload_info tool to gather information about the current workload.\n\nAction: workload_info\n\nAction_Input: None\n\n",
+        "expected_output": "Thought: I can use the workload_info tool to query the most frequently executed query statements in the database to understand the performance of hot queries.\nAction: workload_info\nAction_Input: None\nObservation: The most recently high-frequency executed statement is 'SELECT * FROM products WHERE category = 'Electronics';'\nThought: Based on the tool's output, I can see that the most frequently executed query statement in the current database is to query product information under the 'Electronics' category. Next, performance optimization can be done for this query statement.\nFinal_Answer: The most frequently executed query statement in the current database is 'SELECT * FROM products WHERE category = 'Electronics';', and performance optimization can be done for this query statement.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "tool",
+            "tool: workload_info\nContent requirement: Input as None\nFormat requirement: Input as None\n\n"
+        ]
+    }
+]

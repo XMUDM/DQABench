@@ -1,0 +1,32 @@
+[
+    {
+        "model": "gpt-4-0125-preview",
+        "field": "gauss",
+        "language": "en",
+        "input": "In GaussDB, what are the field types in the PG_THREAD_WAIT_STATUS view?",
+        "actual_output": "As of my last update in 2023, GaussDB(DWS) for PostgreSQL provides a view named `PG_THREAD_WAIT_STATUS` that is designed to help users monitor and analyze the wait events of threads in the database system. This view can be particularly useful for performance tuning and identifying bottlenecks in database operations.\n\nThe `PG_THREAD_WAIT_STATUS` view typically includes fields that describe the wait event information for each thread. However, the specific field types and their descriptions might vary depending on the version of GaussDB(DWS) you are using. Generally, you can expect to find the following types of fields in the `PG_THREAD_WAIT_STATUS` view:\n\n1. **Thread ID**: A field that uniquely identifies each thread. This is usually an integer or numeric type.\n\n2. **Wait Event Type**: This field describes the type or category of the wait event. It's often a text or varchar type, providing a high-level classification of the wait event (e.g., IO, Lock, LWLock, BufferPin).\n\n3. **Wait Event**: This field provides more detailed information about the specific wait event. Like the Wait Event Type, it's typically a text or varchar type, describing the exact event the thread is waiting on (e.g., data file read, tuple lock).\n\n4. **Wait Start Time**: A timestamp field indicating when the thread started waiting on the current event. This helps in understanding how long the wait has been occurring.\n\n5. **State**: This field describes the current state of the thread, such as whether it is actively waiting, idle, or in some other state. It's usually a text or varchar type.\n\n6. **Query ID**: If the wait event is associated with a specific query, this field contains an identifier for that query. It's often an integer or numeric type.\n\n7. **Session ID**: This field identifies the session associated with the wait event, allowing you to correlate waits with specific user sessions. It's typically an integer or numeric type.\n\nTo get the most accurate and detailed description of the fields in the `PG_THREAD_WAIT_STATUS` view for your specific version of GaussDB(DWS), you should consult the official documentation or use the `\\d+ pg_thread_wait_status` command in the psql terminal to describe the view structure. Keep in mind that database products continually evolve, and new fields may be added or existing fields modified in future releases.",
+        "expected_output": "The field types in the PG_THREAD_WAIT_STATUS view are as follows:\n\n- node_name: text\n- db_name: text\n- thread_name: text\n- query_id: bigint\n- tid: bigint\n- sessionid: bigint\n- lwtid: integer\n- psessionid: bigint\n- tlevel: integer\n- smpid: integer\n- wait_status: text\n- wait_event: text\n- locktag: text\n- lockmode: text\n- block_sessionid: bigint\n- global_sessionid: text\n\nThese field types are detailed in document Table 12-356.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "text\n加密算法。\nSM4\nCTR\n128\nAES\nCTR\n128\nremain\ntext\n保留字段。\n12.3.264 PG_THREAD_WAIT_STATUS\n通过PG_THREAD_WAIT_STATUS视图可以检测当前实例中工作线程（backend\nthread）以及辅助线程（auxiliary thread）的阻塞等待情况。\n表 12\n356 PG_THREAD_WAIT_STATUS 字段\n名称\n类型\n描述\nnode_name\ntext\n当前节点的名称。\ndb_name\ntext\n数据库名称。\nthread_name\ntext\n线程名称。\nquery_id\nbigint\n查询ID，对应debug_query_id。\n云数据库 GaussDB\n主备版开发指南\n12 系统表和系统视图\n文档版本 01 (2023\n11\n09)\ntext\n如果wait_status是acquire lock、acquire lwlock、wait\nio三种类型，此列描述具体的锁、轻量级锁、IO的信\n息。否则是空。\nlocktag\ntext\n当前线程正在等待锁的信息。\nlockmode\ntext\n当前线程正等待获取的锁模式。包含表级锁、行级锁、\n页级锁下的各模式。\nblock_session\nid\nbigint\n阻塞当前线程获取锁的会话标识。\nglobal_sessio\nnid\ntext\n全局会话ID。\n云数据库 GaussDB\n主备版开发指南\n12 系统表和系统视图\n文档版本 01 (2023\n11\n09)\n版权所有 © 华为云计算技术有限公司\n2153\n名称\n类型\n描述\ntid\nbigint\n当前线程的线程号。\nsessionid\nbigint\n当前会话ID。\nlwtid\ninteger\n当前线程的轻量级线程号。\npsessionid\nbigint\n父会话ID。\ntlevel\ninteger\nstreaming线程的层级。\nsmpid\ninteger\n并行线程的ID。\nwait_status\ntext\n当前线程的等待状态。等待状态的详细信息请参见表\n12\n357。\nwait_event\ntext\n如果wait_status是acquire lock、acquire lwlock、wait\nio三种类型，此列描述具体的锁、轻量级锁、IO的信\n息。否则是空。\n"
+        ]
+    },
+    {
+        "model": "gpt-4-0125-preview",
+        "field": "gauss",
+        "language": "en",
+        "input": "In GaussDB, what is the default value of the standby_shared_buffers_fraction parameter?",
+        "actual_output": "As of my last update in 2023, in GaussDB, the default value of the `standby_shared_buffers_fraction` parameter is 1. This parameter is used to specify the fraction of shared buffers that can be used by the standby server for caching data. A value of 1 means that the standby server can use all of the shared buffers for caching, just like the primary server. However, it's always a good idea to check the most current documentation or the database configuration directly, as default values and configurations can change with new versions of the software.",
+        "expected_output": "The default value of the standby_shared_buffers_fraction parameter is 1.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "默认值：2GB\n设置建议：建议导入压力大的场景中增加数据库节点中此参数配置。\nstandby_shared_buffers_fraction\n参数说明：备实例所在服务器使用shared_buffers内存缓冲区大小的比例。\n该参数属于SIGHUP类型参数，请参考表14\n1中对应设置方法进行设置。\n取值范围：双精度浮点型，0.1~1.0\n默认值：1\ntemp_buffers\n参数说明：设置每个数据库会话使用的LOCAL临时缓冲区的大小。\n该参数属于USERSET类型参数，请参考表14\n1中对应设置方法进行设置。\n在每个会话的第一次使用临时表之前可以改变temp_buffers的值，之后的设置将是无\n效的。\n一个会话将按照temp_buffers给出的限制，根据需要分配临时缓冲区。如果在一个并\n不需要大量临时缓冲区的会话里设置一个大的数值，其开销只是一个缓冲区描述符的\n0.25。\n2.\n如果设置较大的shared_buffers需要同时增加checkpoint_segments的值，因为写\n入大量新增、修改数据需要消耗更多的时间周期。\n3.\n如果调整shared_buffers参数之后，导致进程重启失败，请参考启动失败的报错信\n息，采用以下解决方案之一：\na.\n对应调整操作系统kernel.shmall、kernel.shmmax、kernel.shmmin参数，调\n整方式请参考《安装指南》的配置操作系统其他参数小节。\nb.\n执行free\ng观察操作系统可用内存和swap空间是否足够，如果内存明显不\n足，请手动停止其他比较占用内存的用户程序。\nc.\n避免设置明显不合理（过大或过小）的shared_buffers值。\nsegment_buffers\n参数说明：设置GaussDB段页式元数据页的内存大小。\n该参数属于POSTMASTER类型参数，请参考表14\n1中对应设置方法进行设置。\n1中对应设置方法进行设置。\n取值范围：整型，16 ~ 1073741823，单位为8KB。\nshared_buffers需要设置为BLCKSZ的整数倍，BLCKSZ目前设置为8KB，即\nshared_buffers需要设置为8KB整数倍。改变BLCKSZ的值会改变最小值。\n默认值：\n560GB（196核CPU/1536G内存）；360GB（128核CPU/1024G内存，104核CPU/\n1024G内存，96核CPU/1024G内存）；270GB（96核CPU/768G内存）；220GB（80\n核CPU/640G内存）；180GB（64核CPU/512G内存）；160GB（60核CPU/480G内\n"
+        ]
+    }
+]

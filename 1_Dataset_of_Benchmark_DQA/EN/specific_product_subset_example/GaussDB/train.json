@@ -1,0 +1,16 @@
+[
+    {
+        "question": "What information does the DBE_XMLDOM.SETDOCTYPE function support setting for the external DTD of DOMDOCUMENT?",
+        "answer": "The DBE_XMLDOM.SETDOCTYPE function is used to set the external DTD of DOMDOCUMENT and supports setting the following information:\n\n1. name: the name to initialize the doctype, limited to 32500 bytes.\n2. sysid: the system ID to initialize the doctype, limited to 32500 bytes.\n3. pubid: the public ID to initialize the doctype, limited to 32500 bytes.\n\nAccording to the documentation and examples, when using the DBE_XMLDOM.SETDOCTYPE function, the name, system ID, and public ID of the external DTD can be set, with a total length limit of 32500 bytes for this information.\n",
+        "doc": "云数据库 GaussDB 主备版_3.x版本_124.json",
+        "field": "rag",
+        "retrieval": "DBE_XMLDOM.SETDOCTYPE的函数原型 为： DBE_XMLDOM.SETDOCTYPE( doc     IN   DOMDocument, name    IN   VARCHAR2, sysid   IN   VARCHAR2, pubid   IN   VARCHAR2); 表 10-367 DBE_XMLDOM.SETDOCTYPE 接口参数说明 参数 描述 doc 指定的DOMDOCUMENT节点。 name 需要初始化doctype的名称。 sysid 需要初始化doctype的system ID。 pubid 需要初始化doctype的public ID。\ndbe_output.print_line('buffer: '); dbe_output.print_line(buffer); dbe_xmldom.freedocument(doc); END; / ● DBE_XMLDOM.SETDOCTYPE 设置DOMDOCUMENT的外部DTD。\ndbe_output.print_line(buffer); dbe_output.print_line('------------------------------------------------'); dbe_xmldom.setdoctype(doc, 'n0te', NULL, ''); dbe_xmldom.setdoctype(doc, 'n0t1e', NULL, ''); dbe_xmldom.writetobuffer(doc, buffer); dbe_output.print_line('buffer: '); dbe_output.print_line(buffer); dbe_xmldom.freedocument(doc); END; / ● DBE_XMLDOM.SETNODEVALUE 此函数用于向DOMNODE对象中设置节点的值。\n"
+    },
+    {
+        "question": "What are the default values of the parameters off_set and amount for the DBE_RAW.SUBSTR function?",
+        "answer": "According to the documentation, the default values for the parameters off_set and amount of the DBE_RAW.SUBSTR function are 1 and 32767, respectively.\n",
+        "doc": "云数据库 GaussDB 主备版_3.x版本_107.json",
+        "field": "rag",
+        "retrieval": "预期并处理RAW类型值，这里定义为TEXT类型不影响对RAW类型值的处\n理。\nstr2\n按位或的第二个字符串。\n说明\n由于历史原因，该参数被定义为TEXT类型，但是DBE_RAW.SUBSTR接口\n预期并处理RAW类型值，这里定义为TEXT类型不影响对RAW类型值的处\n理。\nDBE_RAW.SUBSTR\n函数SUBSTR将RAW类型值按起始位off_set和长度amount截取。\nDBE_RAW.SUBSTR函数原型为：\nDBE_RAW.SUBSTR(\nlob_loc IN BLOB,\noff_set IN INTEGER DEFAULT 1,\namount  IN INTEGER DEFAULT 32767)\nRETURN RAW;\n表 10-191 DBE_RAW.SUBSTR 接口参数说明\n参数\n描述\nlob_loc\n源RAW类型值。\n说明\nRETURN RAW;\n表 10-191 DBE_RAW.SUBSTR 接口参数说明\n参数\n描述\nlob_loc\n源RAW类型值。\n说明\n由于历史原因，该参数被定义为BLOB类型，但是DBE_RAW.SUBSTR接口\n预期并处理RAW类型值，这里定义为BLOB类型不影响对RAW类型值的处\n理。\noff_set\n子串的起始位置，默认值1。\namount\n子串的长度，默认值32767。\nDBE_RAW.BIT_AND\n函数BIT_AND求两个RAW类型按位与的结果。\nDBE_RAW.BIT_AND函数原型为：\nDBE_RAW.BIT_AND(\nr1 IN RAW,\n云数据库 GaussDB\n主备版开发指南\n10 存储过程\n文档版本 01 (2023-11-09)\n版权所有 © 华为云计算技术有限公司\n1641\n函数CAST_FROM_RAW_TO_NVARCHAR2将RAW类型转换为NVARCHAR2类型。\nDBE_RAW.CAST_FROM_RAW_TO_NVARCHAR2函数原型为：\nDBE_RAW.CAST_FROM_RAW_TO_NVARCHAR2(\nr IN RAW)\nRETURN NVARCHAR2;\n表 10-201 DBE_RAW.CAST_FROM_RAW_TO_NVARCHAR2 接口参数说明\n参数\n描述\nr\n需要进行转换的RAW类型，最大长度不超过32767。\nDBE_RAW.COMPARE\n函数COMPARE返回两个RAW类型值首个不相同的位置。\nDBE_RAW.COMPARE函数原型为：\nDBE_RAW.COMPARE(\nr1  IN RAW,\nr2  IN RAW,\npad IN RAW DEFAULT NULL)\nRETURN INTEGER;\n表 10-202 DBE_RAW.COMPARE 接口参数说明\n参数\n"
+    }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "model": "Yuan2-2B-Februa-hf",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, what do the parameters clusterName and nodeNames in the cluster_config.xml file represent?",
+        "actual_output": " In openGauss, what do the parameters clusterName and nodeNames in the cluster_config.xml file represent?\n    The parameters in the cluster_config.xml file represent the cluster name and the node names of the nodes in the cluster.\n    \"\"\"\n    # Assuming the cluster_config.xml file contains the following information:\n    # <cluster_config>\n    #   <cluster_name>example_cluster</cluster_name>\n    #   <node_names>node1,node2,node3</node_names>\n    # </cluster_config>\n    cluster_name = cluster_config.get('cluster_name')\n    node_names = cluster_config.get('node_names')\n    return cluster_name, node_names\n```<eod>",
+        "expected_output": "In the cluster_config.xml file, the parameter clusterName represents the name of openGauss, while the parameter nodeNames represents the host names in openGauss. clusterName is used to identify the name of the openGauss cluster, while nodeNames is used to specify the host names of each node in openGauss for proper recognition and deployment on each node.",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "表 1  参数说明\n实例类型 \n \n 参数 \n \n 说明 \n \n 整体信息 \n \n clusterName \n \n openGauss名称。 \n \n nodeNames \n \n openGauss中主机名称。 \n \n backIp1s \n \n 主机在后端存储网络中的IP地址（内网IP）。所有openGauss主机使用后端存储网络通讯。 \n \n gaussdbAppPath \n \n openGauss程序安装目录。此目录应满足如下要求： \n 磁盘空间>1GB。 与数据库所需其它路径相互独立，没有包含关系。\n若需要安装脚本自动创建安装用户时，各配置的目录需保证不与系统创建的默认用户目录耦合关联。\n配置openGauss路径和实例路径时，路径中不能包含“|”、“;”、“&”、“$”、“<”、“>”、“`”、“\\\\”、“'”、“\\”、“,”、“{”，“}”、“(”，“)”、“[”，“]”、“\\~”、“*”、“?”特殊字符。\n配置数据库节点名称时，请通过hostname命令获取数据库节点的主机名称，替换示例中的node1_hostname，node2_hostname。\n配置dcf_config时，角色的配置有leader、follower、passive和logger，其中可投票的角色有leader、follower和logger。配置角色组网时，可投票的角色不能少于3个，因此dcf模式下至少需要三个节点。\n表 1  参数说明\n实例类型 \n \n 参数 \n \n 说明\n创建XML配置文件\n安装openGauss前需要创建cluster_config.xml文件。cluster_config.xml文件包含部署openGauss的服务器信息、安装路径、IP地址以及端口号等。用于告知openGauss如何部署。用户需根据不同场景配置对应的XML文件。\n下面以一主一备的方案为例，说明如何创建XML配置文件。\n配置数据库名称及各项目录\n配置Host基本信息\n配置数据库主节点信息\n配置CM_SERVER（主、非主）信息\n示例\n配置数据库名称及各项目录\n在script/gspylib/etc/conf/cluster_config_template.xml获取XML文件模板。以下配置内容为示例，可自行替换。每行信息均有注释进行说明。\n```\n```\n须知：\n“/opt/huawei/install/om”存放互信等工具，为了避免权限问题，不要把实例数据目录放在此目录下。\n安装目录和数据目录需为空或者不存在，否则可能导致安装失败。\n"
+        ]
+    },
+    {
+        "model": "Yuan2-2B-Februa-hf",
+        "field": "gauss",
+        "language": "en",
+        "input": "In openGauss, how does the gs_space_shrink function perform space shrink operations on the specified tablespace and database extent?",
+        "actual_output": " In openGauss, how does the gs_space_shrink function perform space shrink operations on the specified tablespace and database extent?\n    gs_space_shrink(table_space, extent);\n    // Perform other operations on the specified tablespace and database extent\n    // ...\n    return 0;\n}\n```<eod>",
+        "expected_output": "According to the documentation, the gs_space_shrink function is used to perform space shrink operations on the specified tablespace and database extent. The specific steps are as follows:\n\n1. First, use the pg_stat_segment_extent_usage function to query information about the extent that needs to be shrunk, determining the starting physical page number (start_block) and size (extent_size) of the extent to be shrunk.\n\n2. Then, use the gs_space_shrink function to perform space shrink operations on the specified tablespace and database. The function parameters include tablespace (oid of the tablespace), database (oid of the database), extent_type (type of extent), forknum (fork number).\n\n3. After executing the gs_space_shrink function, the system will perform space shrink operations on the specified extent, reclaiming unused space.\n\nTherefore, to perform space shrink operations on the specified tablespace and database extent, you need to first query information about the extent that needs to be shrunk, and then use the gs_space_shrink function to perform the shrink operation.\n",
+        "retrieval_text": [
+            ""
+        ],
+        "context": [
+            "RAG",
+            "local_space_shrink(tablespacename TEXT, databasename TEXT)\n描述：当前节点上对指定段页式空间做物理空间收缩。注意，目前只支持对当前连接的database做shrink。\n返回值：空\ngs_space_shrink(int4 tablespace, int4 database, int4 extent_type, int4 forknum)\n段页式存储函数\nlocal_segment_space_info(tablespacename TEXT, databasename TEXT)\n描述：输出为该表空间下所有ExtentGroup的使用信息。\n返回值类型：\nnode_name\n节点名称。\nextent_size\n该ExtentGroup的extent规格，单位是block数。\nforknum\nFork号。\ntotal_blocks\n物理文件总extent数目。\nmeta_data_blocks\n表空间管理的metadata占用的block数，只包括space header、map page等，不包括segment head。\nused_data_blocks\n存数据占用的extent数目。包括segment head。\nutilization\n使用的block数占总block数的百分比。即(used_data_blocks+meta_data_block)/total_blocks。\nhigh_water_mark\n高水位线，被分配出去的extent，最大的物理页号。超过高水位线的block都没有被使用，可以被直接回收。\npg_stat_segment_extent_usage(int4 tablespace oid, int4 database oid, int4 extent_type, int4 forknum)\n描述：每次返回一个ExtentGroup中，每个被分配出去的extent的使用情况。extent_type表示ExtentGroup的类型，合理取值为[1,5]的int值。在此范围外的会报error。forknum 表示fork号，合法取值为[0,4]的int值，目前只有三种值有效，数据文件为0，FSM文件为1，visibility map文件为2。\n返回值类型：\n名称\n描述\nstart_block\nExtent的起始物理页号。\nextent_size\nExtent的大小。\nusage_type\nExtent的使用类型，比如segment head、data extent等。\nower_location\n有指针指向该extent的对象的位置。比如data extent的owner就是它所属的segment的head位置。\nspecial_data\n"
+        ]
+    }
+]

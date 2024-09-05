@@ -1,0 +1,12 @@
+[
+    {
+        "question": "返回一个表中所有行，其中cat_id在另一个表中找不到\n\n我有一个数据库，其中`article.cat_id`链接到`category.id`。我从`category`中删除了一些行，现在我想选择或删除所有链接到在`category`中不存在的`id`的`article`中的所有行。不幸的是，我不确定到底删除了哪些`id`。有没有一种SQL方法可以检查返回所有`article`中没有与`article.cat_id`相等的`category.id`的行？",
+        "answer": "当你需要返回一个表中所有行，其中某个字段的值在另一个表中找不到时，你可以使用SQL中的`NOT IN`子查询来实现。具体地，你可以编写类似以下的SQL语句：\n\n```sql\nSELECT * FROM article WHERE cat_id NOT IN (SELECT id FROM category)\n```\n\n在这个例子中，`article`表中的`cat_id`字段链接到`category`表中的`id`字段。通过上述SQL语句，内部查询会选择`category`表中的所有`id`，而外部查询会返回那些在`category`表中找不到对应`id`的`article`表中的行。\n\n举个例子，假设`article`表如下：\n\n| ID  | Title       | cat_id |\n|-----|-------------|--------|\n| 1   | Article 1   | 1      |\n| 2   | Article 2   | 2      |\n| 3   | Article 3   | 3      |\n| 4   | Article 4   | 4      |\n\n而`category`表如下：\n\n| ID  | Name        |\n|-----|-------------|\n| 1   | Category A  |\n| 2   | Category B  |\n| 3   | Category C  |\n\n如果运行上述SQL语句，将返回`article`表中`cat_id`为4的行，因为在`category`表中找不到对应的`id`。\n\n除了使用`NOT IN`子查询，你还可以考虑使用`LEFT JOIN`来实现相同的效果。以下是使用`LEFT JOIN`的示例：\n\n```sql\nSELECT a.* \nFROM article a\nLEFT JOIN category c ON a.cat_id = c.id\nWHERE c.id IS NULL\n```\n\n这个查询将返回与`category`表中的`id`无法匹配的`article`表中的行。这种方法在某些情况下可能比`NOT IN`更有效率。",
+        "field": "general"
+    },
+    {
+        "question": "如何堆叠mysql查询结果以依次选择每一行\n\n请问如何在查询数据库表时一次只选择一行，直到选择完所有行而不重复相同行。\n\n例如\n\n我希望查询第一行第一次，第二行第二次，直到选择完所有行。请注意，我不希望使用随机选择，因为结果可能会重复。\n\n谢谢您提前。",
+        "answer": "要在MySQL中查询数据库表时一次只选择一行，直到选择完所有行而不重复相同行，您可以使用`OFFSET`选项。这个选项可以帮助您实现逐行选择的需求。下面是一个示例代码：\n\n```sql\n$offset = 0;\n$query = 'SELECT * FROM my_table LIMIT 1 OFFSET='. $offset;\n$offset++;\n$query = 'SELECT * FROM my_table LIMIT 1 OFFSET='. $offset; // offset现在为1\n$offset++;\n$query = 'SELECT * FROM my_table LIMIT 1 OFFSET='. $offset; // offset现在为2\n```\n\n通常情况下，您会将这些代码放在一个循环中，以便逐行选择数据。`OFFSET`的作用是忽略偏移计数之前的记录。例如，如果您有记录`1,2,3,4,5`，并且使用偏移量为2进行选择，您将得到`3,4,5`作为结果。\n\n您也可以将`$offset`作为参数传递，以便更灵活地控制偏移量。这样，您可以在每次查询时递增偏移量，以便逐行选择数据。\n\n关于API请求和响应方面，您可以在第一个API请求的响应中包含`last_offset`，并告知消费者在下一个请求中将`offset`作为参数传递。例如，`my.api.com?offset=1`。在验证和清理参数`offset`后，您可以将该值包含在您的查询中，或者使用默认的`offset`为0。\n\n如果消费者在上一个响应中收到`last_offset=2`，则应在下一个请求中传递`offset=3`，以便继续逐行选择数据。\n\n您可以参考[W3Schools的相关文档](https://www.w3schools.com/php/php_mysql_select_limit.asp)来更深入地了解`LIMIT`和`OFFSET`的用法。希望这些信息能帮助您更好地理解如何实现逐行选择数据的需求。如果您有任何疑问，请随时提出。",
+        "field": "general"
+    }
+]
