@@ -39,3 +39,18 @@ This repository contains the following contents:
   This section provides additional material to the footnotes in our paper, including additional data, methodological details, or other supplementary information, such as prompts for data collection and experiments used, aiming to provide readers with more comprehensive background and understanding.
 
 Click to view details.
+
+## Citation
+
+Feel free to cite us ([paper link](https://arxiv.org/abs/2409.04475)) and star us if you like this project.
+
+```bibtex
+@misc{zheng2024dqa,
+      title={Revolutionizing Database Q&A with Large Language Models: Comprehensive Benchmark and Evaluation}, 
+      author={Yihang Zheng, Bo Li, Zhenghao Lin, Yi Luo, Xuanhe Zhou, Chen Lin, Jinsong Su, Guoliang Li, Shifu Li},
+      year={2024},
+      eprint={2409.04475},
+      archivePrefix={arXiv},
+      primaryClass={cs.DB}
+}
+```

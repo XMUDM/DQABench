@@ -39,3 +39,18 @@ DQA 是第一个全面的数据库问答基准，其数据集采用互联网数�
   这部分内容提供了我们论文中脚注的附加材料，包括额外的数据、方法细节或其他补充信息，如数据收集和实验中使用的prompt等内容，旨在为读者提供更全面的背景和理解。
 
 点击查看详细内容。
+
+## 引用
+
+如果您喜欢这个项目，欢迎引用我们的论文([paper link](https://arxiv.org/abs/2409.04475))，并为项目加上星标。
+
+```bibtex
+@misc{zheng2024dqa,
+      title={Revolutionizing Database Q&A with Large Language Models: Comprehensive Benchmark and Evaluation}, 
+      author={Yihang Zheng, Bo Li, Zhenghao Lin, Yi Luo, Xuanhe Zhou, Chen Lin, Jinsong Su, Guoliang Li, Shifu Li},
+      year={2024},
+      eprint={2409.04475},
+      archivePrefix={arXiv},
+      primaryClass={cs.DB}
+}
+```
