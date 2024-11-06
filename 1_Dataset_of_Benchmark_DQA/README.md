@@ -35,22 +35,22 @@ Dataset_of_Benchmark_DQA
 │  └─specific_product
 │      ├─GaussDB
 │      └─openGauss
-└─ZH
-    ├─general_knowledge
-    │  ├─multiple_choice
-    │  └─forum_QA
-    ├─multiple_choice
-    ├─specific_instance
-    │  │  tools.json
-    │  ├─scenarios-based
-    │  └─tool-based
-    └─specific_product
-        ├─GaussDB
-        └─openGauss
+├─ZH
+│   ├─general_knowledge
+│   │  ├─multiple_choice
+│   │  └─forum_QA
+│   ├─specific_instance
+│   │  │  tools.json
+│   │  ├─scenarios-based
+│   │  └─tool-based
+│   └─specific_product
+│      ├─GaussDB
+│      └─openGauss
+└─general_knowledge_with_tags
 
 ```
 
-Each directory contains three files: `train.json`, `test.json`, `validation.json`, with a data ratio of `9:0.5:0.5`.
+Each directory under the EN and ZH directories contains three files: `train.json`, `test.json`, `validation.json`, with a data ratio of `9:0.5:0.5`.
 
 ## 4. Data Example
 

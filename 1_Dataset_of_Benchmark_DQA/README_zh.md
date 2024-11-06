@@ -35,22 +35,22 @@ Dataset_of_Benchmark_DQA
 │  └─specific_product
 │      ├─GaussDB
 │      └─openGauss
-└─ZH
-    ├─general_knowledge
-    │  ├─multiple_choice
-    │  └─forum_QA
-    ├─multiple_choice
-    ├─specific_instance
-    │  │  tools.json
-    │  ├─scenarios-based
-    │  └─tool-based
-    └─specific_product
-        ├─GaussDB
-        └─openGauss
+├─ZH
+│   ├─general_knowledge
+│   │  ├─multiple_choice
+│   │  └─forum_QA
+│   ├─specific_instance
+│   │  │  tools.json
+│   │  ├─scenarios-based
+│   │  └─tool-based
+│   └─specific_product
+│      ├─GaussDB
+│      └─openGauss
+└─general_knowledge_with_tags
 
 ```
 
-每个目录下均有 `train.json`, `test.json`, `validation.json` 三个文件，数据比例为`9:0.5:0.5`。
+EN和ZH目录下每个目录均有 `train.json`, `test.json`, `validation.json` 三个文件，数据比例为`9:0.5:0.5`。
 
 
 ## 4. 数据示例
