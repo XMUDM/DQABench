@@ -14,19 +14,19 @@ DQA 是第一个全面的数据库问答基准，其数据集采用互联网数�
 
 本仓库共包含以下内容：
 
-* [Dataset of Benchmark DQA](1_Dataset_of_Benchmark_DQA/README.md)
+* [Dataset of Benchmark DQA](1_Dataset_of_Benchmark_DQA/README_zh.md)
 
   这部分展示了 DQA 的数据集，其构建采用了互联网数据采集和创新的基于大型语言模型生成的方法。该数据集包含了超过240,000对中英文问答对，覆盖了数据库知识的几乎所有方面。该目录包含数据示例和完整数据集下载链接等内容，分为中英两个子目录，每个分别包含General Knowledge，Specific Product，Specific Instance三个部分。
 
-* [Testbed Demo](2_Testbed_Demo/README.md)
+* [Testbed Demo](2_Testbed_Demo/README_zh.md)
 
-  这部分是 LLM 数据库问答测试平台的具体演示。该测试平台高度模块化和可扩展，具备多种基本和高级组件，旨在支持各种 LLM 与这些组件集成，以处理实际的数据库问答场景。该目录包含问题分类模型的实现，使用方法和下载链接（[Question_Classification_Model](2_Testbed_Demo/Question_Classification_Model/README.md)），以及对数据库问题分类解答的具体实现和使用方法（[Testbed_Backbone](2_Testbed_Demo/Testbed_Backbone/README.md)）。
+  这部分是 LLM 数据库问答测试平台的具体演示。该测试平台高度模块化和可扩展，具备多种基本和高级组件，旨在支持各种 LLM 与这些组件集成，以处理实际的数据库问答场景。该目录包含问题分类模型的实现，使用方法和下载链接（[Question_Classification_Model](2_Testbed_Demo/Question_Classification_Model/README.md)），以及对数据库问题分类解答的具体实现和使用方法（[Testbed_Backbone](2_Testbed_Demo/Testbed_Backbone/README_zh.md)）。
 
-* [Evaluation Code of Benchmark](3_Evaluation_Code_of_Benchmark/README.md)
+* [Evaluation Code of Benchmark](3_Evaluation_Code_of_Benchmark/README_zh.md)
 
   这部分是 DQA 的完整评估流程。评估流程包括多样化的指标和标准化的评估过程，以确保评估的全面性、准确性和公平性。该评估流程支持多个主流的大语言模型，并可以通过简单扩展支持更多模型和测试指标。该目录提供了评估流程的具体实现和使用方法。
 
-* [Popular LLMs Response for DQA](4_Popular_LLMs_Response_for_DQA/README.md)
+* [Popular LLMs Response for DQA](4_Popular_LLMs_Response_for_DQA/README_zh.md)
  
   这部分内容展示了多个主流的大型语言模型在 DQA 上的回答。通过对该回答数据集的测试，可以全面评估不同 LLM 在数据库问答任务中的表现。该目录包含模型回答示例和完整回答数据集下载链接等内容，分为中英两个子目录，每个分别包含General Knowledge，Specific Product，Specific Instance三个部分。
 
